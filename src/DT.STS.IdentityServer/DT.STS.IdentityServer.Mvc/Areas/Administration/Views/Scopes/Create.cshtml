@@ -1,0 +1,170 @@
+﻿@using DT.STS.IdentityServer.Mvc.Extensions
+@model DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Scopes.ScopeCreateModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.light.css" type="text/css" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Scripts/admin_lte/bower_components/select2/dist/css/select2.min.css">
+}
+<div class="box box-info form-horizontal">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="box-header with-border">
+            <h3 class="box-title">Thêm Scope</h3>
+            <div class="mailbox-controls">
+                <a href="@Url.Action("List")" class="btn btn-success btn-sm">
+                    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Danh sách
+                </a>
+                <button id="submit-button" type="submit" class="btn btn-primary btn-sm">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="form-horizontal">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.DropDownListFor(model => model.Type, Model.AvailableScopeTypes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ScopeClaims, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.ScopeClaims, Model.AvailableClaims, new { @class = "form-control", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.ScopeClaims, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Required, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Required)
+                                @Html.ValidationMessageFor(model => model.Required, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Emphasize, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Emphasize)
+                                @Html.ValidationMessageFor(model => model.Emphasize, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IncludeAllClaimsForUser, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IncludeAllClaimsForUser)
+                                @Html.ValidationMessageFor(model => model.IncludeAllClaimsForUser, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClaimsRule, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.ClaimsRule, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ClaimsRule, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShowInDiscoveryDocument, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.ShowInDiscoveryDocument)
+                                @Html.ValidationMessageFor(model => model.ShowInDiscoveryDocument, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section scripts
+{
+    <script>
+        const hostUrl = '@Url.GetHost()';
+    </script>
+    <!-- Select 2-->
+    <script src="~/Scripts/admin_lte/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
+    <script type="text/javascript" src="~/Scripts/demos.js"></script>
+    <script type="text/javascript">
+
+        const scopeClaims = $('#ScopeClaims');
+        $(document).ready(function () {
+            $('#ShowInDiscoveryDocument').jqxCheckBox();
+            $('#IncludeAllClaimsForUser').jqxCheckBox();
+            $('#Emphasize').jqxCheckBox();
+            $('#Required').jqxCheckBox();
+
+            $('#ShowInDiscoveryDocument').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=ShowInDiscoveryDocument]').val(`${checked}`);
+            });
+
+            $('#IncludeAllClaimsForUser').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=IncludeAllClaimsForUser]').val(`${checked}`);
+            });
+
+            $('#Emphasize').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=Emphasize]').val(`${checked}`);
+            });
+
+            $('#Required').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=Required]').val(`${checked}`);
+            });
+
+            scopeClaims.select2();
+        });
+
+    </script>
+}

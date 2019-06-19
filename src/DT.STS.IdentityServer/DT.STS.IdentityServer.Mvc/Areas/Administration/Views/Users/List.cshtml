@@ -1,0 +1,238 @@
+﻿@using DT.STS.IdentityServer.Mvc.Extensions
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.light.css" type="text/css" />
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Danh sách người dùng</h3>
+                <div class="box-tools pull-right">                 
+                </div>
+                <div class="mailbox-controls">
+                    <!-- Check all button -->
+                    <a href="@Url.ActionWithHost("DataExport", "ExportAllAirTicketToExcel")" class="btn btn-success btn-sm"><i class="fa fa-file-excel-o"></i> Export to Excel</a>
+                    <button type="button"
+                            id="btnSyncFromAd"
+                            class="btn btn-success btn-sm">
+                        <i class="fa fa-refresh"></i>
+                        Sync từ AD
+                    </button>
+                    <a href="@Url.Action("Create")" class="btn btn-success btn-sm">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
+                    </a>
+                    <div class="box-tools pull-right">
+                        <input id="txtSearch"
+                               class="form-control" 
+                               placeholder="Tìm kiếm" />
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id='jqxWidget'>
+                        <div id="grdUser"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        const hostUrl = '@Url.GetHost()';
+    </script>
+    <!--Auto numeric-->
+    <script src="~/Scripts/autoNumeric-1.9.41.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.edit.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxtextarea.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxnumberinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
+    <script type="text/javascript" src="~/Scripts/demos.js"></script>
+    <script type="text/javascript">
+        Globalize.cultureSelector = "vi";
+    </script>
+    <script>
+        const txtSearch = $('#txtSearch');
+        const grdUser = $("#grdUser");
+        txtSearch.on("keyup", function (e) {
+            const key = event.charCode ? event.charCode : event.keyCode ? event.keyCode : 0;
+            if (key === 13) {             
+                grdUser.jqxGrid('updatebounddata');
+                grdUser.jqxGrid('gotopage', 0);
+            }
+        });
+
+        const imagerenderer = function (row, datafield, value) {
+            if (isVariableHaveDefaltVal(value))
+                return `<img style="margin-left: 5px;" height="60" width="60" src="@Url.GetHost()/images/no_image_available.jpg" + value + '"/>`;
+            return `<img style="margin-left: 5px;" height="60" width="60" src="data:image/jpg;base64,${value}" + value + '"/>`;
+        }
+        let users = [];
+
+        let source =
+        {
+            url: '@Url.ActionApiWithHost("users", "searchusersbytokenpaged")',
+            datatype: "json",
+            id: "id",
+            updaterow: function (rowid, rowdata, commit) {
+                // synchronize with the server - send update command
+                // call commit with parameter true if the synchronization with the server is successful
+                // and with parameter false if the synchronization failder.
+                commit(true);
+            },
+            cache: false,
+            pagesize: 20,
+            pagesizeoptions: ["20", "40", "60"],
+            datafields:
+                [
+                    { name: 'id', type: 'int' },
+                    { name: 'userName', type: 'string' },
+                    { name: 'firstName', type: 'string' },
+                    { name: 'lastName', type: 'string' },
+                    { name: 'fullNameUnicode', type: 'string' },
+                    { name: 'lastLoginDate', type: 'string' },
+                    { name: 'managerName', type: 'string' },
+                    { name: 'departmentName', type: 'string' },
+                    { name: 'directReports', type: 'string' },
+                    { name: 'jpegPhoto', type: 'string'}
+                ],
+            root: 'data',
+            beforeprocessing: function (data) { source.totalrecords = data.total; }
+        };
+        let dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                beforeSend: function (jqXHR, settings) {
+                    settings.url = `${settings.url}&token=${txtSearch.val()}`;
+                    jqXHR.setRequestHeader('token', txtSearch.val());
+                }
+            });
+
+        grdUser.jqxGrid(
+            {
+                width: '100%',
+                height: 600,
+                source: dataAdapter,
+                pageable: true,
+                autorowheight: true,
+                columnsresize: true,
+                altrows: true,
+                editable: true,
+                pagesizeoptions: ["20", "40", "60"],
+                localization: getLocalization('vi'),
+                selectionmode: 'singlerow',
+                editmode: 'singlecell',
+                showstatusbar: false,
+                virtualMode: true,
+                renderGridRows: function (obj) {
+                    return obj.data;
+                },
+                columns: [
+                    {
+                        text: 'STT',
+                        sortable: false,
+                        filterable: false,
+                        editable: false,
+                        groupable: false,
+                        draggable: false,
+                        pinned: true,
+                        datafield: '',
+                        columntype: 'number',
+                        width: 30,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Tên đăng nhập',
+                        columntype: 'textbox',
+                        datafield: 'userName',
+                        pinned: true,
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Phòng ban',
+                        columntype: 'textbox',
+                        datafield: 'departmentName',
+                        pinned: true,
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Họ và tên lót',
+                        columntype: 'textbox',
+                        datafield: 'lastName',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Tên',
+                        columntype: 'textbox',
+                        datafield: 'firstName',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Quản lý',
+                        columntype: 'textbox',
+                        datafield: 'managerName',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Ảnh nhân viên',
+                        datafield: 'jpegPhoto',
+                        editable: false,
+                        width: 150,
+                        cellsrenderer: imagerenderer
+                    }
+                ]
+            });
+
+    </script>
+
+    <script>
+        let btnSyncFromAd = $('#btnSyncFromAd');
+        let syncUsersFromAdUrl = '@Url.ActionApiWithHost("users","syncusersfromad")';
+        btnSyncFromAd.click(function () {
+            $.ajax({
+                url: syncUsersFromAdUrl,
+                type: "POST",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (event, settings, xhr) {
+                    xhr.message = {
+                        infor: 'Cập nhật thông tin người dùng từ Active Dicrectory thành công!',
+                        returnUrl: ''
+                    };
+                    grdUser.jqxGrid('updatebounddata', 'cells');
+                }
+            });
+        });
+    </script>
+}
+

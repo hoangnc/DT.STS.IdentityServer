@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{213E99B6-1813-4AA4-B414-44078DECE0D6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DT.STS.IdentityServer.Application</RootNamespace>
+    <AssemblyName>DT.STS.IdentityServer.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="IdentityServer3, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityServer3.2.6.3\lib\net45\IdentityServer3.dll</HintPath>
+    </Reference>
+    <Reference Include="MediatR, Version=7.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.7.0.0\lib\net461\MediatR.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Wdc.DirectoryLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wdc.DirectoryLib.2.2.5\lib\net35\Wdc.DirectoryLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseCommand.cs" />
+    <Compile Include="Clients\Commands\CreateClientCommand.cs" />
+    <Compile Include="Clients\Commands\CreateClientCommandHandler.cs" />
+    <Compile Include="Clients\Queries\SearchClientsByTokenPagedDto.cs" />
+    <Compile Include="Clients\Queries\SearchClientsByTokenPagedQuery.cs" />
+    <Compile Include="Clients\Queries\SearchClientsByTokenPagedQueryHandler.cs" />
+    <Compile Include="Departments\Commands\SyncDepartmentsFromActiveDirectoryCommand.cs" />
+    <Compile Include="Departments\Commands\SyncDepartmentsFromActiveDirectoryCommandHandler.cs" />
+    <Compile Include="Departments\Queries\GetAllDepartmentsDto.cs" />
+    <Compile Include="Departments\Queries\GetAllDepartmentsQuery.cs" />
+    <Compile Include="Departments\Queries\GetAllDepartmentsQueryHandler.cs" />
+    <Compile Include="Departments\Queries\SearchDepartmentsByTokenPagedDto.cs" />
+    <Compile Include="Departments\Queries\SearchDepartmentsByTokenPagedQuery.cs" />
+    <Compile Include="Departments\Queries\SearchDepartmentsByTokenPagedQueryHandler.cs" />
+    <Compile Include="Mapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Mapper\MappingExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scopes\Commands\CreateScopeCommand.cs" />
+    <Compile Include="Scopes\Commands\CreateScopeCommandHandler.cs" />
+    <Compile Include="ScopeClaims\Queries\GetAllScopeClaimsDto.cs" />
+    <Compile Include="ScopeClaims\Queries\GetAllScopeClaimsQuery.cs" />
+    <Compile Include="ScopeClaims\Queries\GetAllScopeClaimsQueryHandler.cs" />
+    <Compile Include="Scopes\Commands\UpdateScopeCommand.cs" />
+    <Compile Include="Scopes\Commands\UpdateScopeCommandHandler.cs" />
+    <Compile Include="Scopes\Queries\GetScopeByIdDto.cs" />
+    <Compile Include="Scopes\Queries\GetScopeByIdQuery.cs" />
+    <Compile Include="Scopes\Queries\GetScopeByIdQueryHandler.cs" />
+    <Compile Include="Scopes\Queries\SearchScopesByTokenPagedDto.cs" />
+    <Compile Include="Scopes\Queries\SearchScopesByTokenPagedQuery.cs" />
+    <Compile Include="Scopes\Queries\SearchScopesByTokenPagedQueryHandler.cs" />
+    <Compile Include="STSIdentityServerApplicationModule.cs" />
+    <Compile Include="Users\Commands\Authenticate\AuthenticateCommand.cs" />
+    <Compile Include="Users\Commands\Authenticate\AuthenticateCommandHandler.cs" />
+    <Compile Include="Users\Commands\Authenticate\AuthenticateDto.cs" />
+    <Compile Include="Users\Commands\CreateUser\CreateUserCommand.cs" />
+    <Compile Include="Users\Commands\CreateUser\CreateUserCommandHandler.cs" />
+    <Compile Include="Users\Commands\SyncUsersFromActiveDirectory\SyncUsersFromActiveDirectoryCommand.cs" />
+    <Compile Include="Users\Commands\SyncUsersFromActiveDirectory\SyncUsersFromActiveDirectoryCommandHandler.cs" />
+    <Compile Include="Users\Queries\GetAllUsers\GetAllUsersDto.cs" />
+    <Compile Include="Users\Queries\GetAllUsers\GetAllUsersQuery.cs" />
+    <Compile Include="Users\Queries\GetAllUsers\GetAllUsersQueryHandler.cs" />
+    <Compile Include="Users\Queries\GetUserByUserNameFromAd\GetUserByUserNameFromAdDto.cs" />
+    <Compile Include="Users\Queries\GetUserByUserNameFromAd\GetUserByUserNameFromAdQuery.cs" />
+    <Compile Include="Users\Queries\GetUserByUserNameFromAd\GetUserByUserNameFromAdQueryHandler.cs" />
+    <Compile Include="Users\Queries\GetUsersPaged\GetUsersPagedDto.cs" />
+    <Compile Include="Users\Queries\GetUsersPaged\GetUsersPagedQuery.cs" />
+    <Compile Include="Users\Queries\GetUsersPaged\GetUsersPagedQueryHandler.cs" />
+    <Compile Include="Users\Queries\SearchUsersByToken\SearchUsersByTokenPagedDto.cs" />
+    <Compile Include="Users\Queries\SearchUsersByToken\SearchUsersByTokenPagedQuery.cs" />
+    <Compile Include="Users\Queries\SearchUsersByToken\SearchUsersByTokenPagedQueryHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DT.STS.IdentityServer.Common\DT.STS.IdentityServer.Common.csproj">
+      <Project>{07ec6671-51f9-4057-9b56-d65033529ee3}</Project>
+      <Name>DT.STS.IdentityServer.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DT.STS.IdentityServer.Domain\DT.STS.IdentityServer.Domain.csproj">
+      <Project>{d9b16ddc-e5b3-4257-a50e-ddba8e374dc9}</Project>
+      <Name>DT.STS.IdentityServer.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DT.STS.IdentityServer.Persistence\DT.STS.IdentityServer.Persistence.csproj">
+      <Project>{3a3e2e89-bf89-4810-aa6b-d1a8b3ab691d}</Project>
+      <Name>DT.STS.IdentityServer.Persistence</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ScopeClaims\Commands\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

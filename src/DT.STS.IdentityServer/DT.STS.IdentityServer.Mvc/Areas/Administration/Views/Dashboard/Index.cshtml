@@ -1,0 +1,45 @@
+﻿@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+<!-- Content Header (Page header) -->
+@section contentheader {
+    <h1>
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+}
+<div class="content">
+    <div class="row">
+        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>@DT.STS.IdentityServer.Common.Constants.MainPages.Users</h3>
+                    <p>Người dùng.</p>
+                </div>
+                <div class="icon"><i class="fa fa-user"></i></div>
+                <a href="@Url.Action("Index", "Users")" class="small-box-footer show-progress">
+                    Xem chi tiết <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>@DT.STS.IdentityServer.Common.Constants.MainPages.Settings</h3>
+                    <p>Cấu hình.</p>
+                </div>
+                <div class="icon"><i class="fa fa-cog"></i></div>
+                <a href="@Url.Action("Index", "Settings")" class="small-box-footer show-progress">
+                    Xem chi tiết <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+

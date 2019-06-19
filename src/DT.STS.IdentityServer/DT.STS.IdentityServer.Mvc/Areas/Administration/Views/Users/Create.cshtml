@@ -1,0 +1,238 @@
+﻿@using DT.STS.IdentityServer.Mvc.Extensions
+@model DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Users.UserCreateModel
+@{
+    ViewBag.Title = "Tạo mới người dùng";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.light.css" type="text/css" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Scripts/admin_lte/bower_components/select2/dist/css/select2.min.css">
+}
+<div class="box box-info form-horizontal">
+    @using (Html.BeginForm())
+    {
+        <div class="box-header with-border">
+            <h3 class="box-title">Thêm người dùng</h3>
+            <div class="mailbox-controls">
+                <a href="@Url.Action("List")" class="btn btn-success btn-sm">
+                    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Danh sách
+                </a>
+                <button id="submit-button" type="submit" class="btn btn-primary btn-sm">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Domain, new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(model => model.Domain, Model.AvailableDomains, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Domain, "", new { @class = "text-danger" })
+                        <small class="form-text text-muted">Nếu người dùng không thuộc trong công ty Duy Tân thì chọn Domain là khách.</small>
+                    </div>
+                    <i id="domain-help"
+                       class="fa fa-info-circle"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Nếu user là khách không nằm trong công ty Duy Tân thì chọn domain là Khách"></i>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-5">
+                        @if (!string.IsNullOrEmpty(Model.Domain) && Model.Domain.Equals("Customer"))
+                        {
+                            <button type="button"
+                                    class="btn btn-success btn-sm"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Tìm kiếm thông tin người dùng từ Active Directory"
+                                    disabled
+                                    id="btnLookFromAd">
+                                <i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm từ AD
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button"
+                                    class="btn btn-success btn-sm"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Tìm kiếm thông tin người dùng từ Active Directory"
+                                    id="btnLookFromAd">
+                                <i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm từ AD
+                            </button>
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @if (!string.IsNullOrEmpty(Model.Domain) && Model.Domain.Equals("Customer"))
+                        {
+                            @Html.PasswordFor(model => model.Password, htmlAttributes: new { @value = Model.Password, @class = "form-control" })
+                        }
+                        else
+                        {
+                            @Html.PasswordFor(model => model.Password, htmlAttributes: new { @value = Model.Password, @class = "form-control", @disabled = "disabled" })
+                        }
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <i id="password-help"
+                       class="fa fa-info-circle"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title=" Nếu người dùng là Khách thì cần phải thiết lập mật khẩu.
+                            Nếu là Duy Tân thì mặc định lấy mật khẩu trên Active Directory."></i>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullNameUnicode, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.FullNameUnicode, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FullNameUnicode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Active)
+                            @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ManagerName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @if (!string.IsNullOrEmpty(Model.Domain) && Model.Domain.Equals("Customer"))
+                        {
+                            @Html.DropDownListFor(model => model.ManagerName, Model.Users, new { @class = "form-control", @disabled = "disabled" })
+                            @*Html.EditorFor(model => model.ManagerName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })*@
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(model => model.ManagerName, Model.Users, new { @class = "form-control" })
+                            @*Html.EditorFor(model => model.ManagerName, new { htmlAttributes = new { @class = "form-control" } })*@
+                        }
+                        @Html.ValidationMessageFor(model => model.ManagerName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DepartmentName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(model => model.DepartmentName, Model.Departments, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DepartmentName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section scripts
+{
+    <script>
+        const hostUrl = '@Url.GetHost()';
+    </script>
+    <!-- Select 2-->
+    <script src="~/Scripts/admin_lte/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
+    <script type="text/javascript" src="~/Scripts/demos.js"></script>
+
+    <script type="text/javascript">
+        const lookUserFromAdUrl = '@Url.ActionApiWithHost("users", "lookuserfromad")';
+        const userName = $('#UserName');
+        const firstName = $('#FirstName');
+        const lastName = $('#LastName');
+        const email = $('#Email');
+        const manager = $('#ManagerName');
+        const department = $('#DepartmentName');
+        const domain = $('#Domain');
+        const btnLookFromAd = $('#btnLookFromAd');
+        const password = $('#Password');
+
+        $(document).ready(function () {
+            $('#Active').jqxCheckBox();
+            btnLookFromAd.click(function () {
+                $.getJSON(`${lookUserFromAdUrl}?userName=${userName.val()}`,
+                    function (data) {
+                        if (!isVariableHaveDefaltVal(data)) {
+                            firstName.val(data.firstName);
+                            lastName.val(data.lastName);
+                            email.val(data.email);
+                            manager.val(data.managerName).change();
+                            department.val(data.departmentName);
+                        }
+                    });
+            });
+
+            domain.change(function () {
+                const domainVal = domain.val();
+                if (!isVariableHaveDefaltVal(domainVal)
+                    && domainVal === 'Customer') {
+                    btnLookFromAd.attr('disabled', 'disabled');
+                    password.removeAttr('disabled');
+                    department.val('Customer').change();
+                    manager.attr('disabled', 'disabled');
+                } else {
+                    btnLookFromAd.removeAttr('disabled');
+                    password.attr('disabled', 'disabled');
+                    manager.removeAttr('disabled');
+                }
+            });
+
+            function formatUserResult(user) {
+                if (!user.id)
+                    return user.text;
+                const text = user.text;
+                const fullName = text.split(';')[0];
+                const department = text.split(';')[1];
+                return $(`<p>${fullName}</p><small>Phòng ban: ${department}</small>`);
+            }
+
+            function formatUserSelection(user) {
+                if (!user.id)
+                    return user.text;
+                const text = user.text;
+                const fullName = text.split(';')[0];
+                return $(`<p>${fullName}</p>`);
+            }
+
+            manager.select2({
+                templateResult: formatUserResult,
+                templateSelection: formatUserSelection
+            });
+        });
+    </script>
+}

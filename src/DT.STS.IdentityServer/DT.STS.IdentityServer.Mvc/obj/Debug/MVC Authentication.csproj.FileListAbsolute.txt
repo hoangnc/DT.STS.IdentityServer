@@ -1,0 +1,122 @@
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\IdentityServer\idsrv3test.pfx
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\EmbeddedMvc.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\EmbeddedMvc.pdb
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Antlr3.Runtime.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\IdentityModel.Net45.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\IdentityServer3.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Security.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Security.Google.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Security.OpenIdConnect.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Web.Infrastructure.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Newtonsoft.Json.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Owin.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Net.Http.Extensions.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Net.Http.Primitives.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.Helpers.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.Mvc.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.Optimization.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.Razor.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.WebPages.Deployment.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.WebPages.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.WebPages.Razor.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Thinktecture.IdentityModel.Core.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\WebGrease.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Antlr3.Runtime.pdb
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\IdentityModel.Net45.pdb
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\IdentityServer3.pdb
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\IdentityServer3.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Security.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Security.Google.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Microsoft.Owin.Security.OpenIdConnect.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Newtonsoft.Json.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Net.Http.Extensions.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Net.Http.Primitives.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.Helpers.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.Mvc.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.Razor.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.WebPages.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.WebPages.Deployment.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.WebPages.Razor.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\System.Web.Optimization.xml
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Thinktecture.IdentityModel.Core.pdb
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.pdb
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc.pdb
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\obj\Debug\MVC Authentication.csprojAssemblyReference.cache
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\obj\Debug\MVC Authentication.csproj.CoreCompileInputs.cache
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\obj\Debug\MVC Authentication.csproj.CopyComplete
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\obj\Debug\EmbeddedMvc.dll
+C:\Open source\01.IdentityServer3\IdentityServer3.Samples-master\source\MVC Authentication\EmbeddedMvc\obj\Debug\EmbeddedMvc.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\IdentityServer\idsrv3test.pfx
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\EmbeddedMvc.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\EmbeddedMvc.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Antlr3.Runtime.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\IdentityModel.Net45.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\IdentityServer3.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Security.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Security.OpenIdConnect.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Newtonsoft.Json.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Owin.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Net.Http.Extensions.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Net.Http.Primitives.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.Helpers.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.Mvc.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.Optimization.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.Razor.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.WebPages.Deployment.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.WebPages.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.WebPages.Razor.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Thinktecture.IdentityModel.Core.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\WebGrease.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Antlr3.Runtime.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\IdentityModel.Net45.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\IdentityServer3.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\IdentityServer3.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Security.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Microsoft.Owin.Security.OpenIdConnect.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Newtonsoft.Json.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Net.Http.Extensions.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Net.Http.Primitives.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.Helpers.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.Mvc.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.Razor.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.WebPages.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.WebPages.Deployment.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.WebPages.Razor.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\System.Web.Optimization.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Thinktecture.IdentityModel.Core.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\obj\Debug\MVC Authentication.csprojAssemblyReference.cache
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\obj\Debug\MVC Authentication.csproj.CoreCompileInputs.cache
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\obj\Debug\MVC Authentication.csproj.CopyComplete
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\obj\Debug\EmbeddedMvc.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\obj\Debug\EmbeddedMvc.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\EmbeddedMvc.dll.config
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\obj\Debug\MVC Authentication.csproj.App.config

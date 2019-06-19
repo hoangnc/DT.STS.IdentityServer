@@ -1,0 +1,92 @@
+﻿using DT.STS.IdentityServer.Application.Departments.Queries;
+using DT.STS.IdentityServer.Application.ScopeScopeClaims.Queries;
+using DT.STS.IdentityServer.Application.Scopes.Commands;
+using DT.STS.IdentityServer.Application.Users.Commands;
+using DT.STS.IdentityServer.Application.Users.Queries;
+using DT.STS.IdentityServer.Domain.Entities;
+using DT.STS.IdentityServer.Application.Scopes.Queries;
+using DT.STS.IdentityServer.Application.Clients.Queries;
+using DT.STS.IdentityServer.Application.Clients.Commands;
+
+namespace DT.STS.IdentityServer.Application.Mapper
+{
+    public  static class MappingExtensions
+    {
+        public static TDestination MapTo<TSource, TDestination>(this TSource source)
+        {
+            return AutoMapperConfiguration.Mapper.Map<TSource, TDestination>(source);
+        }
+
+        public static TDestination MapTo<TSource, TDestination>(this TSource source, TDestination destination)
+        {
+            return AutoMapperConfiguration.Mapper.Map(source, destination);
+        }
+
+        #region Users
+        public static GetUsersPagedDto ToGetUsersPagedDto(this User entity)
+        {
+            return entity.MapTo<User, GetUsersPagedDto>();
+        }
+        public static SearchUsersByTokenPagedDto ToSearchUsersByTokenDto(this User entity)
+        {
+            return entity.MapTo<User, SearchUsersByTokenPagedDto>();
+        }
+        public static User ToUser(this CreateUserCommand command)
+        {
+            return command.MapTo<CreateUserCommand, User>();
+        }
+        public static GetAllUsersDto ToGetAllUsersDto(this User entity)
+        {
+            return entity.MapTo<User, GetAllUsersDto>();
+        }
+        #endregion
+
+        #region Departments
+        public static GetAllDepartmentsDto ToGetAllDepartmentsDto(this Department entity)
+        {
+            return entity.MapTo<Department, GetAllDepartmentsDto>();
+        }
+
+        public static SearchDepartmentsByTokenPagedDto ToSearchDepartmentsByTokenPagedDto(this Department entity)
+        {
+            return entity.MapTo<Department, SearchDepartmentsByTokenPagedDto>();
+        }
+        #endregion
+
+        #region ScopeClaims
+        public static GetAllScopeClaimsDto ToGetAllScopeClaimsDto(this ScopeClaim entity)
+        {
+            return entity.MapTo<ScopeClaim, GetAllScopeClaimsDto>();
+        }
+        #endregion
+
+        #region Scopes
+        public static Scope ToScope(this CreateScopeCommand command)
+        {
+            return command.MapTo<CreateScopeCommand, Scope>();
+        }
+
+        public static Scope ToScope(this UpdateScopeCommand command)
+        {
+            return command.MapTo<UpdateScopeCommand, Scope>();
+        }
+
+        public static GetScopeByIdDto ToGetScopeByIdDto(this Scope entity)
+        {
+            return entity.MapTo<Scope, GetScopeByIdDto>();
+        }
+        #endregion
+
+        #region Clients
+        public static SearchClientsByTokenPagedDto ToSearchClientsByTokenPagedDto(this Client entity)
+        {
+            return entity.MapTo<Client, SearchClientsByTokenPagedDto>();
+        }
+
+        public static Client ToClient(this CreateClientCommand command)
+        {
+            return command.MapTo<CreateClientCommand, Client>();
+        }
+        #endregion
+    }
+}

@@ -1,0 +1,11 @@
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\DT.STS.IdentityServer.Domain.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\DT.STS.IdentityServer.Domain.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\obj\Debug\DT.STS.IdentityServer.Domain.csproj.CoreCompileInputs.cache
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\obj\Debug\DT.STS.IdentityServer.Domain.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\obj\Debug\DT.STS.IdentityServer.Domain.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\IdentityServer3.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\Owin.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\IdentityServer3.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\IdentityServer3.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\obj\Debug\DT.STS.IdentityServer.Domain.csprojAssemblyReference.cache
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\obj\Debug\DT.STS.IdentityServer.Domain.csproj.CopyComplete

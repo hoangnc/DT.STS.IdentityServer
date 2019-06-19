@@ -1,0 +1,244 @@
+﻿@using DT.STS.IdentityServer.Mvc.Extensions
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.light.css" type="text/css" />
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Danh sách Clients</h3>
+                <div class="box-tools pull-right">
+                </div>
+                <div class="mailbox-controls">
+                    <!-- Check all button -->
+                    <a href="@Url.ActionWithHost("DataExport", "ExportAllAirTicketToExcel")"
+                       class="btn btn-success btn-sm">
+                        <i class="fa fa-file-excel-o"></i>
+                        Export to Excel
+                    </a>
+                    <a href="@Url.Action("Create")" class="btn btn-success btn-sm">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
+                    </a>
+                    <div class="box-tools pull-right">
+                        <input id="txtSearch"
+                               class="form-control"
+                               placeholder="Tìm kiếm" />
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id='jqxWidget'>
+                        <div id="grdClient"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        const hostUrl = '@Url.GetHost()';
+    </script>
+    <!--Auto numeric-->
+    <script src="~/Scripts/autoNumeric-1.9.41.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.edit.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxtextarea.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxnumberinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
+    <script type="text/javascript" src="~/Scripts/demos.js"></script>
+    <script type="text/javascript">
+        Globalize.cultureSelector = "vi";
+    </script>
+    <script>
+        const txtSearch = $('#txtSearch');
+        const grdClient = $("#grdClient");
+
+        const updateClientUrl = `${hostUrl}/administration/clients/update`;
+
+        txtSearch.on("keyup", function (e) {
+            const key = event.charCode ? event.charCode : event.keyCode ? event.keyCode : 0;
+            if (key === 13) {
+                grdClient.jqxGrid('updatebounddata');
+            }
+        });
+
+        $(document).ready(function () {
+        let source =
+        {
+            url: '@Url.ActionApiWithHost("clients", "searchclientsbytokenpaged")',
+            datatype: "json",
+            id: "id",
+            updaterow: function (rowid, rowdata, commit) {
+                // synchronize with the server - send update command
+                // call commit with parameter true if the synchronization with the server is successful
+                // and with parameter false if the synchronization failder.
+                commit(true);
+            },
+            cache: false,
+            pagesize: 20,
+            pagesizeoptions: ["20", "40", "60"],
+            datafields:
+                [
+                    { name: 'id', type: 'int' },
+                    { name: 'clientId', type: 'string' },
+                    { name: 'clientName', type: 'string' },
+                    { name: 'clientUri', type: 'string' },
+                    { name: 'logoUri', type: 'string' },
+                    { name: 'requireConsent', type: 'bool' },
+                    { name: 'allowRememberConsent', type: 'bool' },
+                    { name: 'flow', type: 'string' },
+                    { name: 'allowClientCredentialsOnly', type: 'bool' },
+                    { name: 'redirectUris', type: 'string' },
+                    { name: 'postLogoutRedirectUris', type: 'string'}
+                ],
+            root: 'data',
+            beforeprocessing: function (data) { source.totalrecords = data.total; }
+        };
+        let dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                beforeSend: function (jqXHR, settings) {
+                    settings.url = `${settings.url}&token=${txtSearch.val()}`;
+                    jqXHR.setRequestHeader('token', txtSearch.val());
+                }
+            });
+
+            grdClient.jqxGrid(
+            {
+                width: '100%',
+                height: 600,
+                source: dataAdapter,
+                pageable: true,
+                autorowheight: true,
+                columnsresize: true,
+                altrows: true,
+                editable: true,
+                pagesizeoptions: ["20", "40", "60"],
+                localization: getLocalization('vi'),
+                selectionmode: 'singlerow',
+                editmode: 'singlecell',
+                showstatusbar: true,
+                virtualMode: true,
+                renderGridRows: function (obj) {
+                    return obj.data;
+                },
+                columns: [
+                    {
+                        text: 'STT',
+                        sortable: false,
+                        filterable: false,
+                        editable: false,
+                        groupable: false,
+                        draggable: false,
+                        pinned: true,
+                        datafield: '',
+                        columntype: 'number',
+                        width: 30,
+                        cellsrenderer: function (row, column, value) {
+                            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Client Id',
+                        columntype: 'textbox',
+                        datafield: 'clientId',
+                        pinned: true,
+                        editable: false,
+                        width: 150,
+                        cellsrenderer: function (row, column, value, defaultHtml) {
+                            var element = $(defaultHtml);
+                            element.html(`<a href="${updateClientUrl}?id=${dataAdapter.records[row].id}"> <i class="fa fa-pencil"></i> ${value} </a>`);
+                            return element[0].outerHTML;
+                        }
+                    },
+                    {
+                        text: 'Client Name',
+                        columntype: 'textbox',
+                        datafield: 'clientName',
+                        pinned: true,
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Client Uri',
+                        columntype: 'textbox',
+                        datafield: 'clientUri',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Logo',
+                        columntype: 'textbox',
+                        datafield: 'logoUri',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Require Consent',
+                        columntype: 'checkbox',
+                        datafield: 'requireConsent',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Allow remember consent',
+                        columntype: 'checkbox',
+                        datafield: 'allowRememberConsent',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Flow',
+                        columntype: 'textbox',
+                        datafield: 'flow',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Allow client credentials only',
+                        columntype: 'checkbox',
+                        datafield: 'allowClientCredentialsOnly',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Redirect Uris',
+                        columntype: 'textbox',
+                        datafield: 'redirectUris',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Post logout redirect uris',
+                        columntype: 'textbox',
+                        datafield: 'postLogoutRedirectUris',
+                        editable: false,
+                        width: 150
+                    }
+                ]
+            });
+        });
+    </script>
+}
