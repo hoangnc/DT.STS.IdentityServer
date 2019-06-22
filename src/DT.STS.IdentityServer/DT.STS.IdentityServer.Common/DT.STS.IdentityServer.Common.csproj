@@ -92,6 +92,7 @@
     <Compile Include="Data\IPagedList.cs" />
     <Compile Include="Data\PagedList.cs" />
     <Compile Include="Helpers\ActiveDirectoryHelper.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Models\DataSourceParameterBinding.cs" />
     <Compile Include="Models\DataSourceParameters.cs" />
     <Compile Include="Models\DataSourceRequest.cs" />

@@ -56,6 +56,7 @@ namespace DT.STS.IdentityServer.Mvc.Controllers
                         claims.Add(new Claim(Common.Constants.DtClaimTypes.UserImage, Convert.ToBase64String(authenticateResult.User.JpegPhoto)));
 
                     claims.Add(new Claim(Constants.ClaimTypes.GivenName, $"{authenticateResult.User.DisplayName }"));
+                    claims.Add(new Claim(Constants.ClaimTypes.Email, $"{ authenticateResult.User.UserPrincipalName}"));
 
                     env.IssueLoginCookie(new IdentityServer3.Core.Models.AuthenticatedLogin
                     {

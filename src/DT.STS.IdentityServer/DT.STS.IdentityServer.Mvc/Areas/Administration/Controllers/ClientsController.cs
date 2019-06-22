@@ -1,5 +1,4 @@
-﻿using DT.STS.IdentityServer.Application.Scopes.Commands;
-using DT.STS.IdentityServer.Application.ScopeScopeClaims.Queries;
+﻿using DT.STS.IdentityServer.Application.ScopeScopeClaims.Queries;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients;
 using MediatR;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
@@ -36,7 +34,8 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         [HttpGet]
         public async Task<ActionResult> Create()
         {
-            ClientCreateModel model = new ClientCreateModel {
+            ClientCreateModel model = new ClientCreateModel
+            {
                 RequireConsent = true,
                 AllowRememberConsent = true,
                 LogoutSessionRequired = true,
@@ -45,13 +44,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
                 PrefixClientClaims = true
             };
 
-            var scopeClaims = await _mediator.Send(new GetAllScopeClaimsQuery());
-            model.AvailableClaims = scopeClaims.Select(scopeClaim => new SelectListItem
-            {
-                Value = scopeClaim.Id.ToString(),
-                Text = scopeClaim.Description
-            }).ToList();
-
+            model.AvailableClaims = await GetClaims();
             return View(model);
         }
 
@@ -60,7 +53,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var createClientCommand = model.ToCreateClientCommand();
+                Application.Clients.Commands.CreateClientCommand createClientCommand = model.ToCreateClientCommand();
                 createClientCommand.CreatedBy = User.Identity.Name;
                 createClientCommand.CreatedOn = DateTime.Now;
 
@@ -75,14 +68,20 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
                 }
             }
 
-            var scopeClaims = await _mediator.Send(new GetAllScopeClaimsQuery());
-            model.AvailableClaims = scopeClaims.Select(scopeClaim => new SelectListItem
+            model.AvailableClaims = await GetClaims();
+            model.InitData();
+            return View(model);
+        }
+
+        private async Task<List<SelectListItem>> GetClaims()
+        {
+            List<GetAllScopeClaimsDto> scopeClaims = await _mediator.Send(new GetAllScopeClaimsQuery());
+            List<SelectListItem> claims = scopeClaims.Select(scopeClaim => new SelectListItem
             {
                 Value = scopeClaim.Id.ToString(),
                 Text = scopeClaim.Description
             }).ToList();
-
-            return View(model);
+            return claims;
         }
 
     }

@@ -55,6 +55,8 @@
     <Compile Include="Entities\ScopeClaim.cs" />
     <Compile Include="Entities\ScopeScopeClaim.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserClaim.cs" />
+    <Compile Include="Entities\UserScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

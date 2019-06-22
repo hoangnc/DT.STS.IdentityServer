@@ -84,13 +84,13 @@
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.Flow, htmlAttributes: new { @class = "control-label" })
 
-                    @Html.DropDownListFor(model => model.AvailableFlows, Model.AvailableFlows, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.Flow, Model.AvailableFlows, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.AvailableFlows, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.RefreshTokenExpiration, htmlAttributes: new { @class = "control-label" })
 
-                    @Html.DropDownListFor(model => model.AvailableTokenExpirations, Model.AvailableTokenExpirations, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.RefreshTokenExpiration, Model.AvailableTokenExpirations, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.AvailableFlows, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -100,7 +100,8 @@
                         <span class="form-group inline-block">
                             <input type="checkbox"
                                    name="RequireConsent"
-                                   id="RequireConsent">
+                                   id="RequireConsent"
+                                   value="@Model.RequireConsent">
                             Require consent
                         </span>
                     </label>
@@ -159,7 +160,7 @@
                         <input type="checkbox"
                                name="RequireSignOutPrompt"
                                id="RequireSignOutPrompt"
-                               value=""> Require SignOut Prompt
+                               value="@Model.RequireSignOutPrompt"> Require SignOut Prompt
                     </label>
                     <i id="requiresignoutprompt-help"
                        class="fa fa-info-circle inline"
@@ -716,9 +717,19 @@
                 checked: @Model.AllowRememberConsent.ToString().ToLowerInvariant()
             });
 
+            $('#AllowRememberConsent').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AllowRememberConsent]').val(`${checked}`);
+            });
+
             $('#RequireConsent').jqxCheckBox({
                 width: 250,
                 checked: @Model.RequireConsent.ToString().ToLowerInvariant()
+            });
+
+            $('#RequireConsent').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=RequireConsent]').val(`${checked}`);
             });
 
             $('#AllowClientCredentialsOnly').jqxCheckBox({
@@ -726,9 +737,19 @@
                 checked: @Model.AllowClientCredentialsOnly.ToString().ToLowerInvariant()
             });
 
+            $('#AllowClientCredentialsOnly').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AllowClientCredentialsOnly]').val(`${checked}`);
+            });
+
             $('#LogoutSessionRequired').jqxCheckBox({
                 width: 250,
                 checked: @Model.LogoutSessionRequired.ToString().ToLowerInvariant()
+            });
+
+            $('#LogoutSessionRequired').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=LogoutSessionRequired]').val(`${checked}`);
             });
 
             $('#RequireSignOutPrompt').jqxCheckBox({
@@ -736,9 +757,19 @@
                 checked: @Model.RequireSignOutPrompt.ToString().ToLowerInvariant()
             });
 
+            $('#RequireSignOutPrompt').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=RequireSignOutPrompt]').val(`${checked}`);
+            });
+
             $('#AllowAccessTokensViaBrowser').jqxCheckBox({
                 width: 250,
                 checked: @Model.AllowAccessTokensViaBrowser.ToString().ToLowerInvariant()
+            });
+
+            $('#AllowAccessTokensViaBrowser').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AllowAccessTokensViaBrowser]').val(`${checked}`);
             });
 
             $('#AllowedCustomGrantTypes').jqxCheckBox({
@@ -746,9 +777,19 @@
                 checked: @Model.AllowedCustomGrantTypes.ToString().ToLowerInvariant()
             });
 
+            $('#AllowedCustomGrantTypes').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AllowedCustomGrantTypes]').val(`${checked}`);
+            });
+
             $('#UpdateAccessTokenClaimsOnRefresh').jqxCheckBox({
                 width: 250,
                 checked: @Model.UpdateAccessTokenClaimsOnRefresh.ToString().ToLowerInvariant()
+            });
+
+            $('#UpdateAccessTokenClaimsOnRefresh').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=UpdateAccessTokenClaimsOnRefresh]').val(`${checked}`);
             });
 
             $('#EnableLocalLogin').jqxCheckBox({
@@ -756,9 +797,19 @@
                 checked: @Model.EnableLocalLogin.ToString().ToLowerInvariant()
             });
 
+            $('#EnableLocalLogin').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=EnableLocalLogin]').val(`${checked}`);
+            });
+
             $('#IncludeJwtId').jqxCheckBox({
                 width: 250,
                 checked: @Model.IncludeJwtId.ToString().ToLowerInvariant()
+            });
+
+            $('#IncludeJwtId').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=EnableLocalLogin]').val(`${checked}`);
             });
 
             $('#AlwaysSendClientClaims').jqxCheckBox({
@@ -766,14 +817,19 @@
                 checked: @Model.AlwaysSendClientClaims.ToString().ToLowerInvariant()
             });
 
+            $('#AlwaysSendClientClaims').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AlwaysSendClientClaims]').val(`${checked}`);
+            });
+
             $('#PrefixClientClaims').jqxCheckBox({
                 width: 250,
                 checked: @Model.PrefixClientClaims.ToString().ToLowerInvariant()
             });
 
-            $('#RequireConsent').on('change', function (event) {
+            $('#PrefixClientClaims').on('change', function (event) {
                 var checked = event.args.checked;
-                $('input:hidden[name=RequireConsent]').val(`${checked}`);
+                $('input:hidden[name=PrefixClientClaims]').val(`${checked}`);
             });
 
             initGrdRedirectUris();

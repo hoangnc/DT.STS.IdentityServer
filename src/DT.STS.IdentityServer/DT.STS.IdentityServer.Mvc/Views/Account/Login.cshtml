@@ -54,57 +54,16 @@
             }
         </div>
     </div>
-    @*<div class="container">
-            <div class="row">
-                <!-- Mixins-->
-                <!-- Pen Title-->
-                <div class="pen-title">
-                    <h4>Duy Tan - Security Token Service</h4>
-                </div>
-                <div class="container">
-                    <div class="card"></div>
-                    <div class="card">
-
-                        @using (Html.BeginForm("Login", "Account", new { id=Request.QueryString["id"],  ReturnUrl = ViewBag.ReturnUrl },
-                            FormMethod.Post, new { @class = "clearfix", role = "form", autocomplete = "off" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <h4 class="title">Đăng nhập</h4>
-                            @Html.ValidationSummary(true)
-                            <div class="input-container">
-                                <input type="text"
-                                       id="Username"
-                                       name="Username"
-                                       required="required" />
-                                <label for="Username">Tài khoản</label>
-                                <div class="bar"></div>
-                            </div>
-                            <div class="input-container">
-                                <input type="password"
-                                       id="Password"
-                                       name="Password"
-                                       required="required" />
-                                <label for="Password">Mật khẩu</label>
-                                <div class="bar"></div>
-                            </div>
-                            <div class="button-container">
-                                <button type="submit"><span>Đăng nhập</span></button>
-                            </div>
-                            <div class="footer"><a href="#">Quyên mật khẩu?</a></div>
-                        }
-                    </div>
-                </div>
-                <!-- Duy Tan portal-->
-                <a id="portfolio" href="https://duytan.sharepoint.com/sites/Portal" title="Duy Tan Home page!"><i class="fa fa-link"></i></a>
-            </div>
-        </div>*@
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $(function () {
+        $(document).ready(function () {
             $("form").data("validator").settings.submitHandler = function (form) {
                 $("#submit-button").html("<i class=\"fa fa-spinner fa-pulse\"></i> Đang đăng nhập...").prop('disabled', true);
                 form.submit();
             };
-        }
+        });
     </script>
 </body>
 </html>

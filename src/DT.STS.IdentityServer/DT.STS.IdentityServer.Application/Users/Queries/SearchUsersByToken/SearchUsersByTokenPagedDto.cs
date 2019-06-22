@@ -12,6 +12,7 @@ namespace DT.STS.IdentityServer.Application.Users.Queries
         public bool Active { get; set; }
         public string JpegPhoto { get; set; }
         public string ManagerName { get; set; }
+        public string Email { get; set; }
         public string DepartmentName { get; set; }
         public string DirectReports { get; set; }
     }

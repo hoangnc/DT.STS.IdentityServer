@@ -1,0 +1,253 @@
+﻿@using DT.STS.IdentityServer.Mvc.Extensions
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.light.css" type="text/css" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Scripts/admin_lte/bower_components/select2/dist/css/select2.min.css">
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Danh sách User - Scope</h3>
+                <div class="box-tools pull-right">
+                </div>
+                <div class="mailbox-controls">
+                    <!-- Check all button -->
+                    <a href="@Url.ActionWithHost("DataExport", "ExportAllAirTicketToExcel")"
+                       class="btn btn-success btn-sm">
+                        <i class="fa fa-file-excel-o"></i>
+                        Export to Excel
+                    </a>
+
+                    <div class="box-tools pull-right">
+                        <input id="txtSearch"
+                               class="form-control"
+                               placeholder="Tìm kiếm" />
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id='jqxWidget'>
+                        <div id="grdUserScope"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        const hostUrl = '@Url.GetHost()';
+    </script>
+    <!-- Select 2-->
+    <script src="~/Scripts/admin_lte/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.edit.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxtextarea.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxnumberinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
+    <script type="text/javascript" src="~/Scripts/demos.js"></script>
+    <script type="text/javascript">
+        Globalize.cultureSelector = "vi";
+    </script>
+    <script>
+        const getAllUsersUrl = `${hostUrl}/api/users/getallusers`;
+        const insertOrUpdateUserScopeUrl = `${hostUrl}/api/userscopes/insertorupdate`;
+        let users = [];
+
+        const txtSearch = $('#txtSearch');
+        const grdUserScope = $("#grdUserScope");
+
+        const updateScopeUrl = `${hostUrl}/administration/scopes/update`;
+
+        txtSearch.on("keyup", function (e) {
+            const key = event.charCode ? event.charCode : event.keyCode ? event.keyCode : 0;
+            if (key === 13) {
+                grdUserScope.jqxGrid('updatebounddata');
+            }
+        });
+
+        function getUsers() {
+            return $.getJSON(getAllUsersUrl,
+                function (data) {
+                    users = data.map((u) => {
+                        return {
+                            id: u.userName,
+                            text: u.text,
+                            departmentName: u.departmentName
+                        };
+                    });
+                });
+        }
+
+        function formatUserResult(user) {
+            if (!user.id)
+                return user.text;
+            const fullName = user.text;
+            const department = user.departmentName;
+            return $(`<span>${fullName}</span><div><small style="color: #a5a0a0">Phòng ban: ${department}</small></div>`);
+        }
+
+        function formatUserSelection(user) {
+            if (!user.id)
+                return user.text;
+            const fullName = user.text;
+            return $(`<span>${fullName}</span>`);
+        }
+
+        const initrowdetails = function (index, parentElement, gridElement, datarecord) {
+            let container = $($(parentElement).children()[0]);
+            if (container != null) {
+                const selectUsers = container.find('#selectUsers');
+
+                selectUsers.select2({
+                    data: users,
+                    templateResult: formatUserResult,
+                    templateSelection: formatUserSelection
+                });
+
+                if (!isVariableHaveDefaltVal(datarecord.users)) {
+                    selectUsers.val(datarecord.users.split(';')).trigger('change');
+                }
+
+                selectUsers.on("change", function (e) {
+                    const users = selectUsers.val().join(';');
+                    let data = {
+                        users: users,
+                        scopeName: datarecord.scopeName
+                    };
+                    $.ajax({
+                        url: insertOrUpdateUserScopeUrl,
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (event, settings, xhr) {
+                            xhr.message = {
+                                infor: 'Thêm người dùng vào Scope thành công',
+                                returnUrl: ''
+                            };
+                        }
+                    });
+                });
+            }
+        };
+
+        function initGrid() {
+            let source =
+            {
+                url: '@Url.ActionApiWithHost("userscopes", "searchuserscopesbytokenpaged")',
+                datatype: "json",
+                id: "id",
+                updaterow: function (rowid, rowdata, commit) {
+                    // synchronize with the server - send update command
+                    // call commit with parameter true if the synchronization with the server is successful
+                    // and with parameter false if the synchronization failder.
+                    commit(true);
+                },
+                cache: false,
+                pagesize: 20,
+                pagesizeoptions: ["20", "40", "60"],
+                datafields:
+                    [
+                        { name: 'id', type: 'int' },
+                        { name: 'scopeName', type: 'string' },
+                        { name: 'users', type: 'string' },
+                    ],
+                root: 'data',
+                beforeprocessing: function (data) { source.totalrecords = data.total; }
+            };
+
+            let dataAdapter = new $.jqx.dataAdapter(source,
+            {
+                beforeSend: function (jqXHR, settings) {
+                    settings.url = `${settings.url}&token=${txtSearch.val()}`;
+                    jqXHR.setRequestHeader('token', txtSearch.val());
+                }
+                });
+
+            grdUserScope.jqxGrid(
+                {
+                    width: '100%',
+                    height: 600,
+                    source: dataAdapter,
+                    pageable: true,
+                    autorowheight: true,
+                    columnsresize: true,
+                    altrows: true,
+                    editable: true,
+                    pagesizeoptions: ["20", "40", "60"],
+                    localization: getLocalization('vi'),
+                    selectionmode: 'singlerow',
+                    editmode: 'singlecell',
+                    showstatusbar: true,
+                    virtualMode: true,
+                    rowdetails: true,
+                    rowdetailstemplate: {
+                        rowdetails: `<div style='margin: 10px;'>
+                                            <select id="selectUsers" multiple style="width: 680px; height: 100px"><select>
+                                     </div>`,
+                        rowdetailsheight: 150
+                    },
+                    ready: function () {
+                        const rows = grdUserScope.jqxGrid('getdatainformation');
+                        for (let ri = 0; ri < rows.rowscount; ri++) {
+                            grdUserScope.jqxGrid('showrowdetails', ri);
+                        }
+                    },
+                    initrowdetails: initrowdetails,
+
+                    renderGridRows: function (obj) {
+                        return obj.data;
+                    },
+                    columns: [
+                        {
+                            text: 'Scope',
+                            columntype: 'textbox',
+                            datafield: 'scopeName',
+                            pinned: true,
+                            editable: false,
+                            width: 700
+                        }
+                    ]
+                });
+        }
+
+        $(document).ready(function () {
+
+            Promise.all([getUsers()
+            ]).then(() => {
+                initGrid();
+                // all requests finished successfully
+            }).catch((reason) => {
+                // all requests finished but one or more failed
+            })
+        });
+
+    </script>
+
+}
+

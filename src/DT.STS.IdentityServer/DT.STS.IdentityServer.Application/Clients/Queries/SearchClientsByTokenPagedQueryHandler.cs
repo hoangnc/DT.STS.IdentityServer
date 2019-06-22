@@ -4,10 +4,8 @@ using DT.STS.IdentityServer.Common.Models;
 using DT.STS.IdentityServer.Domain.Entities;
 using DT.STS.IdentityServer.Persistence;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,6 +23,7 @@ namespace DT.STS.IdentityServer.Application.Clients.Queries
         {
             IQueryable<Client> query = _context.Clients.AsQueryable();
             query = query.Where(u => !u.Deleted);
+
             if (!string.IsNullOrWhiteSpace(request.Token))
             {
                 query = query.Where(u => u.ClientId.Contains(request.Token)

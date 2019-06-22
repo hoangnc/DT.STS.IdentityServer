@@ -222,11 +222,13 @@
     <Compile Include="Areas\Administration\Controllers\Apis\DepartmentsApiController.cs" />
     <Compile Include="Areas\Administration\Controllers\Apis\ScopesApiController.cs" />
     <Compile Include="Areas\Administration\Controllers\Apis\UsersApiController.cs" />
+    <Compile Include="Areas\Administration\Controllers\Apis\UserScopesApiController.cs" />
     <Compile Include="Areas\Administration\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Administration\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Administration\Controllers\DepartmentsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ScopesController.cs" />
     <Compile Include="Areas\Administration\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Administration\Controllers\UserScopesController.cs" />
     <Compile Include="Areas\Administration\Mapper\MvcAutoMapperConfiguration.cs" />
     <Compile Include="Areas\Administration\Mapper\MvcMappingExtensions.cs" />
     <Compile Include="Areas\Administration\Models\Clients\ClientCreateModel.cs" />
@@ -237,9 +239,13 @@
     <Compile Include="Areas\Administration\Models\Users\UserCreateModel.cs" />
     <Compile Include="AuthorizationManager.cs" />
     <Compile Include="AutofacConfig.cs" />
+    <Compile Include="Configurations\DefaultClientSetting.cs" />
+    <Compile Include="Configurations\DefaultClientSettings.cs" />
+    <Compile Include="Configurations\DefaultClientsSection.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CallApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Extensions\DependencyResolverExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
@@ -252,6 +258,8 @@
     <Compile Include="IdentityServer\Users.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ClientStore.cs" />
+    <Compile Include="Services\ScopeStore.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="STSIdentityServerModule.cs" />
@@ -1873,6 +1881,7 @@
     <Content Include="Areas\Administration\Views\Scopes\Update.cshtml" />
     <Content Include="Areas\Administration\Views\Clients\List.cshtml" />
     <Content Include="Areas\Administration\Views\Clients\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\UserScopes\List.cshtml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\admin_lte\adminlte.min.js" />
     <Content Include="Scripts\admin_lte\bower_components\bootstrap\dist\css\bootstrap-theme.css" />

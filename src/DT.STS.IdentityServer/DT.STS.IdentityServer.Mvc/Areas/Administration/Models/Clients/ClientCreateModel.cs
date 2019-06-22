@@ -164,5 +164,64 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients
                 }
             };
         }
+
+        public void InitData()
+        {
+            AvailableTokenExpirations = new List<SelectListItem> {
+                new SelectListItem
+                {
+                    Text = nameof(TokenExpiration.Absolute),
+                    Value = "1"
+                },
+                new SelectListItem
+                {
+                    Text = nameof(TokenExpiration.Sliding),
+                    Value = "0"
+                }
+            };
+
+            AvailableFlows = new List<SelectListItem> {
+                new SelectListItem
+                {
+                    Text = nameof(Flows.AuthorizationCode),
+                    Value = "0"
+                },
+                new SelectListItem
+                {
+                    Text = nameof(Flows.AuthorizationCodeWithProofKey),
+                    Value = "6"
+                },
+                new SelectListItem
+                {
+                    Text = nameof(Flows.ClientCredentials),
+                    Value = "3"
+                },
+                new SelectListItem
+                {
+                    Text = nameof(Flows.Custom),
+                    Value = "5"
+                },
+                new SelectListItem
+                {
+                    Text = nameof(Flows.Hybrid),
+                    Value = "2"
+                },
+                new SelectListItem
+                {
+                    Text = nameof(Flows.HybridWithProofKey),
+                    Value = "7"
+                },
+                new SelectListItem
+                {
+                    Text = nameof(Flows.Implicit),
+                    Value = "1"
+                },
+                new SelectListItem
+                {
+                    Text = nameof(Flows.ResourceOwner),
+                    Value = "4"
+                }
+            };
+        }
     }
 }

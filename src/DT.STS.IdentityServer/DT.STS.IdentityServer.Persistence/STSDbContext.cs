@@ -41,5 +41,6 @@ namespace DT.STS.IdentityServer.Persistence
         public DbSet<Client> Clients { get; set; }
         public DbSet<ScopeClaim> ScopeClaims { get; set; }
         public DbSet<ScopeScopeClaim> ScopeScopeClaims { get; set; }
+        public DbSet<UserScope> UserScopes { get; set; }
     }
 }

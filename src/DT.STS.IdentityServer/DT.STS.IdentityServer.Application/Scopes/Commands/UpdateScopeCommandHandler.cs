@@ -2,11 +2,9 @@
 using DT.STS.IdentityServer.Domain.Entities;
 using DT.STS.IdentityServer.Persistence;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,12 +24,14 @@ namespace DT.STS.IdentityServer.Application.Scopes.Commands
             {
                 try
                 {
-                    _context.Scopes.AddOrUpdate(sc => new { Id = sc.Id }, scope);
+                    _context.Scopes.AddOrUpdate(sc => new { sc.Id }, scope);
                     await _context.SaveChangesAsync();
-                    var scopeClaims = _context.ScopeScopeClaims;
+
+                    System.Data.Entity.DbSet<ScopeScopeClaim> scopeClaims = _context.ScopeScopeClaims;
                     _context.ScopeScopeClaims.RemoveRange(scopeClaims);
                     await _context.SaveChangesAsync();
-                    var newScopeClaims = request.ScopeClaims.Select(id => new ScopeScopeClaim
+
+                    IEnumerable<ScopeScopeClaim> newScopeClaims = request.ScopeClaims.Select(id => new ScopeScopeClaim
                     {
                         ScopeClaimId = id,
                         ScopeId = scope.Id,

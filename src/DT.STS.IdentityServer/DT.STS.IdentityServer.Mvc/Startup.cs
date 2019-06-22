@@ -21,6 +21,9 @@ using IdentityServer3.Core.Services;
 using DT.STS.IdentityServer.Mvc.Services;
 using Serilog;
 using Autofac;
+using System.Net;
+using System.Net.Security;
+using DT.STS.IdentityServer.Mvc.Extensions;
 
 [assembly: OwinStartup(typeof(DT.STS.IdentityServer.Mvc.Startup))]
 
@@ -30,11 +33,13 @@ namespace DT.STS.IdentityServer.Mvc
     {
         public void Configuration(IAppBuilder app)
         {
+
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.File(@"c:\logs\sts.identityserver.txt")
                 .CreateLogger();
-
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
             AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
             JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
             // Adjust the configuration for anti-CSRF protection to the new unique sub claim type
@@ -45,14 +50,13 @@ namespace DT.STS.IdentityServer.Mvc
 
             app.Map("/identity", idsrvApp =>
                 {
+                    idsrvApp.UseAutofacMiddleware(container);
                     var factory = new IdentityServerServiceFactory()
-                    .UseInMemoryClients(Clients.Get())
-                    .UseInMemoryScopes(Scopes.Get());
-                   // .UseInMemoryUsers(Users.Get());
-
+                    .UseInMemoryClients(Clients.Get());
 
                     factory.UserService = new Registration<IUserService, UserService>();
-
+                    factory.ScopeStore = new Registration<IScopeStore>(container.Resolve<IScopeStore>());
+                    factory.ClientStore = new Registration<IClientStore>(container.Resolve<IClientStore>());
                     var options = new IdentityServerOptions
                     {
                         SiteName = "Duy Tan Security Token Service",
@@ -88,15 +92,14 @@ namespace DT.STS.IdentityServer.Mvc
             app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
                 {
                     Authority = "https://localhost:44319/identity",
-
+                    // Authority = "https://192.168.9.61/identity",
                     ClientId = "idserver",
                     Scope = "openid profile roles adminapi",
                     ResponseType = "id_token token",
                     RedirectUri = "https://localhost:44319/administration/dashboard",
-
+                    // RedirectUri = "https://192.168.9.61/administration/dashboard",
                     SignInAsAuthenticationType = "Cookies",
                     UseTokenLifetime = false,
-
                     Notifications = new OpenIdConnectAuthenticationNotifications
                     {
                         SecurityTokenValidated = async n =>
@@ -156,7 +159,6 @@ namespace DT.STS.IdentityServer.Mvc
                     AuthenticationType = "Google",
                     Caption = "Sign-in with Google",
                     SignInAsAuthenticationType = signInAsType,
-
                     ClientId = "701386055558-9epl93fgsjfmdn14frqvaq2r9i44qgaa.apps.googleusercontent.com",
                     ClientSecret = "3pyawKDWaXwsPuRDL7LtKm_o"
                 });

@@ -9,7 +9,7 @@ namespace DT.STS.IdentityServer.Mvc.IdentityServer
         {
             return new[]
             {
-                new Client 
+                new Client
                 {
                     ClientName = "IdentityServer Client",
                     ClientId = "idserver",
@@ -17,12 +17,15 @@ namespace DT.STS.IdentityServer.Mvc.IdentityServer
                     RequireConsent = false,
                     RedirectUris = new List<string>
                     {
-                        "https://localhost:44319/",
-                        "https://localhost:44319/administration/dashboard"
+                       "https://localhost:44319/",
+                       "https://localhost:44319/administration/dashboard"
+                        //"https://192.168.9.61/",
+                        //"https://192.168.9.61/administration/dashboard"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {
                         "https://localhost:44319/"
+                        //"https://192.168.9.61/",
                     },
                     AllowedScopes = new List<string>
                     {
@@ -34,7 +37,7 @@ namespace DT.STS.IdentityServer.Mvc.IdentityServer
                 },
                 new Client
                 {
-                    ClientName = "IdentityServer (service communication)",   
+                    ClientName = "IdentityServer (service communication)",
                     ClientId = "idserver_service",
                     Flow = Flows.ClientCredentials,
 

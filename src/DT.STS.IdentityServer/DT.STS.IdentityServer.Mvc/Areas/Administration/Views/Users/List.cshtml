@@ -88,7 +88,8 @@
         const imagerenderer = function (row, datafield, value) {
             if (isVariableHaveDefaltVal(value))
                 return `<img style="margin-left: 5px;" height="60" width="60" src="@Url.GetHost()/images/no_image_available.jpg" + value + '"/>`;
-            return `<img style="margin-left: 5px;" height="60" width="60" src="data:image/jpg;base64,${value}" + value + '"/>`;
+            // return `<img style="margin-left: 5px;" height="60" width="60" src="data:image/jpg;base64,${value}" + value + '"/>`;
+            return `<img style="margin-left: 5px;" height="60" width="60" src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=${value}&UA=0&size=HR64x64&sc=1468233338850"/>`;
         }
         let users = [];
 
@@ -117,7 +118,8 @@
                     { name: 'managerName', type: 'string' },
                     { name: 'departmentName', type: 'string' },
                     { name: 'directReports', type: 'string' },
-                    { name: 'jpegPhoto', type: 'string'}
+                    { name: 'jpegPhoto', type: 'string' },
+                    { name: 'email', type: 'string'}
                 ],
             root: 'data',
             beforeprocessing: function (data) { source.totalrecords = data.total; }
@@ -204,7 +206,7 @@
                     },
                     {
                         text: 'Ảnh nhân viên',
-                        datafield: 'jpegPhoto',
+                        datafield: 'email',
                         editable: false,
                         width: 150,
                         cellsrenderer: imagerenderer

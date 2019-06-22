@@ -18,14 +18,15 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        @{ if (string.IsNullOrEmpty(User.Identity.GetUserImage()))
-                            {
-                        <img src="~/images/avatar5.png" class="user-image" alt="User Image">
-                            }
-                            else { 
-                            @Html.Image(User.Identity.GetUserImage())
-                            }
-                        }
+                        @*{ if (string.IsNullOrEmpty(User.Identity.GetUserImage()))
+            {
+        <img src="~/images/avatar5.png" class="user-image" alt="User Image">
+            }
+            else {
+            @Html.Image(User.Identity.GetUserImage())
+            }
+        }*@
+                        <img src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=@User.Identity.GetUserEmail()&UA=0&size=HR64x64&sc=1468233338850" class="user-image" alt="User Image">
                         <span class="hidden-xs">@User.Identity.Name</span>
                     </a>
                     <ul class="dropdown-menu">

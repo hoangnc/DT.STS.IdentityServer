@@ -2,6 +2,7 @@
 using DT.STS.IdentityServer.Application.Users.Queries;
 using DT.STS.IdentityServer.Common.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -47,6 +48,13 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
                 DataSourceRequest = dataSourceRequest,
                 Token = token
             });
+        }
+
+        [Route("api/users/getallusers")]
+        [HttpGet]
+        public async Task<List<GetAllUsersDto>> GetAllUsers()
+        {
+            return await Mediator.Send(new GetAllUsersQuery());
         }
     }
 }

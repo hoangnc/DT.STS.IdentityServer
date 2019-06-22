@@ -7,6 +7,7 @@ using DT.STS.IdentityServer.Application.Scopes.Queries;
 using DT.STS.IdentityServer.Application.ScopeScopeClaims.Queries;
 using DT.STS.IdentityServer.Application.Users.Commands;
 using DT.STS.IdentityServer.Application.Users.Queries;
+using DT.STS.IdentityServer.Application.UserScopes.Commands;
 using DT.STS.IdentityServer.Domain.Entities;
 using System;
 
@@ -26,12 +27,14 @@ namespace DT.STS.IdentityServer.Application.Mapper
                 cfg.CreateMap<User, GetUsersPagedDto>()
                 .ForMember(dest => dest.JpegPhoto,
                     mo => mo.MapFrom(src => src.JpegPhoto != null ? Convert.ToBase64String(src.JpegPhoto) : string.Empty));
+
                 cfg.CreateMap<GetUsersPagedDto, User>();
 
                 // ----- SearchUserByTokenPagedDto -----
                 cfg.CreateMap<User, SearchUsersByTokenPagedDto>()
                 .ForMember(dest => dest.JpegPhoto,
                     mo => mo.MapFrom(src => src.JpegPhoto != null ? Convert.ToBase64String(src.JpegPhoto) : string.Empty));
+
                 cfg.CreateMap<SearchUsersByTokenPagedDto, User>();
 
                 // ----- GetAllDeparmentsDto -----
@@ -52,11 +55,17 @@ namespace DT.STS.IdentityServer.Application.Mapper
                 // ------ GetScopeByIdDto -----
                 cfg.CreateMap<Scope, GetScopeByIdDto>();
 
+                // ------ GetScopesDto -----
+                cfg.CreateMap<Scope, GetScopesDto>();
+
                 // ----- SearchClientsByTokenPagedDto -----
                 cfg.CreateMap<Client, SearchClientsByTokenPagedDto>();
 
                 // ----- CreateClientCommand -----
                 cfg.CreateMap<CreateClientCommand, Client>();
+
+                // ----- UserScope -----
+                cfg.CreateMap<InsertOrUpdateUserScopeCommand, UserScope>();
 
             });
             Mapper = MapperConfiguration.CreateMapper();

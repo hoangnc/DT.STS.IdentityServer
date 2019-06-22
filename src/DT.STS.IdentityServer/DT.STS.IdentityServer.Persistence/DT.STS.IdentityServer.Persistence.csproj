@@ -65,6 +65,7 @@
     <Compile Include="Configurations\ScopeConfiguration.cs" />
     <Compile Include="Configurations\ScopeScopeClaimsConfiguration.cs" />
     <Compile Include="Configurations\UserConfiguration.cs" />
+    <Compile Include="Configurations\UserScopeConfiguration.cs" />
     <Compile Include="Migrations\201906050207563_InitialCreate.cs" />
     <Compile Include="Migrations\201906050207563_InitialCreate.Designer.cs">
       <DependentUpon>201906050207563_InitialCreate.cs</DependentUpon>
@@ -104,6 +105,10 @@
     <Compile Include="Migrations\201906170317255_AddClientAndUpdatePrimaryKeyScope.cs" />
     <Compile Include="Migrations\201906170317255_AddClientAndUpdatePrimaryKeyScope.Designer.cs">
       <DependentUpon>201906170317255_AddClientAndUpdatePrimaryKeyScope.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906210435108_AddUserScope.cs" />
+    <Compile Include="Migrations\201906210435108_AddUserScope.Designer.cs">
+      <DependentUpon>201906210435108_AddUserScope.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -151,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906170317255_AddClientAndUpdatePrimaryKeyScope.resx">
       <DependentUpon>201906170317255_AddClientAndUpdatePrimaryKeyScope.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906210435108_AddUserScope.resx">
+      <DependentUpon>201906210435108_AddUserScope.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

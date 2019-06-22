@@ -4,6 +4,7 @@ using Autofac.Integration.WebApi;
 using DT.STS.IdentityServer.Application;
 using DT.STS.IdentityServer.Mvc.Services;
 using DT.STS.IdentityServer.Persistence;
+using IdentityServer3.Core.Services;
 using MediatR;
 using System.Configuration;
 using System.Reflection;
@@ -54,8 +55,16 @@ namespace DT.STS.IdentityServer.Mvc
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
 
             builder.RegisterType<UserService>()
-                   .As<IdentityServer3.Core.Services.IUserService>()
+                   .As<IUserService>()
                    .InstancePerDependency();
+
+            builder.RegisterType<ScopeStore>()
+                .As<IScopeStore>()
+                .SingleInstance();
+
+            builder.RegisterType<ClientStore>()
+                .As<IClientStore>()
+                .SingleInstance();
 
             IContainer container = builder.Build();
             // Set MVC DI resolver to use our Autofac container

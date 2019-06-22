@@ -136,7 +136,7 @@
                 spinner: "cubes"
             });
         });
-        $(document).ajaxComplete(function () {
+        $(document).ajaxStop(function () {
             $.busyLoadFull("hide");
         });
         $(document).ajaxSuccess(function (event, xhr, settings) {

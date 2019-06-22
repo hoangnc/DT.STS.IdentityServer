@@ -1,9 +1,9 @@
 namespace DT.STS.IdentityServer.Persistence.Migrations
 {
+    using DT.STS.IdentityServer.Domain.Entities;
     using System;
-    using System.Data.Entity;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<DT.STS.IdentityServer.Persistence.STSDbContext>
     {
@@ -19,6 +19,24 @@ namespace DT.STS.IdentityServer.Persistence.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            SeedScopeClaim(context);
+        }
+
+        private void SeedScopeClaim(STSDbContext context)
+        {
+            List<ScopeClaim> scopeClaims = new List<ScopeClaim>();
+            scopeClaims.Add(new ScopeClaim
+            {
+                Name = "role",
+                Description = "Role",
+                AlwaysIncludeInIdToken = false,
+                CreatedOn = DateTime.Now,
+                CreatedBy = "nguyenconghoang",
+                Deleted = false
+            });
+
+            context.ScopeClaims.AddOrUpdate(scopeClaim => new { scopeClaim.Name }, scopeClaims.ToArray());
+            context.SaveChanges();
         }
     }
 }

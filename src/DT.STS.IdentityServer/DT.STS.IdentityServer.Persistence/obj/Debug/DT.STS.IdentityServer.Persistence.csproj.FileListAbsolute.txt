@@ -30,3 +30,4 @@ C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServe
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.ChangeUpdatedToModifiedColumns.resources
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddScopeScopeClaims.resources
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddClientAndUpdatePrimaryKeyScope.resources
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddUserScope.resources

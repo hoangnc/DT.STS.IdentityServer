@@ -63,8 +63,10 @@
         </div>
         <!-- /.content-wrapper -->
     </div>
-   
+
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    
     <!-- jQuery UI 1.11.4 -->
     <script src="~/Scripts/admin_lte/bower_components/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -110,8 +112,8 @@
         }
 
         function isVariableHaveDefaltVal(variable) {
-            if (typeof (variable) === 'string') {  // number, boolean, string, object 
-                 return (variable.trim().length === 0) ? true : false;
+            if (typeof (variable) === 'string') {  // number, boolean, string, object
+                return (variable.trim().length === 0) ? true : false;
             } else if (typeof (variable) === 'boolean') {
                 return (variable === false) ? true : false;
             } else if (typeof (variable) === 'undefined') {
@@ -131,7 +133,7 @@
                 } else if (typeOfVar(variable) === 'regexp' && variable.source.trim().length === 0) {
                     return true;
                 } else if (variable === null) {
-                     return true;
+                    return true;
                 }
             }
             return false;

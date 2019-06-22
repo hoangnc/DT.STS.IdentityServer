@@ -71,7 +71,7 @@ namespace DT.STS.IdentityServer.Application.Users.Commands
                                     DirectReports = string.Join(";", directReports),
                                     FirstName = userAccount.GivenName,
                                     LastName = userAccount.SurName,
-                                    Email = userAccount.Email,
+                                    Email = userAccount.UserPrincipalName,
                                     JpegPhoto = userAccount.JpegPhoto,
                                     ManagerName = manager
                                 });

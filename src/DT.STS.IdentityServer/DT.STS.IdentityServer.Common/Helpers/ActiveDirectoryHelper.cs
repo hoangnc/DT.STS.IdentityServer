@@ -8,7 +8,6 @@ namespace DT.STS.IdentityServer.Common.Helpers
     /// </summary>
     public static class ActiveDirectoryHelper
     {
-
         /// <summary>
         /// Returns UserAccount object from a given search result
         /// </summary>

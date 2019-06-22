@@ -7,6 +7,7 @@ using DT.STS.IdentityServer.Domain.Entities;
 using DT.STS.IdentityServer.Application.Scopes.Queries;
 using DT.STS.IdentityServer.Application.Clients.Queries;
 using DT.STS.IdentityServer.Application.Clients.Commands;
+using DT.STS.IdentityServer.Application.UserScopes.Commands;
 
 namespace DT.STS.IdentityServer.Application.Mapper
 {
@@ -75,6 +76,11 @@ namespace DT.STS.IdentityServer.Application.Mapper
         {
             return entity.MapTo<Scope, GetScopeByIdDto>();
         }
+
+        public static GetScopesDto ToGetScopesDto(this Scope entity)
+        {
+            return entity.MapTo<Scope, GetScopesDto>();
+        }
         #endregion
 
         #region Clients
@@ -86,6 +92,14 @@ namespace DT.STS.IdentityServer.Application.Mapper
         public static Client ToClient(this CreateClientCommand command)
         {
             return command.MapTo<CreateClientCommand, Client>();
+        }
+        #endregion
+
+        #region UserScopes
+
+        public static UserScope ToUserScope(this InsertOrUpdateUserScopeCommand command)
+        {
+            return command.MapTo<InsertOrUpdateUserScopeCommand, UserScope>();
         }
         #endregion
     }
