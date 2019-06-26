@@ -218,6 +218,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\Apis\BaseApiController.cs" />
+    <Compile Include="Areas\Administration\Controllers\Apis\ClaimsApiController.cs" />
     <Compile Include="Areas\Administration\Controllers\Apis\ClientsApiController.cs" />
     <Compile Include="Areas\Administration\Controllers\Apis\DepartmentsApiController.cs" />
     <Compile Include="Areas\Administration\Controllers\Apis\ScopesApiController.cs" />

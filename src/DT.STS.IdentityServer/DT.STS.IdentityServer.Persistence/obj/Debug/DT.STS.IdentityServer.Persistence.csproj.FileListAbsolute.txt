@@ -31,3 +31,7 @@ C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServe
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddScopeScopeClaims.resources
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddClientAndUpdatePrimaryKeyScope.resources
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddUserScope.resources
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\bin\Debug\DT.Core.Web.Common.Identity.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\bin\Debug\DT.Core.Web.Common.Identity.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddClaimAndUserClaim.resources
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddPermissionsToUserScope.resources

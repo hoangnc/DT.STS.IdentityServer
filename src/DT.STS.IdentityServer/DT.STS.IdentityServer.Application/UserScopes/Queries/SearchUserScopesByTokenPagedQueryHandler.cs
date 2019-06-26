@@ -20,27 +20,38 @@ namespace DT.STS.IdentityServer.Application.UserScopes.Queries
 
         public async Task<DataSourceResult> Handle(SearchUserScopesByTokenPagedQuery request, CancellationToken cancellationToken)
         {
-            IQueryable<UserScope> query = _context.UserScopes.AsQueryable();
+            IQueryable<Scope> query = _context.Scopes.AsQueryable();
             query = query.Where(u => !u.Deleted);
+
+            IQueryable<SearchUserScopesByTokenPagedDto> userScopesQuery = query.SelectMany(s => _context.UserScopes
+                .Where(us => us.ScopeName == s.Name)
+                .DefaultIfEmpty()
+                .Select(us => new SearchUserScopesByTokenPagedDto
+                {
+                    ScopeName = s.Name,
+                    Users = us.Users,
+                    Permissions = us.Permissions              
+                }));
 
             if (!string.IsNullOrWhiteSpace(request.Token))
             {
-                query = query.Where(u => u.Users.Contains(request.Token)
+                userScopesQuery = userScopesQuery.Where(u => u.Users.Contains(request.Token)
                 || u.ScopeName.Contains(request.Token));
             }
-            query = query.OrderByDescending(u => u.CreatedOn);
+            userScopesQuery = userScopesQuery.OrderBy(u => u.ScopeName);
 
-            PagedList<UserScope> queryResult = new PagedList<UserScope>();
-            await queryResult.CreateAsync(query, request.DataSourceRequest.PageNum, request.DataSourceRequest.PageSize);
-            List<SearchUserScopesByTokenPagedDto> data = queryResult.Select(u => new SearchUserScopesByTokenPagedDto
+            PagedList<SearchUserScopesByTokenPagedDto> queryResult = new PagedList<SearchUserScopesByTokenPagedDto>();
+            await queryResult.CreateAsync(userScopesQuery, request.DataSourceRequest.PageNum, request.DataSourceRequest.PageSize);
+            /*List<SearchUserScopesByTokenPagedDto> data = queryResult.Select(u => new SearchUserScopesByTokenPagedDto
             {
                 ScopeName = u.ScopeName,
-                Users = u.Users
-            }).ToList();
+                Users = u.Users,
+                Permissions = u.Permissions
+            }).ToList();*/
 
             return new DataSourceResult
             {
-                Data = data,
+                Data = queryResult,
                 Total = queryResult.TotalCount
             };
         }

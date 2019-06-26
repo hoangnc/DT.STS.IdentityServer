@@ -32,6 +32,7 @@ namespace DT.STS.IdentityServer.Persistence
             modelBuilder.Configurations.Add(new ScopeClaimConfiguration());
             modelBuilder.Configurations.Add(new ScopeScopeClaimsConfiguration());
             modelBuilder.Configurations.Add(new ClientConfiguration());
+            modelBuilder.Configurations.Add(new ClaimConfiguration());
         }
 
         public DbSet<User> Users { get; set; }
@@ -42,5 +43,6 @@ namespace DT.STS.IdentityServer.Persistence
         public DbSet<ScopeClaim> ScopeClaims { get; set; }
         public DbSet<ScopeScopeClaim> ScopeScopeClaims { get; set; }
         public DbSet<UserScope> UserScopes { get; set; }
+        public DbSet<Claim> Claims { get; set; }
     }
 }

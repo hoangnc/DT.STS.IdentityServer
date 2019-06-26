@@ -67,6 +67,7 @@
     <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdatetimeinput.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.pager.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxtabs.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
     <script type="text/javascript" src="~/Scripts/demos.js"></script>
@@ -75,8 +76,10 @@
     </script>
     <script>
         const getAllUsersUrl = `${hostUrl}/api/users/getallusers`;
+        const getAllClaimsUrl = `${hostUrl}/api/claims/getallclaims`;
         const insertOrUpdateUserScopeUrl = `${hostUrl}/api/userscopes/insertorupdate`;
         let users = [];
+        let claims = [];
 
         const txtSearch = $('#txtSearch');
         const grdUserScope = $("#grdUserScope");
@@ -101,6 +104,25 @@
                         };
                     });
                 });
+        }
+
+        function getClaims() {
+            return $.getJSON(getAllClaimsUrl,
+                function (data) {
+                    claims = data;
+                });
+        }
+
+        function formatClaimResult(claim) {
+            if (!claim.id)
+                return claim.text;
+            return $(`<span>${claim.value}</span><div><small style="color: #a5a0a0">Claim: ${claim.name}</small></div>`);
+        }
+
+        function formatClaimSelection(claim) {
+            if (!claim.id)
+                return claim.text;
+            return $(`<span>${claim.text}</span>`);
         }
 
         function formatUserResult(user) {
@@ -133,10 +155,27 @@
                     selectUsers.val(datarecord.users.split(';')).trigger('change');
                 }
 
+                const selectPermissions = container.find('#selectPermissions');
+                selectPermissions.select2({
+                    data: claims,
+                    templateResult: formatClaimResult,
+                    templateSelection: formatClaimSelection
+                });
+
+                if (!isVariableHaveDefaltVal(datarecord.permissions)) {
+                    selectPermissions.val(datarecord.permissions.split(';')).trigger('change');
+                }
+
                 selectUsers.on("change", function (e) {
                     const users = selectUsers.val().join(';');
+                    let permissions = [];
+                    if (!isVariableHaveDefaltVal(selectPermissions.val())) {
+                        permissions = selectPermissions.val().join(';');
+                    }
+
                     let data = {
                         users: users,
+                        permissions: permissions,
                         scopeName: datarecord.scopeName
                     };
                     $.ajax({
@@ -153,6 +192,35 @@
                         }
                     });
                 });
+
+                selectPermissions.on("change", function (e) {
+                    let users = [];
+                    if (!isVariableHaveDefaltVal(selectUsers.val())) {
+                        users = selectUsers.val().join(';');
+                    }
+                    const permissions = selectPermissions.val().join(';');
+                    let data = {
+                        users: users,
+                        permissions: permissions,
+                        scopeName: datarecord.scopeName
+                    };
+                    $.ajax({
+                        url: insertOrUpdateUserScopeUrl,
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (event, settings, xhr) {
+                            xhr.message = {
+                                infor: 'Thêm permissions vào scope thành công',
+                                returnUrl: ''
+                            };
+                        }
+                    });
+                });
+
+                $(container).jqxTabs({ width: 750, height: 150 });
+
             }
         };
 
@@ -176,6 +244,7 @@
                         { name: 'id', type: 'int' },
                         { name: 'scopeName', type: 'string' },
                         { name: 'users', type: 'string' },
+                        { name: 'permissions', type: 'string'}
                     ],
                 root: 'data',
                 beforeprocessing: function (data) { source.totalrecords = data.total; }
@@ -208,9 +277,11 @@
                     rowdetails: true,
                     rowdetailstemplate: {
                         rowdetails: `<div style='margin: 10px;'>
-                                            <select id="selectUsers" multiple style="width: 680px; height: 100px"><select>
+                                            <ul style='margin-left: 30px;'><li>Người dùng</li><li>Permissions</li></ul>
+                                            <div><select id="selectUsers" multiple style="width: 680px; height: 150px"><select></div>
+                                            <div><select id="selectPermissions" multiple style="width: 680px; height: 150px"><select></div>
                                      </div>`,
-                        rowdetailsheight: 150
+                        rowdetailsheight: 250
                     },
                     ready: function () {
                         const rows = grdUserScope.jqxGrid('getdatainformation');
@@ -228,7 +299,7 @@
                             text: 'Scope',
                             columntype: 'textbox',
                             datafield: 'scopeName',
-                            pinned: true,
+                            pinned: false,
                             editable: false,
                             width: 700
                         }
@@ -238,7 +309,8 @@
 
         $(document).ready(function () {
 
-            Promise.all([getUsers()
+            Promise.all([getUsers(),
+                getClaims()
             ]).then(() => {
                 initGrid();
                 // all requests finished successfully

@@ -20,6 +20,7 @@ namespace DT.STS.IdentityServer.Mvc.Controllers
         }
 
         [ResourceAuthorize("Read", "ContactDetails")]
+        [HandleForbidden]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

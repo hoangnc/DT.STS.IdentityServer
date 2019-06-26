@@ -87,10 +87,7 @@ namespace DT.STS.IdentityServer.Mvc.Controllers
         [AllowAnonymous]
         public ActionResult Signout()
         {
-            Request.GetOwinContext().Authentication.SignOut(new AuthenticationProperties { RedirectUri = "/" },
-            OpenIdConnectAuthenticationDefaults.AuthenticationType,
-            CookieAuthenticationDefaults.AuthenticationType);
-
+            Request.GetOwinContext().Authentication.SignOut();
             return Redirect("/");
         }
 

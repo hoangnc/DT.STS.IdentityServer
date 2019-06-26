@@ -66,7 +66,7 @@ namespace DT.STS.IdentityServer.Mvc.Services
                             "openid",
                             "profile",
                             "roles",
-                            "adminapi"
+                            "documentmvc"
                         }
                     };
                 }

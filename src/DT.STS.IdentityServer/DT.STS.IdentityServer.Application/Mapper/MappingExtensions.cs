@@ -8,6 +8,7 @@ using DT.STS.IdentityServer.Application.Scopes.Queries;
 using DT.STS.IdentityServer.Application.Clients.Queries;
 using DT.STS.IdentityServer.Application.Clients.Commands;
 using DT.STS.IdentityServer.Application.UserScopes.Commands;
+using DT.STS.IdentityServer.Application.Claims.Queries;
 
 namespace DT.STS.IdentityServer.Application.Mapper
 {
@@ -100,6 +101,13 @@ namespace DT.STS.IdentityServer.Application.Mapper
         public static UserScope ToUserScope(this InsertOrUpdateUserScopeCommand command)
         {
             return command.MapTo<InsertOrUpdateUserScopeCommand, UserScope>();
+        }
+        #endregion
+
+        #region Claims
+        public static GetAllClaimsDto ToGetAllClaimsDto(this Claim claim)
+        {
+            return claim.MapTo<Claim, GetAllClaimsDto>();
         }
         #endregion
     }

@@ -3,6 +3,7 @@
     public class SearchUserScopesByTokenPagedDto
     {
         public string Users { get; set; }
+        public string Permissions { get; set; }
         public string ScopeName { get; set; }
     }
 }

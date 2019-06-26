@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DT.STS.IdentityServer.Application.Claims.Queries;
 using DT.STS.IdentityServer.Application.Clients.Commands;
 using DT.STS.IdentityServer.Application.Clients.Queries;
 using DT.STS.IdentityServer.Application.Departments.Queries;
@@ -66,6 +67,9 @@ namespace DT.STS.IdentityServer.Application.Mapper
 
                 // ----- UserScope -----
                 cfg.CreateMap<InsertOrUpdateUserScopeCommand, UserScope>();
+
+                // ----- GetAllClaimsDto -----
+                cfg.CreateMap<Claim, GetAllClaimsDto>();
 
             });
             Mapper = MapperConfiguration.CreateMapper();
