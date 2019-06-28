@@ -39,6 +39,7 @@ namespace DT.STS.IdentityServer.Persistence.Configurations
             Property(e => e.PostLogoutRedirectUris).HasMaxLength(4000);
             Property(e => e.PrefixClientClaims);
             Property(e => e.RedirectUris).HasMaxLength(4000);
+            Property(e => e.Scopes).HasMaxLength(4000);
             Property(e => e.RefreshTokenExpiration);
             Property(e => e.RefreshTokenUsage);
             Property(e => e.RequireConsent);

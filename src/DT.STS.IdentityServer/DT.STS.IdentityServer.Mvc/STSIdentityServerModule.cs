@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using DT.Core.Web.Ui.Navigation;
+using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
 using MediatR;
 using MediatR.Pipeline;
 
@@ -18,6 +20,14 @@ namespace DT.STS.IdentityServer.Mvc
 
             builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>))
                .As(typeof(IPipelineBehavior<,>));
+
+            builder.RegisterType<MenuConfigurationContext>()
+                .As<IMenuConfigurationContext>()
+                .InstancePerRequest();
+
+            builder.RegisterType<MenuManager>()
+                .As<IMenuManager>()
+                .InstancePerRequest();
 
             base.Load(builder);
         }

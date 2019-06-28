@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DT.Core.Web.Ui.Navigation;
+using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +12,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
     {
         // GET: Administration/Dashboard
         [Authorize]
+        [Menu(SelectedMenu = MenuNameConstants.User)]
         public ActionResult Index()
         {
             return View();

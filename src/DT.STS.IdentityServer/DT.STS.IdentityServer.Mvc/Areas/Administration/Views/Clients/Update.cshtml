@@ -1,0 +1,945 @@
+﻿@using DT.STS.IdentityServer.Mvc.Extensions
+@model DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients.ClientUpdateModel
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.light.css" type="text/css" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Scripts/admin_lte/bower_components/select2/dist/css/select2.min.css">
+}
+<div class="box box-info">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="box-header with-border">
+            <h3 class="box-title">Thêm Client</h3>
+            <div class="mailbox-controls">
+                <div class="btn-group">
+                    <a href="@Url.Action("List")" class="btn btn-success btn-sm">
+                        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Danh sách
+                    </a>
+                    <button id="submit-button" type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClientId)
+                        <i id="clientid-help"
+                           class="fa fa-info-circle"
+                           data-toggle="tooltip"
+                           data-placement="top"
+                           title="Unique ID of the client"></i>
+                        @Html.EditorFor(model => model.ClientId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClientName)
+                        <i id="clientname-help"
+                           class="fa fa-info-circle"
+                           data-toggle="tooltip"
+                           data-placement="top"
+                           title="Client display name (used for logging and consent screen)"></i>
+                        @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ClientUri)
+                        <i id="clienturi-help"
+                           class="fa fa-info-circle"
+                           data-toggle="tooltip"
+                           data-placement="top"
+                           title="URI to further information about client (used on consent screen)"></i>
+                        @Html.EditorFor(model => model.ClientUri, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ClientUri, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LogoUri, htmlAttributes: new { @class = "control-label" })
+                        <i id="logouri-help"
+                           class="fa fa-info-circle"
+                           data-toggle="tooltip"
+                           data-placement="top"
+                           title="URI to client logo (used on consent screen)"></i>
+                        @Html.EditorFor(model => model.LogoUri, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LogoUri, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.Flow, htmlAttributes: new { @class = "control-label" })
+
+                    @Html.DropDownListFor(model => model.Flow, Model.AvailableFlows, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AvailableFlows, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.RefreshTokenExpiration, htmlAttributes: new { @class = "control-label" })
+
+                    @Html.DropDownListFor(model => model.RefreshTokenExpiration, Model.AvailableTokenExpirations, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AvailableFlows, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <span class="form-group inline-block">
+                            <input type="checkbox"
+                                   name="RequireConsent"
+                                   id="RequireConsent"
+                                   value="@Model.RequireConsent">
+                            Require consent
+                        </span>
+                    </label>
+                    <i id="requireconsent-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Specifies whether a consent screen is required. Defaults to true."></i>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="AllowRememberConsent"
+                               id="AllowRememberConsent"
+                               value=""> Allow remember consent
+                    </label>
+                    <i id="allowrememberconsent-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Specifies whether user can choose to store consent decisions. Defaults to true"></i>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="AllowClientCredentialsOnly"
+                               id="AllowClientCredentialsOnly"
+                               value=""> Allow client credentitals only
+
+                    </label>
+                    <i id="allowclientcredentialsonly-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="left"
+                       title="Gets or sets a value indicating whether this client is allowed to request token using client credentials only. This is useful when you want a client to be able to use both a user-centric flow like implicit and additionally client credentials flow. Defaults to false. Should only be used for confidential clients (e.g. not Implicit)."></i>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="LogoutSessionRequired"
+                               id="LogoutSessionRequired"
+                               value=""> Logout Session Required
+                    </label>
+                    <i id="logoutsessionrequired-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Specifies if the user’s session id should be sent to the LogoutUri. Defaults to true."></i>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="RequireSignOutPrompt"
+                               id="RequireSignOutPrompt"
+                               value="@Model.RequireSignOutPrompt"> Require SignOut Prompt
+                    </label>
+                    <i id="requiresignoutprompt-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Specifies if the client will always show a confirmation page for sign-out. Defaults to false."></i>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="AllowAccessTokensViaBrowser"
+                               id="AllowAccessTokensViaBrowser"
+                               value="">Allow access tokens via browser
+                    </label>
+                    <i id="allowaccesstokenviabrower-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="left"
+                       title="Specifies whether this client is allowed to request access tokens via the browser. This is useful to harden flows that allow multiple response types (e.g. by disallowing a hybrid flow client that is supposed to use code id_token to add the token response type and thus leaking the token to the browser."></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="AllowedCustomGrantTypes"
+                               id="AllowedCustomGrantTypes"
+                               value="">Allowed custom grant types
+                    </label>
+                    <i id="allwedcustomgranttypes-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="When Custom flow is used, you also need to specify which custom grant types this client can use. Explicitly specify the grant types here (recommended) or set AllowAccessToAllCustomGrantTypes to true."></i>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="UpdateAccessTokenClaimsOnRefresh"
+                               id="UpdateAccessTokenClaimsOnRefresh"
+                               value="">Update Access token claims on refresh
+                    </label>
+                    <i id="updateaccesstokenclaimsonrefresh-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Gets or sets a value indicating whether the access token (and its claims) should be updated on a refresh token request."></i>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="EnableLocalLogin"
+                               id="EnableLocalLogin"
+                               value="">Enable local login
+                    </label>
+                    <i id="enablelocallogin-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="left"
+                       title="Specifies if this client can use local accounts, or external IdPs only. Defaults to true."></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="IncludeJwtId"
+                               id="IncludeJwtId"
+                               value="">Include JwtId
+                    </label>
+                    <i id="includejwtid-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="Specifies whether JWT access tokens should have an embedded unique ID (via the jti claim)."></i>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="AlwaysSendClientClaims"
+                               id="AlwaysSendClientClaims"
+                               value="">Always send client claims
+                    </label>
+                    <i id="includejwtid-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="If set, the client claims will be sent for every flow. If not, only for client credentials flow (default is false)"></i>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                               name="PrefixClientClaims"
+                               id="PrefixClientClaims"
+                               value="">Prefix client claims
+                    </label>
+                    <i id="includejwtid-help"
+                       class="fa fa-info-circle inline"
+                       data-toggle="tooltip"
+                       data-placement="left"
+                       title="If set, all client claims will be prefixed with client_ to make sure they don’t accidentally collide with user claims. Default is true."></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Scopes, htmlAttributes: new { @class = "control-label" })
+                        <i id="logouturi-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Allowed Scopes"></i>
+                        @Html.DropDownListFor(model => model.Scopes, Model.AvailableScopes, new { @class = "form-control", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.Scopes, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LogoutUri, htmlAttributes: new { @class = "control-label" })
+                        <i id="logouturi-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Specifies logout URI at client for HTTP based logout"></i>
+                        @Html.EditorFor(model => model.LogoutUri, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LogoutUri, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RedirectUris, htmlAttributes: new { @class = "control-label" })
+                        <i id="redirecturis-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Specifies the allowed URIs to return tokens or authorization codes to"></i>
+                        @Html.HiddenFor(model => model.RedirectUris)
+                        @Html.ValidationMessageFor(model => model.RedirectUris, "", new { @class = "text-danger" })
+                        <div id="grdRedirectUris"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        @Html.LabelFor(model => model.PostLogoutRedirectUris, htmlAttributes: new { @class = "control-label" })
+                        <i id="postlogoutredirecturis-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Specifies allowed URIs to redirect to after logout"></i>
+                        @Html.HiddenFor(model => model.PostLogoutRedirectUris)
+                        @Html.ValidationMessageFor(model => model.PostLogoutRedirectUris, "", new { @class = "text-danger" })
+                        <div id="grdPostLogoutRedirectUris"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AllowedCorsOrigins, htmlAttributes: new { @class = "control-label" })
+                        <i id="allowedcorsorigins-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="If specified, will be used by the default CORS policy service implementations (In-Memory and EF) to build a CORS policy for JavaScript clients"></i>
+                        @Html.HiddenFor(model => model.AllowedCorsOrigins)
+                        @Html.ValidationMessageFor(model => model.AllowedCorsOrigins, "", new { @class = "text-danger" })
+                        <div id="grdAllowedCorsOrigins"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IdentityTokenLifetime, htmlAttributes: new { @class = "control-label" })
+                        <i id="identitytokenlifetime-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Lifetime to identity token in seconds (defaults to 300 seconds / 5 minutes)"></i>
+                        @Html.EditorFor(model => model.IdentityTokenLifetime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IdentityTokenLifetime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AccessTokenLifetime, htmlAttributes: new { @class = "control-label" })
+                        <i id="accesstokenlifetime-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Lifetime of access token in seconds (defaults to 3600 seconds / 1 hour)"></i>
+                        @Html.EditorFor(model => model.AccessTokenLifetime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AccessTokenLifetime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AuthorizationCodeLifetime, htmlAttributes: new { @class = "control-label" })
+                        <i id="authorizationcodelifetime-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Lifetime of authorization code in seconds (defaults to 300 seconds / 5 minutes)"></i>
+                        @Html.EditorFor(model => model.AuthorizationCodeLifetime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AuthorizationCodeLifetime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AbsoluteRefreshTokenLifetime, htmlAttributes: new { @class = "control-label" })
+                        <i id="absoluterefreshtokenlifetime-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Maximum lifetime of a refresh token in seconds. Defaults to 2592000 seconds / 30 days"></i>
+                        @Html.EditorFor(model => model.AbsoluteRefreshTokenLifetime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AbsoluteRefreshTokenLifetime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SlidingRefreshTokenLifetime, htmlAttributes: new { @class = "control-label" })
+                        <i id="slidingrefreshtokenlifetime-help"
+                           class="fa fa-info-circle inline"
+                           data-toggle="tooltip"
+                           data-placement="right"
+                           title="Sliding lifetime of a refresh token in seconds. Defaults to 1296000 seconds / 15 days"></i>
+                        @Html.EditorFor(model => model.SlidingRefreshTokenLifetime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SlidingRefreshTokenLifetime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts
+{
+    <script>
+        const hostUrl = '@Url.GetHost()';
+    </script>
+    <!-- Select 2-->
+    <script src="~/Scripts/admin_lte/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.edit.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxtextarea.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxnumberinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
+    <script type="text/javascript" src="~/Scripts/demos.js"></script>
+    <script type="text/javascript">
+        const scopeClaims = $('#ScopeClaims');
+        const scopes = $('#Scopes');
+        const grdRedirectUris = $("#grdRedirectUris");
+        const grdPostLogoutRedirectUris = $("#grdPostLogoutRedirectUris");
+        const grdAllowedCorsOrigins = $("#grdAllowedCorsOrigins");
+        const redirectUriStr = '@Model.RedirectUris';
+        const postLogoutRedirectUriStr = '@Model.PostLogoutRedirectUris';
+        const allowedCorsOriginStr = '@Model.AllowedCorsOrigins';
+
+        let redirectUris = redirectUriStr.split(';').map((value, index) => {
+            return {
+                id: index,
+                uri: value
+            };
+        });
+
+        let postLogoutRedirectUris = postLogoutRedirectUriStr.split(';').map((value, index) => {
+            return {
+                id: index,
+                uri: value
+            };
+        });
+
+        let allowedCorsOrigins = allowedCorsOriginStr.split(';').map((value, index) => {
+            return {
+                id: index,
+                uri: value
+            };
+        });
+
+        function isValidUrl(url) {
+            return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.\:]{1}[a-z0-9]+)*[\.\][a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g.test(url);
+        }
+
+        function updateRedirectUris(redirectUrisDataAdapter) {
+            let redirectUrisNotEmpty = redirectUrisDataAdapter.records.filter(function (value) {
+                return !isVariableHaveDefaltVal(value.uri);
+            }).map(value => value.uri);
+            $('#RedirectUris').val(redirectUrisNotEmpty.join(';'));
+        }
+
+        function updatePostLogoutRedirectUris(postLogoutRedirectUrisDataAdapter) {
+            let redirectUrisNotEmpty = postLogoutRedirectUrisDataAdapter.records.filter(function (value) {
+                return !isVariableHaveDefaltVal(value.uri);
+            }).map(value => value.uri);
+            $('#PostLogoutRedirectUris').val(redirectUrisNotEmpty.join(';'));
+        }
+
+        function updateAllowedCorsOrigins(allowedCorsOriginsDataAdapter) {
+            let redirectUrisNotEmpty = allowedCorsOriginsDataAdapter.records.filter(function (value) {
+                return !isVariableHaveDefaltVal(value.uri);
+            }).map(value => value.uri);
+            $('#AllowedCorsOrigins').val(redirectUrisNotEmpty.join(';'));
+        }
+
+        const initGrdRedirectUris = function () {
+            let sourceRedirectUris =
+            {
+                localdata: redirectUris,
+                datatype: "array",
+                id: "id",
+                updaterow: function (rowid, rowdata, commit) {
+                    // synchronize with the server - send update command
+                    // call commit with parameter true if the synchronization with the server is successful
+                    // and with parameter false if the synchronization failder.
+                    updateRedirectUris(redirectUrisDataAdapter);
+                    commit(true);
+                },
+                pagesize: 5,
+                pagesizeoptions: ["5", "10", "20"],
+                datafields:
+                    [
+                        { name: 'id', type: 'int' },
+                        { name: 'uri', type: 'string' }
+                    ]
+            };
+
+            let redirectUrisDataAdapter = new $.jqx.dataAdapter(sourceRedirectUris);
+
+            grdRedirectUris.jqxGrid(
+                {
+                    width: '100%',
+                    height: 250,
+                    source: redirectUrisDataAdapter,
+                    pageable: true,
+                    autorowheight: false,
+                    columnsresize: true,
+                    altrows: false,
+                    editable: true,
+                    pagesizeoptions: ["5", "10", "20"],
+                    localization: getLocalization('vi'),
+                    selectionmode: 'singlerow',
+                    editmode: 'singlecell',
+                    showstatusbar: false,
+                    virtualMode: true,
+                    renderGridRows: function (obj) {
+                        return obj.data;
+                    },
+                    showtoolbar: true,
+                    rendertoolbar: function (toolbar) {
+                        const container = $(`<div class="btn-group" style='margin: 2px;'></div>`);
+                        toolbar.append(container);
+                        container.append(`<button id="addRedirectUris"
+                                                 type="button"
+                                                 class="btn btn-primary btn-sm"
+                                                  >Thêm mới</button>`);
+                        let btnRemoveRedirectUris = $(`<button id="btnRemoveRedirectUris"
+                            type="button"
+                            class="btn btn-primary btn-sm">
+                            <i class="fa fa-trash-o"></i> Xóa
+                            </button>`);
+                        container.append(btnRemoveRedirectUris);
+                        // create new row.
+                        $('#addRedirectUris').on('click', function () {
+                            const datarow = {
+                                id: 0,
+                                uri: ''
+                            };
+                            grdRedirectUris.jqxGrid('addrow', null, datarow);
+                            grdRedirectUris.jqxGrid('updatebounddata');
+                        });
+
+                        btnRemoveRedirectUris.click(function () {
+                            
+                        });
+                    },
+                    columns: [
+                        {
+                            text: 'STT',
+                            sortable: false,
+                            filterable: false,
+                            editable: false,
+                            groupable: false,
+                            draggable: false,
+                            pinned: true,
+                            datafield: '',
+                            columntype: 'number',
+                            width: 40,
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        {
+                            text: 'Uri',
+                            columntype: 'textbox',
+                            datafield: 'uri',
+                            pinned: false,
+                            editable: true,
+                            width: 300,
+                            validation: function (cell, value) {
+                                if (value == "")
+                                    return true;
+
+                                if (!isValidUrl(value)) {
+                                    return { result: false, message: "Không đúng format Uri" };
+                                }
+                                return true;
+                            }
+                        }]
+                });
+            /*grdRedirectUris.on('cellendedit', function (event) {
+                const args = event.args;
+                const datafield = event.args.datafield;
+                if (datafield === 'uri') {
+                    updateRedirectUris(redirectUrisDataAdapter);
+                }
+            });*/
+        }
+
+        const initGrdPostLogoutRedirectUris = function () {
+            let sourcePostLogoutRedirectUris =
+            {
+                localdata: postLogoutRedirectUris,
+                datatype: "array",
+                id: "id",
+                updaterow: function (rowid, rowdata, commit) {
+                    // synchronize with the server - send update command
+                    // call commit with parameter true if the synchronization with the server is successful
+                    // and with parameter false if the synchronization failder.
+                    updatePostLogoutRedirectUris(postLogoutRedirectUrisDataAdapter);
+                    commit(true);
+                },
+                pagesize: 5,
+                pagesizeoptions: ["5", "10", "20"],
+                datafields:
+                    [
+                        { name: 'id', type: 'int' },
+                        { name: 'uri', type: 'string' }
+                    ]
+            };
+
+            let postLogoutRedirectUrisDataAdapter = new $.jqx.dataAdapter(sourcePostLogoutRedirectUris);
+
+            grdPostLogoutRedirectUris.jqxGrid(
+                {
+                    width: '100%',
+                    height: 250,
+                    source: postLogoutRedirectUrisDataAdapter,
+                    pageable: true,
+                    autorowheight: false,
+                    columnsresize: true,
+                    altrows: true,
+                    editable: true,
+                    pagesizeoptions: ["5", "10", "20"],
+                    localization: getLocalization('vi'),
+                    selectionmode: 'singlerow',
+                    editmode: 'singlecell',
+                    showstatusbar: false,
+                    virtualMode: true,
+                    renderGridRows: function (obj) {
+                        return obj.data;
+                    },
+                    showtoolbar: true,
+                    rendertoolbar: function (toolbar) {
+                        const container = $(`<div class="btn-group" style='margin: 2px;'></div>`);
+                        toolbar.append(container);
+                        container.append(`<button id="addLogoutRedirectUris"
+                                                 type="button"
+                                                 class="btn btn-primary btn-sm"
+                                                  >Thêm mới</button>`);
+                        let btnRemoveLogoutRedirectUris = $(`<button id="btnRemoveLogoutRedirectUris"
+                            type="button"
+                            class="btn btn-primary btn-sm">
+                            <i class="fa fa-trash-o"></i> Xóa
+                            </button>`);
+                        container.append(btnRemoveLogoutRedirectUris);
+                        // create new row.
+                        $("#addLogoutRedirectUris").on('click', function () {
+                            const datarow = {
+                                id: 0,
+                                uri: ''
+                            };
+                            grdPostLogoutRedirectUris.jqxGrid('addrow', null, datarow);
+                            grdPostLogoutRedirectUris.jqxGrid('updatebounddata');
+                        });
+
+                        btnRemoveLogoutRedirectUris.click(function () {
+
+                        });
+                    },
+                    columns: [
+                        {
+                            text: 'STT',
+                            sortable: false,
+                            filterable: false,
+                            editable: false,
+                            groupable: false,
+                            draggable: false,
+                            pinned: true,
+                            datafield: '',
+                            columntype: 'number',
+                            width: 40,
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        {
+                            text: 'Uri',
+                            columntype: 'textbox',
+                            datafield: 'uri',
+                            pinned: false,
+                            editable: true,
+                            width: 300,
+                            validation: function (cell, value) {
+                                if (value == "")
+                                    return true;
+
+                                if (!isValidUrl(value)) {
+                                    return { result: false, message: "Không đúng format Uri" };
+                                }
+                                return true;
+                            }
+                        }]
+                });
+        }
+
+        const initGrdAllowedCorsOrigins = function () {
+            let sourceAllowdCorsOrigins =
+            {
+                localdata: allowedCorsOrigins,
+                datatype: "array",
+                id: "id",
+                updaterow: function (rowid, rowdata, commit) {
+                    // synchronize with the server - send update command
+                    // call commit with parameter true if the synchronization with the server is successful
+                    // and with parameter false if the synchronization failder.
+                    updateAllowedCorsOrigins(allowedCorsOriginsDataAdapter);
+                    commit(true);
+                },
+                cache: false,
+                pagesize: 5,
+                pagesizeoptions: ["5", "10", "250"],
+                datafields:
+                    [
+                        { name: 'id', type: 'int' },
+                        { name: 'uri', type: 'string' }
+                    ]
+            };
+
+            let allowedCorsOriginsDataAdapter = new $.jqx.dataAdapter(sourceAllowdCorsOrigins);
+
+            grdAllowedCorsOrigins.jqxGrid(
+                {
+                    width: '100%',
+                    height: 250,
+                    source: allowedCorsOriginsDataAdapter,
+                    pageable: true,
+                    autorowheight: false,
+                    columnsresize: true,
+                    altrows: true,
+                    editable: true,
+                    pagesizeoptions: ["5", "10", "20"],
+                    localization: getLocalization('vi'),
+                    selectionmode: 'singlerow',
+                    editmode: 'singlecell',
+                    showstatusbar: false,
+                    virtualMode: true,
+                    renderGridRows: function (obj) {
+                        return obj.data;
+                    },
+                    showtoolbar: true,
+                    rendertoolbar: function (toolbar) {
+                        const container = $(`<div class="btn-group" style='margin: 2px;'></div>`);
+                        toolbar.append(container);
+                        container.append(`<button id="addAllowedCorsOrigins"
+                                                 type="button"
+                                                 class="btn btn-primary btn-sm"
+                                                  >Thêm mới</button>`);
+                        let btnRemoveAllowedCorsOrigins = $(`<button id="btnRemoveAllowedCorsOrigins"
+                            type="button"
+                            class="btn btn-primary btn-sm">
+                            <i class="fa fa-trash-o"></i> Xóa
+                            </button>`);
+                        container.append(btnRemoveAllowedCorsOrigins);
+                        // create new row.
+                        $("#addAllowedCorsOrigins").on('click', function () {
+                            const datarow = {
+                                id: 0,
+                                uri: ''
+                            };
+                            grdAllowedCorsOrigins.jqxGrid('addrow', null, datarow);
+                            grdAllowedCorsOrigins.jqxGrid('updatebounddata');
+                        });
+
+                        btnRemoveAllowedCorsOrigins.click(function () {
+
+                        });
+                    },
+                    columns: [
+                        {
+                            text: 'STT',
+                            sortable: false,
+                            filterable: false,
+                            editable: false,
+                            groupable: false,
+                            draggable: false,
+                            pinned: true,
+                            datafield: '',
+                            columntype: 'number',
+                            width: 40,
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        {
+                            text: 'Uri',
+                            columntype: 'textbox',
+                            datafield: 'uri',
+                            pinned: false,
+                            editable: true,
+                            width: 300,
+                            validation: function (cell, value) {
+                                if (value == "")
+                                    return true;
+
+                                if (!isValidUrl(value)) {
+                                    return { result: false, message: "Không đúng format Uri" };
+                                }
+                                return true;
+                            }
+                        }]
+                });
+        }
+
+        $(document).ready(function () {
+            $('#AllowRememberConsent').jqxCheckBox({
+                width: 250,
+                checked: @Model.AllowRememberConsent.ToString().ToLowerInvariant()
+            });
+
+            $('#AllowRememberConsent').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AllowRememberConsent]').val(`${checked}`);
+            });
+
+            $('#RequireConsent').jqxCheckBox({
+                width: 250,
+                checked: @Model.RequireConsent.ToString().ToLowerInvariant()
+            });
+
+            $('#RequireConsent').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=RequireConsent]').val(`${checked}`);
+            });
+
+            $('#AllowClientCredentialsOnly').jqxCheckBox({
+                width: 250,
+                checked: @Model.AllowClientCredentialsOnly.ToString().ToLowerInvariant()
+            });
+
+            $('#AllowClientCredentialsOnly').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AllowClientCredentialsOnly]').val(`${checked}`);
+            });
+
+            $('#LogoutSessionRequired').jqxCheckBox({
+                width: 250,
+                checked: @Model.LogoutSessionRequired.ToString().ToLowerInvariant()
+            });
+
+            $('#LogoutSessionRequired').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=LogoutSessionRequired]').val(`${checked}`);
+            });
+
+            $('#RequireSignOutPrompt').jqxCheckBox({
+                width: 250,
+                checked: @Model.RequireSignOutPrompt.ToString().ToLowerInvariant()
+            });
+
+            $('#RequireSignOutPrompt').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=RequireSignOutPrompt]').val(`${checked}`);
+            });
+
+            $('#AllowAccessTokensViaBrowser').jqxCheckBox({
+                width: 250,
+                checked: @Model.AllowAccessTokensViaBrowser.ToString().ToLowerInvariant()
+            });
+
+            $('#AllowAccessTokensViaBrowser').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AllowAccessTokensViaBrowser]').val(`${checked}`);
+            });
+
+            $('#AllowedCustomGrantTypes').jqxCheckBox({
+                width: 250,
+                checked: @Model.AllowedCustomGrantTypes.ToString().ToLowerInvariant()
+            });
+
+            $('#AllowedCustomGrantTypes').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AllowedCustomGrantTypes]').val(`${checked}`);
+            });
+
+            $('#UpdateAccessTokenClaimsOnRefresh').jqxCheckBox({
+                width: 250,
+                checked: @Model.UpdateAccessTokenClaimsOnRefresh.ToString().ToLowerInvariant()
+            });
+
+            $('#UpdateAccessTokenClaimsOnRefresh').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=UpdateAccessTokenClaimsOnRefresh]').val(`${checked}`);
+            });
+
+            $('#EnableLocalLogin').jqxCheckBox({
+                width: 250,
+                checked: @Model.EnableLocalLogin.ToString().ToLowerInvariant()
+            });
+
+            $('#EnableLocalLogin').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=EnableLocalLogin]').val(`${checked}`);
+            });
+
+            $('#IncludeJwtId').jqxCheckBox({
+                width: 250,
+                checked: @Model.IncludeJwtId.ToString().ToLowerInvariant()
+            });
+
+            $('#IncludeJwtId').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=EnableLocalLogin]').val(`${checked}`);
+            });
+
+            $('#AlwaysSendClientClaims').jqxCheckBox({
+                width: 250,
+                checked: @Model.AlwaysSendClientClaims.ToString().ToLowerInvariant()
+            });
+
+            $('#AlwaysSendClientClaims').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=AlwaysSendClientClaims]').val(`${checked}`);
+            });
+
+            $('#PrefixClientClaims').jqxCheckBox({
+                width: 250,
+                checked: @Model.PrefixClientClaims.ToString().ToLowerInvariant()
+            });
+
+            $('#PrefixClientClaims').on('change', function (event) {
+                var checked = event.args.checked;
+                $('input:hidden[name=PrefixClientClaims]').val(`${checked}`);
+            });
+
+            initGrdRedirectUris();
+            initGrdPostLogoutRedirectUris();
+            initGrdAllowedCorsOrigins();
+            scopes.select2();
+            scopes.val([@string.Join(",",Model.Scopes)]).trigger('change');
+        });
+
+    </script>
+}

@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Thinktecture.IdentityModel.Mvc;
+using static DT.Core.Web.Common.Identity.Constants;
 
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
 {
@@ -16,6 +18,8 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
     {
         [Route("api/clients/searchclientsbytokenpaged")]
         [HttpGet]
+        [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.ApiClients)]
+        [HandleForbidden]
         public async Task<DataSourceResult> SearchClientsByTokenPaged([FromUri]DataSourceRequest dataSourceRequest, string token)
         {
             var dataSourceResult = await Mediator.Send(new SearchClientsByTokenPagedQuery

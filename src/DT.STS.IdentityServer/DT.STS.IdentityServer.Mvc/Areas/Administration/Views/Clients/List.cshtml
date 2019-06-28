@@ -169,7 +169,7 @@
                         width: 150,
                         cellsrenderer: function (row, column, value, defaultHtml) {
                             var element = $(defaultHtml);
-                            element.html(`<a href="${updateClientUrl}?id=${dataAdapter.records[row].id}"> <i class="fa fa-pencil"></i> ${value} </a>`);
+                            element.html(`<a href="${updateClientUrl}?clientId=${dataAdapter.records[row].clientId}"> <i class="fa fa-pencil"></i> ${value} </a>`);
                             return element[0].outerHTML;
                         }
                     },

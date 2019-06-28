@@ -65,6 +65,9 @@ namespace DT.STS.IdentityServer.Application.Mapper
                 // ----- CreateClientCommand -----
                 cfg.CreateMap<CreateClientCommand, Client>();
 
+                // ----- UpdateClientCommand -----
+                cfg.CreateMap<UpdateClientCommand, Client>();
+
                 // ----- UserScope -----
                 cfg.CreateMap<InsertOrUpdateUserScopeCommand, UserScope>();
 

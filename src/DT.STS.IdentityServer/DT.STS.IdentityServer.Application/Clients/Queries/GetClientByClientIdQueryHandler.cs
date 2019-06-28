@@ -20,6 +20,7 @@ namespace DT.STS.IdentityServer.Application.Clients.Queries
             return await _context.Clients.Where(client => client.ClientId.Equals(request.ClientId))
                 .Select(client => new GetClientByClientIdDto
                 {
+                    Id = client.Id,
                     ClientId = client.ClientId,
                     ClientName = client.ClientName,
                     AbsoluteRefreshTokenLifetime = client.AbsoluteRefreshTokenLifetime,

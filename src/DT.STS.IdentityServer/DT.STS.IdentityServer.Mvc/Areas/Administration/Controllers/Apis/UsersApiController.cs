@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Thinktecture.IdentityModel.WebApi;
+using static DT.Core.Web.Common.Identity.Constants;
 
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
 {
@@ -13,17 +15,21 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
     {
         [Route("api/users/getuserspaged")]
         [HttpGet]
+        [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.ApiUsers)]
         public async Task<DataSourceResult> List([FromUri]DataSourceRequest dataSourceRequest)
         {
-            return await Mediator.Send(new GetUsersPagedQuery {
+            return await Mediator.Send(new GetUsersPagedQuery
+            {
                 DataSourceRequest = dataSourceRequest
             });
         }
 
         [Route("api/users/syncusersfromad")]
+        [ResourceAuthorize(DtPermissionBaseTypes.Sync, IdentityServerResources.ApiUsers)]
         public async Task<int> SyncUsersFromAd()
         {
-            return await Mediator.Send(new SyncUsersFromActiveDirectoryCommand {
+            return await Mediator.Send(new SyncUsersFromActiveDirectoryCommand
+            {
                 CreatedBy = User.Identity.Name,
                 CreatedOn = DateTime.Now
             });
@@ -31,17 +37,19 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
 
         [Route("api/users/lookuserfromad")]
         [HttpGet]
+        [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.ApiUsers)]
         public async Task<GetUserByUserNameFromAdDto> LookUserFromAd(string userName)
         {
             return await Mediator.Send(new GetUserByUserNameFromAdQuery
             {
-               UserName = userName
+                UserName = userName
             });
         }
 
         [Route("api/users/searchusersbytokenpaged")]
         [HttpGet]
-        public async Task<DataSourceResult> SearchUsersByTokenPaged([FromUri]DataSourceRequest dataSourceRequest,string token)
+        [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.ApiUsers)]
+        public async Task<DataSourceResult> SearchUsersByTokenPaged([FromUri]DataSourceRequest dataSourceRequest, string token)
         {
             return await Mediator.Send(new SearchUsersByTokenPagedQuery
             {
@@ -52,6 +60,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
 
         [Route("api/users/getallusers")]
         [HttpGet]
+        [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.ApiUsers)]
         public async Task<List<GetAllUsersDto>> GetAllUsers()
         {
             return await Mediator.Send(new GetAllUsersQuery());

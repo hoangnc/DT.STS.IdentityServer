@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using DT.STS.IdentityServer.Mvc.Areas.Administration.Services
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -44,7 +45,7 @@
     <div class="wrapper">
         @Html.Partial("_HeaderPartial")
         <!-- Left side column. contains the logo and sidebar -->
-        @Html.Partial("_LeftSideColumnPartial")
+        @Html.Partial("_LeftSideColumnPartial", (MenuManager)ViewBag.Menu)
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->

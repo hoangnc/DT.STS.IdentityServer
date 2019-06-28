@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using DT.Core.Web.Ui.Navigation;
+using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
+using System.Web.Mvc;
 
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 {
@@ -10,6 +12,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return RedirectToAction("List");
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.UserScope)]
         public ActionResult List()
         {
             return View();

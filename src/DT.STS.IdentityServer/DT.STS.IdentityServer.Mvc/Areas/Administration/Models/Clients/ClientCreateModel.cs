@@ -101,9 +101,13 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients
         [Display(Name = "Prefix client claims")]
         public bool PrefixClientClaims { get; set; }
 
+        [Display(Name = "Scopes")]
+        public List<string> Scopes { get; set; }
+
         public ICollection<SelectListItem> AvailableClaims { get; set; }
         public ICollection<SelectListItem> AvailableFlows { get; set; }
         public ICollection<SelectListItem> AvailableTokenExpirations { get; set; }
+        public ICollection<SelectListItem> AvailableScopes { get; set; }
         public ClientCreateModel()
         {
             AvailableClaims = new List<SelectListItem>();
@@ -163,6 +167,8 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients
                     Value = Flows.ResourceOwner.ToString()
                 }
             };
+
+            AvailableScopes = new List<SelectListItem>();
         }
 
         public void InitData()

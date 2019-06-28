@@ -76,6 +76,8 @@
     <Compile Include="Claims\Queries\GetAllClaimsQueryHandler.cs" />
     <Compile Include="Clients\Commands\CreateClientCommand.cs" />
     <Compile Include="Clients\Commands\CreateClientCommandHandler.cs" />
+    <Compile Include="Clients\Commands\UpdateClientCommand.cs" />
+    <Compile Include="Clients\Commands\UpdateClientCommandHandler.cs" />
     <Compile Include="Clients\Queries\GetClientByClientIdDto.cs" />
     <Compile Include="Clients\Queries\GetClientByClientIdQuery.cs" />
     <Compile Include="Clients\Queries\GetClientByClientIdQueryHandler.cs" />

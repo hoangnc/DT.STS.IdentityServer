@@ -1,4 +1,5 @@
 ﻿using DT.STS.IdentityServer.Application.Mapper;
+using DT.STS.IdentityServer.Domain.Entities;
 using DT.STS.IdentityServer.Persistence;
 using MediatR;
 using System.Threading;
@@ -15,7 +16,7 @@ namespace DT.STS.IdentityServer.Application.Clients.Commands
         }
         public async Task<int> Handle(CreateClientCommand request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Client client = request.ToClient();
+            Client client = request.ToClient();
             _context.Clients.Add(client);
             return await _context.SaveChangesAsync();
         }

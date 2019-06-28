@@ -70,6 +70,16 @@
     <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="DT.Core.Web.Common">
+      <HintPath>..\..\DocumentManagement\DT.Core.Web.Ui.Navigation\bin\Debug\DT.Core.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DT.Core.Web.Common.Identity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DocumentManagement\DT.Core.Web.Common.Identity\bin\Debug\DT.Core.Web.Common.Identity.dll</HintPath>
+    </Reference>
+    <Reference Include="DT.Core.Web.Ui.Navigation">
+      <HintPath>..\..\DocumentManagement\DT.Core.Web.Ui.Navigation\bin\Debug\DT.Core.Web.Ui.Navigation.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -152,11 +162,11 @@
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.Owin, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.0\lib\net45\System.Web.Http.Owin.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Http.Owin, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.7\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
@@ -203,6 +213,9 @@
     <Reference Include="Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc">
       <HintPath>..\packages\Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc.2.0.0\lib\net45\Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi.3.0.0\lib\net45\Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Wdc.DirectoryLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Wdc.DirectoryLib.2.2.5\lib\net35\Wdc.DirectoryLib.dll</HintPath>
     </Reference>
@@ -233,11 +246,14 @@
     <Compile Include="Areas\Administration\Mapper\MvcAutoMapperConfiguration.cs" />
     <Compile Include="Areas\Administration\Mapper\MvcMappingExtensions.cs" />
     <Compile Include="Areas\Administration\Models\Clients\ClientCreateModel.cs" />
+    <Compile Include="Areas\Administration\Models\Clients\ClientUpdateModel.cs" />
     <Compile Include="Areas\Administration\Models\Clients\SearchClientViewModel.cs" />
     <Compile Include="Areas\Administration\Models\Scopes\ScopeCreateModel.cs" />
     <Compile Include="Areas\Administration\Models\Scopes\ScopeUpdateModel.cs" />
     <Compile Include="Areas\Administration\Models\Scopes\SearchScopeViewModel.cs" />
     <Compile Include="Areas\Administration\Models\Users\UserCreateModel.cs" />
+    <Compile Include="Areas\Administration\Services\MenuConfigurationContext.cs" />
+    <Compile Include="Areas\Administration\Services\MenuManager.cs" />
     <Compile Include="AuthorizationManager.cs" />
     <Compile Include="AutofacConfig.cs" />
     <Compile Include="Configurations\DefaultClientSetting.cs" />
@@ -1883,6 +1899,7 @@
     <Content Include="Areas\Administration\Views\Clients\List.cshtml" />
     <Content Include="Areas\Administration\Views\Clients\Create.cshtml" />
     <Content Include="Areas\Administration\Views\UserScopes\List.cshtml" />
+    <Content Include="Areas\Administration\Views\Clients\Update.cshtml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\admin_lte\adminlte.min.js" />
     <Content Include="Scripts\admin_lte\bower_components\bootstrap\dist\css\bootstrap-theme.css" />

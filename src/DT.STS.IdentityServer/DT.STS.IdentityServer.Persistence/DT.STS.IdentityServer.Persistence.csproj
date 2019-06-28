@@ -122,6 +122,10 @@
     <Compile Include="Migrations\201906250408547_AddPermissionsToUserScope.Designer.cs">
       <DependentUpon>201906250408547_AddPermissionsToUserScope.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906270603293_AddScopesToClient.cs" />
+    <Compile Include="Migrations\201906270603293_AddScopesToClient.Designer.cs">
+      <DependentUpon>201906270603293_AddScopesToClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="STSDbContext.cs" />
@@ -177,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906250408547_AddPermissionsToUserScope.resx">
       <DependentUpon>201906250408547_AddPermissionsToUserScope.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906270603293_AddScopesToClient.resx">
+      <DependentUpon>201906270603293_AddScopesToClient.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

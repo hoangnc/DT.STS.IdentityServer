@@ -24,6 +24,7 @@ using Autofac;
 using System.Net;
 using System.Net.Security;
 using DT.STS.IdentityServer.Mvc.Extensions;
+using System.Web.Mvc;
 
 [assembly: OwinStartup(typeof(DT.STS.IdentityServer.Mvc.Startup))]
 
@@ -92,9 +93,9 @@ namespace DT.STS.IdentityServer.Mvc
             app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
                 {
                     Authority = "https://localhost:44319/identity",
-                    // Authority = "https://192.168.9.61/identity",
+                    //Authority = "https://192.168.9.61/identity",
                     ClientId = "idserver",
-                    Scope = "openid profile roles adminapi",
+                    Scope = "openid profile roles adminapi adminmvc",
                     ResponseType = "id_token token",
                     RedirectUri = "https://localhost:44319/administration/dashboard",
                     // RedirectUri = "https://192.168.9.61/administration/dashboard",

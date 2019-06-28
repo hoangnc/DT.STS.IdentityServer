@@ -9,6 +9,10 @@ using System.Web.Mvc;
 using System;
 using IdentityServer3.Core.Models;
 using DT.STS.IdentityServer.Application.Users.Queries;
+using Thinktecture.IdentityModel.Mvc;
+using static DT.Core.Web.Common.Identity.Constants;
+using DT.Core.Web.Ui.Navigation;
+using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
 
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 {
@@ -16,33 +20,45 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
     public class UsersController : Controller
     {
         private readonly IMediator _mediator;
-
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
+        [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.Users)]
+        [HandleForbidden]
         public ActionResult Index()
         {
+
             return RedirectToAction("List");
         }
 
+        [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.Users)]
+        [HandleForbidden]
+        [Menu(SelectedMenu = MenuNameConstants.User)]
         public ActionResult List()
         {
             return View();
         }
 
+        [ResourceAuthorize(DtPermissionBaseTypes.Write, IdentityServerResources.Users)]
+        [HandleForbidden]
         [HttpGet]
+        [Menu(SelectedMenu = MenuNameConstants.User)]
         public async Task<ActionResult> Create()
         {
             UserCreateModel model = new UserCreateModel();
             model.AvailableDomains = GetDomains();
             model.Departments = await GetDepartments();
             model.Users = await GetUsers();
+
             return View(model);
         }
 
+        [ResourceAuthorize(DtPermissionBaseTypes.Write, IdentityServerResources.Users)]
+        [HandleForbidden]
         [HttpPost]
+        [Menu(SelectedMenu = MenuNameConstants.User)]
         public async Task<ActionResult> Create(UserCreateModel model)
         {
             if (ModelState.IsValid)

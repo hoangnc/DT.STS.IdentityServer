@@ -109,3 +109,9 @@ C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServe
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\EntityFramework.SqlServer.xml
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\DT.Core.Web.Common.Identity.dll
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\DT.Core.Web.Common.Identity.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\DT.Core.Web.Common.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\DT.Core.Web.Ui.Navigation.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\DT.Core.Web.Common.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Mvc\bin\DT.Core.Web.Ui.Navigation.pdb

@@ -94,6 +94,11 @@ namespace DT.STS.IdentityServer.Application.Mapper
         {
             return command.MapTo<CreateClientCommand, Client>();
         }
+
+        public static Client ToClient(this UpdateClientCommand command)
+        {
+            return command.MapTo<UpdateClientCommand, Client>();
+        }
         #endregion
 
         #region UserScopes

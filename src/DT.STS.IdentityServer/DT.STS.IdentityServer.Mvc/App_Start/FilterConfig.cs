@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using DT.Core.Web.Ui.Navigation;
+using System.Web.Mvc;
 
 namespace DT.STS.IdentityServer.Mvc
 {
@@ -7,6 +8,7 @@ namespace DT.STS.IdentityServer.Mvc
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            // filters.Add(new MenuActionFilterAttribute());
         }
     }
 }

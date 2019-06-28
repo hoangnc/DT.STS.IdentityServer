@@ -42,7 +42,14 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper
                 cfg.CreateMap<SearchClientsByTokenPagedDto, SearchClientViewModel>();
 
                 // ----- CreateClientCommand -----
-                cfg.CreateMap<ClientCreateModel, CreateClientCommand>();
+                cfg.CreateMap<ClientCreateModel, CreateClientCommand>()
+                .ForMember(dest => dest.Scopes,
+                  mo=>mo.MapFrom(src => string.Join(";", src.Scopes)));
+
+                // ----- ClientUpdateModel -----
+                cfg.CreateMap<GetClientByClientIdDto, ClientUpdateModel>()
+                .ForMember(dest => dest.Scopes,
+                   mo => mo.MapFrom(src => src.Scopes.Split(';')));
             });
             Mapper = MapperConfiguration.CreateMapper();
         }

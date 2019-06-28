@@ -34,5 +34,6 @@ namespace DT.STS.IdentityServer.Application.Clients.Queries
         public string AllowedCorsOrigins { get; set; }
         public bool AlwaysSendClientClaims { get; set; }
         public bool PrefixClientClaims { get; set; }
+        public string Scopes { get; set; }
     }
 }

@@ -57,6 +57,11 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper
         {
             return model.MapTo<ClientCreateModel, CreateClientCommand>();
         }
+
+        public static ClientUpdateModel ToClientUpdateModel(this GetClientByClientIdDto dto)
+        {
+            return dto.MapTo<GetClientByClientIdDto, ClientUpdateModel>();
+        }
         #endregion
 
     }
