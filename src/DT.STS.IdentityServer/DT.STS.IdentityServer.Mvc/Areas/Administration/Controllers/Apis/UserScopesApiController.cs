@@ -34,7 +34,5 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
             command.CreatedOn = DateTime.Now;
             return await Mediator.Send(command);
         }
-
-
     }
 }

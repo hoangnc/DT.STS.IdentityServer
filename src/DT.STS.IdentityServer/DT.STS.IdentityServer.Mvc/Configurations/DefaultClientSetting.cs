@@ -10,7 +10,7 @@ namespace DT.STS.IdentityServer.Mvc.Configurations
     {
         public DefaultClientSetting() { }
 
-        [ConfigurationProperty("clientId", IsRequired = true, IsKey = true, DefaultValue = "idserver")]
+        [ConfigurationProperty("clientId", IsRequired = true, IsKey = true, DefaultValue = "dtwebappclient")]
         public string ClientId
         {
             get => this["clientId"].ToString();

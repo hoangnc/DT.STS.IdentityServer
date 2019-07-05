@@ -16,7 +16,8 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Services
                                                         <i class=""{1}""></i>
                                                         <span>{2}</span>                                               
                                                     </a>
-                                                    </li>                                                ";
+                                                    </li>
+                                                ";
         public IMenuConfigurationContext MenuConfigurationContext => DependencyResolver.Current.GetService<IMenuConfigurationContext>();
 
         public string SelectedMenu { get ; set ; }

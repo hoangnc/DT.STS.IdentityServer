@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
-using DT.Core.Web.Ui.Navigation;
 using DT.STS.IdentityServer.Application;
 using DT.STS.IdentityServer.Mvc.Services;
 using DT.STS.IdentityServer.Persistence;
@@ -56,7 +55,10 @@ namespace DT.STS.IdentityServer.Mvc
                 return t => c.Resolve(t);
             });
 
-            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof(IMediator)
+                .GetTypeInfo()
+                .Assembly)
+                .AsImplementedInterfaces();
 
             builder.RegisterType<UserService>()
                    .As<IUserService>()
@@ -71,6 +73,7 @@ namespace DT.STS.IdentityServer.Mvc
                 .SingleInstance();
 
             IContainer container = builder.Build();
+
             // Set MVC DI resolver to use our Autofac container
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 

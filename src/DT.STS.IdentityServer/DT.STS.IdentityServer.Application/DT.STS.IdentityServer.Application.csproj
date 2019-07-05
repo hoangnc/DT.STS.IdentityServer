@@ -128,6 +128,8 @@
     <Compile Include="Users\Commands\Authenticate\AuthenticateDto.cs" />
     <Compile Include="Users\Commands\CreateUser\CreateUserCommand.cs" />
     <Compile Include="Users\Commands\CreateUser\CreateUserCommandHandler.cs" />
+    <Compile Include="Users\Commands\SyncImagesFromCloudCommand.cs" />
+    <Compile Include="Users\Commands\SyncImagesFromCloudCommandHandler.cs" />
     <Compile Include="Users\Commands\SyncUsersFromActiveDirectory\SyncUsersFromActiveDirectoryCommand.cs" />
     <Compile Include="Users\Commands\SyncUsersFromActiveDirectory\SyncUsersFromActiveDirectoryCommandHandler.cs" />
     <Compile Include="Users\Queries\GetAllUsers\GetAllUsersDto.cs" />

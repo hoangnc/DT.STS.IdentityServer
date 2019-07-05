@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DT.STS.IdentityServer.Commo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DT.STS.IdentityServer.Mvc", "DT.STS.IdentityServer.Mvc\DT.STS.IdentityServer.Mvc.csproj", "{6FF07508-76CF-459D-AA97-76B3BAD58D65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DT.MasterData.WebApi", "DT.MasterData.WebApi\DT.MasterData.WebApi.csproj", "{9AF5E7F7-DD51-4604-840D-68B0A306C2A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{6FF07508-76CF-459D-AA97-76B3BAD58D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FF07508-76CF-459D-AA97-76B3BAD58D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FF07508-76CF-459D-AA97-76B3BAD58D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AF5E7F7-DD51-4604-840D-68B0A306C2A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AF5E7F7-DD51-4604-840D-68B0A306C2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AF5E7F7-DD51-4604-840D-68B0A306C2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AF5E7F7-DD51-4604-840D-68B0A306C2A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

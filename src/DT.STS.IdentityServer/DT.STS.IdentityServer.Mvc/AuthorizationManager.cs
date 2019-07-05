@@ -25,8 +25,6 @@ namespace DT.STS.IdentityServer.Mvc
         {
             switch (context.Resource.First().Value)
             {
-                case "ContactDetails":
-                    return AuthorizeContactDetails(context);
                 case IdentityServerResources.Users:
                     return AuthorizeUsers(context);
                 case IdentityServerResources.Scopes:
@@ -126,17 +124,5 @@ namespace DT.STS.IdentityServer.Mvc
             }
         }
         #endregion
-        private Task<bool> AuthorizeContactDetails(ResourceAuthorizationContext context)
-        {
-            switch (context.Action.First().Value)
-            {
-                case "Read":
-                    return Eval(context.Principal.HasClaim("role", "Geek"));
-                case "Write":
-                    return Eval(context.Principal.HasClaim("role", "Operator"));
-                default:
-                    return Nok();
-            }
-        }
     }
 }

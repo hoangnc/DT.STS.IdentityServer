@@ -24,6 +24,12 @@
                             <i class="fa fa-refresh"></i>
                             Sync từ AD
                         </button>
+                        <button type="button"
+                                id="btnSyncImageFromCloud"
+                                class="btn btn-success btn-sm">
+                            <i class="fa fa-refresh"></i>
+                            Sync hình từ Cloud
+                        </button>
                         <a href="@Url.Action("Create")" class="btn btn-success btn-sm">
                             <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
                         </a>
@@ -221,10 +227,29 @@
 
     <script>
         let btnSyncFromAd = $('#btnSyncFromAd');
+        let btnSyncImageFromCloud = $('#btnSyncImageFromCloud');
         let syncUsersFromAdUrl = '@Url.ActionApiWithHost("users","syncusersfromad")';
+        let syncImagesFromCloudUrl = '@Url.ActionApiWithHost("users", "syncimagesfromcloud")';
         btnSyncFromAd.click(function () {
             $.ajax({
                 url: syncUsersFromAdUrl,
+                type: "POST",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (event, settings, xhr) {
+                    xhr.message = {
+                        infor: 'Cập nhật thông tin người dùng từ Active Dicrectory thành công!',
+                        returnUrl: ''
+                    };
+                    grdUser.jqxGrid('updatebounddata', 'cells');
+                }
+            });
+        });
+
+        btnSyncImageFromCloud.click(function () {
+            $.ajax({
+                url: syncImagesFromCloudUrl,
                 type: "POST",
                 data: {},
                 contentType: "application/json; charset=utf-8",

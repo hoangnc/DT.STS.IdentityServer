@@ -30,15 +30,33 @@ namespace DT.STS.IdentityServer.Mvc.Services
                 if (clients != null && clients.Count > 0)
                 {
                     defaultClients.AddRange(clients.Cast<DefaultClientSetting>()
-                        .Select(c => new Client
+                        .Select(c =>
                         {
-                            ClientId = c.ClientId,
-                            ClientName = c.ClientName,
-                            Flow = c.Flow,
-                            RequireConsent = c.RequireConsent,
-                            RedirectUris = c.RedirectUris.Split(';').ToList(),
-                            PostLogoutRedirectUris = c.PostLogoutRedirectUris.Split(';').ToList(),
-                            AllowedScopes = c.AllowedScopes.Split(';').ToList()
+                            if (c.Flow == Flows.ClientCredentials)
+                            {
+                                return new Client
+                                {
+                                    ClientId = c.ClientId,
+                                    ClientName = c.ClientName,
+                                    Flow = c.Flow,
+                                    RequireConsent = c.RequireConsent,
+                                    ClientSecrets = new List<Secret>
+                                    {
+                                        new Secret("967ef861-1b5f-4ea1-9fd9-b66c24a8335c".Sha256())
+                                    },
+                                    AllowedScopes = c.AllowedScopes.Split(';').ToList()
+                                };
+                            }
+                            return new Client
+                            {
+                                ClientId = c.ClientId,
+                                ClientName = c.ClientName,
+                                Flow = c.Flow,
+                                RequireConsent = c.RequireConsent,
+                                RedirectUris = c.RedirectUris.Split(';').ToList(),
+                                PostLogoutRedirectUris = c.PostLogoutRedirectUris.Split(';').ToList(),
+                                AllowedScopes = c.AllowedScopes.Split(';').ToList()
+                            };
                         })
                     );
                 }
