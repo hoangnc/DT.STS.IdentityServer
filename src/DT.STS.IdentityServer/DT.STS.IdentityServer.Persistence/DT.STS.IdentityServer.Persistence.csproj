@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Configurations\ClaimConfiguration.cs" />
     <Compile Include="Configurations\ClientConfiguration.cs" />
+    <Compile Include="Configurations\CompanyConfiguration.cs" />
     <Compile Include="Configurations\DepartmentConfiguration.cs" />
     <Compile Include="Configurations\RoleConfiguration.cs" />
     <Compile Include="Configurations\ScopeClaimConfiguration.cs" />
@@ -126,6 +127,10 @@
     <Compile Include="Migrations\201906270603293_AddScopesToClient.Designer.cs">
       <DependentUpon>201906270603293_AddScopesToClient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907050429024_UpdateColumnsCompany.cs" />
+    <Compile Include="Migrations\201907050429024_UpdateColumnsCompany.Designer.cs">
+      <DependentUpon>201907050429024_UpdateColumnsCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="STSDbContext.cs" />
@@ -184,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906270603293_AddScopesToClient.resx">
       <DependentUpon>201906270603293_AddScopesToClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907050429024_UpdateColumnsCompany.resx">
+      <DependentUpon>201907050429024_UpdateColumnsCompany.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

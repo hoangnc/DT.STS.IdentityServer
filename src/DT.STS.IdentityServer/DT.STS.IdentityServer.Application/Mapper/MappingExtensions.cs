@@ -9,6 +9,7 @@ using DT.STS.IdentityServer.Application.Clients.Queries;
 using DT.STS.IdentityServer.Application.Clients.Commands;
 using DT.STS.IdentityServer.Application.UserScopes.Commands;
 using DT.STS.IdentityServer.Application.Claims.Queries;
+using DT.STS.IdentityServer.Application.Companies.Queries;
 
 namespace DT.STS.IdentityServer.Application.Mapper
 {
@@ -37,9 +38,17 @@ namespace DT.STS.IdentityServer.Application.Mapper
         {
             return command.MapTo<CreateUserCommand, User>();
         }
+        public static User ToUser(this UpdateUserCommand command)
+        {
+            return command.MapTo<UpdateUserCommand, User>();
+        }
         public static GetAllUsersDto ToGetAllUsersDto(this User entity)
         {
             return entity.MapTo<User, GetAllUsersDto>();
+        }
+        public static GetUserByIdDto ToGetUserByIdDto(this User entity)
+        {
+            return entity.MapTo<User, GetUserByIdDto>();
         }
         #endregion
 
@@ -113,6 +122,13 @@ namespace DT.STS.IdentityServer.Application.Mapper
         public static GetAllClaimsDto ToGetAllClaimsDto(this Claim claim)
         {
             return claim.MapTo<Claim, GetAllClaimsDto>();
+        }
+        #endregion
+
+        #region Companies
+        public static GetAllCompaniesDto ToGetAllCompaniesDto(this Company company)
+        {
+            return company.MapTo<Company, GetAllCompaniesDto>();
         }
         #endregion
     }

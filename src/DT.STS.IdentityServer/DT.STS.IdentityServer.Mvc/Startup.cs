@@ -3,7 +3,7 @@ using DT.Core.Web.Common.Identity.Configurations;
 using DT.STS.IdentityServer.Mvc.IdentityServer;
 using DT.STS.IdentityServer.Mvc.Services;
 using IdentityModel.Client;
-using IdentityServer3.Core;
+using IdentityServer3Constants = IdentityServer3.Core.Constants;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
 using Microsoft.IdentityModel.Protocols;
@@ -25,6 +25,9 @@ using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Helpers;
+using DT.Core.Web.Common.Validation;
+using Abp.Localization;
+using FluentValidation;
 
 [assembly: OwinStartup(typeof(DT.STS.IdentityServer.Mvc.Startup))]
 
@@ -41,7 +44,7 @@ namespace DT.STS.IdentityServer.Mvc
                 .CreateLogger();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-            AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = IdentityServer3Constants.ClaimTypes.Subject;
             JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
             // Adjust the configuration for anti-CSRF protection to the new unique sub claim type
             JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
@@ -49,11 +52,13 @@ namespace DT.STS.IdentityServer.Mvc
             IContainer container = AutofacConfig.ConfigureContainer();
             app.UseAutofacMiddleware(container);
 
+            CustomLanguageManager customLanguageManager = new CustomLanguageManager(container.Resolve<ILanguageManager>());
+            ValidatorOptions.LanguageManager = customLanguageManager;
+
             app.Map("/identity", idsrvApp =>
                 {
                     idsrvApp.UseAutofacMiddleware(container);
-                    IdentityServerServiceFactory factory = new IdentityServerServiceFactory()
-                    .UseInMemoryClients(Clients.Get());
+                    IdentityServerServiceFactory factory = new IdentityServerServiceFactory();
 
                     factory.UserService = new Registration<IUserService, UserService>();
                     factory.ScopeStore = new Registration<IScopeStore>(container.Resolve<IScopeStore>());
@@ -81,17 +86,7 @@ namespace DT.STS.IdentityServer.Mvc
 
                     idsrvApp.UseIdentityServer(options);
                 });
-
-            /*app.Map("/masterdatas", idsrvApp =>
-            {
-                idsrvApp.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
-                {
-                    Authority = "https://localhost:44319/identity",
-                    RequiredScopes = new[] { "documentapi" },
-                });
-            });*/
-
-
+            
             app.UseResourceAuthorization(new AuthorizationManager());
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -119,8 +114,8 @@ namespace DT.STS.IdentityServer.Mvc
                             {
                                 ClaimsIdentity nid = new ClaimsIdentity(
                                     n.AuthenticationTicket.Identity.AuthenticationType,
-                                    Constants.ClaimTypes.GivenName,
-                                    Constants.ClaimTypes.Role);
+                                    IdentityServer3Constants.ClaimTypes.GivenName,
+                                    IdentityServer3Constants.ClaimTypes.Role);
 
                                     // get userinfo data
                                     UserInfoClient userInfoClient = new UserInfoClient(
@@ -164,18 +159,6 @@ namespace DT.STS.IdentityServer.Mvc
                     }
                 });
             }
-        }
-
-        private void ConfigureIdentityProviders(IAppBuilder app, string signInAsType)
-        {
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions
-            {
-                AuthenticationType = "Google",
-                Caption = "Sign-in with Google",
-                SignInAsAuthenticationType = signInAsType,
-                ClientId = "701386055558-9epl93fgsjfmdn14frqvaq2r9i44qgaa.apps.googleusercontent.com",
-                ClientSecret = "3pyawKDWaXwsPuRDL7LtKm_o"
-            });
         }
     }
 }

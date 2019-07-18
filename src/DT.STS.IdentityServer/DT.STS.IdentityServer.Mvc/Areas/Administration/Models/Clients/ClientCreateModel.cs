@@ -1,5 +1,4 @@
 ﻿using IdentityServer3.Core.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -8,12 +7,12 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients
 {
     public class ClientCreateModel
     {
-        [Display(Name = "Client Id (*)")]
+        [Display(Name = "Client Id")]
         [Required(ErrorMessage = "{0} không được bỏ trống.")]
         [StringLength(128, ErrorMessage = "{0} không được lớn hơn {1} ký tự.")]
         public string ClientId { get; set; }
 
-        [Display(Name = "Client Name (*)")]
+        [Display(Name = "Client Name")]
         [Required(ErrorMessage = "{0} không được bỏ trống.")]
         [StringLength(256, ErrorMessage = "{0} không được lớn hơn {1} ký tự.")]
         public string ClientName { get; set; }
@@ -65,7 +64,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients
         [Display(Name = "Access token lifetime")]
         public int AccessTokenLifetime { get; set; }
 
-        [Display(Name= "Authorization code lifetime")]
+        [Display(Name = "Authorization code lifetime")]
         public int AuthorizationCodeLifetime { get; set; }
 
         [Display(Name = "Absolute refresh token lifetime")]
@@ -89,7 +88,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients
         [Display(Name = "Enable local login")]
         public bool EnableLocalLogin { get; set; }
 
-        [Display(Name ="Include jwtid")]
+        [Display(Name = "Include jwtid")]
         public bool IncludeJwtId { get; set; }
 
         [Display(Name = "Allowed Cors origins")]

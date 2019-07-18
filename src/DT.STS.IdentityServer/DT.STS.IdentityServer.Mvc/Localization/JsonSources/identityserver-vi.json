@@ -1,0 +1,23 @@
+﻿{
+  "culture": "vi-VN",
+  "texts": {
+    "ListOfUser": "Danh sách người dùng",
+    "SyncUsersFromAdSuccessed": "Đồng bộ thông tin người dùng từ Active Directory đã thành công!",
+    "SyncFromAd": "Đồng bộ từ AD",
+    "SearchFromAd": "Tìm kiếm từ Ad",
+    "SyncImageFromCloud": "Đồng bộ hình từ Cloud",
+    "UpdateUser":  "Cập nhật thông tin người dùng",
+    "AddNewUser": "Thêm mới người dùng",
+    "Domain": "Domain",
+    "UserName": "Tên đăng nhập",
+    "Password": "Mật khẩu",
+    "FirstName": "Tên",
+    "LastName": "Họ và tên",
+    "Email": "Địa chỉ email",
+    "Active": "Kích hoạt",
+    "JpegPhoto": "Ảnh nhân viên",
+    "FullNameUnicode": "Tên tiếng Việt",
+    "ManagerName": "Quản lý",
+    "DepartmentName": "Phòng ban"
+  }
+}

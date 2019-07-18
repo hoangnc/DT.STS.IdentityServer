@@ -4,6 +4,7 @@ using DT.STS.IdentityServer.Application.Clients.Queries;
 using DT.STS.IdentityServer.Application.Scopes.Commands;
 using DT.STS.IdentityServer.Application.Scopes.Queries;
 using DT.STS.IdentityServer.Application.Users.Commands;
+using DT.STS.IdentityServer.Application.Users.Queries;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Scopes;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Users;
@@ -19,6 +20,8 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper
             {
                 // ----- CreateUserCommand -----
                 cfg.CreateMap<UserCreateModel, CreateUserCommand>();
+
+                cfg.CreateMap<UserUpdateModel, UpdateUserCommand>();
 
                 // ----- CreateScopeCommand -----
                 cfg.CreateMap<ScopeCreateModel, CreateScopeCommand>();
@@ -50,6 +53,8 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper
                 cfg.CreateMap<GetClientByClientIdDto, ClientUpdateModel>()
                 .ForMember(dest => dest.Scopes,
                    mo => mo.MapFrom(src => src.Scopes.Split(';')));
+
+                cfg.CreateMap<GetUserByIdDto, UserUpdateModel>();
             });
             Mapper = MapperConfiguration.CreateMapper();
         }

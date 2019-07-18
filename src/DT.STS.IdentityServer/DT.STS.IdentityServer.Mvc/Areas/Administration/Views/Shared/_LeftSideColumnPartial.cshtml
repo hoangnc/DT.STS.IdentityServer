@@ -14,7 +14,11 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-        @Html.Menu(Model.RenderToHtml())
+        @if (Model != null)
+        {
+            @Html.Menu(Model.RenderToHtml())
+        }
+
         @*<ul class="sidebar-menu" data-widget="tree">
             <li class="header">Quản trị hệ thống</li>
             <li class="treeview">

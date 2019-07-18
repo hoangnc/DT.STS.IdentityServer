@@ -64,7 +64,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Services
             {
                 Name = MenuNameConstants.Department,
                 DisplayName = "Phòng ban",
-                Url = "#",
+                Url = "/administration/departments/list",
                 Order = 2
             });
 
@@ -72,7 +72,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Services
             {
                 Name = MenuNameConstants.Role,
                 DisplayName = "Cấp bậc",
-                Url = "~/administration/users/list",
+                Url = "/administration/users/list",
                 Order = 3
             });
 
@@ -122,6 +122,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Services
 
             moduleMenuItem.AddItem(menuUserAndPermission);
             #endregion
+
             moduleMenuItems.Add(moduleMenuItem);
             return moduleMenuItems;
         }

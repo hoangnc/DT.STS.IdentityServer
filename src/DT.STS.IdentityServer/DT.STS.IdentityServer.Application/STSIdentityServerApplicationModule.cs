@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DT.STS.IdentityServer.Application.Mapper;
 using MediatR;
 using System;
 using System.Reflection;
@@ -14,6 +15,8 @@ namespace DT.STS.IdentityServer.Application
 
         protected override void Load(ContainerBuilder builder)
         {
+            AutoMapperConfiguration.Initialize();
+
             Type[] mediatrOpenTypes = new[]
             {
                 typeof(IRequestHandler<,>),

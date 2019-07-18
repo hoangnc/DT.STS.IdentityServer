@@ -5,7 +5,7 @@ using System.Web.Mvc;
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 {
     [Authorize]
-    public class UserScopesController : Controller
+    public class UserScopesController : IdentityServerControllerBase
     {
         public ActionResult Index()
         {

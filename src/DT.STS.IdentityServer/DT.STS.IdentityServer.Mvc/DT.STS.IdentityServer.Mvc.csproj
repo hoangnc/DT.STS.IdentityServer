@@ -76,12 +76,18 @@
     <Reference Include="DT.Core.Localization">
       <HintPath>..\..\DocumentManagement\DT.Core.Localization\bin\Debug\DT.Core.Localization.dll</HintPath>
     </Reference>
+    <Reference Include="DT.Core.Web">
+      <HintPath>..\..\DocumentManagement\DT.Core.Web\bin\Debug\DT.Core.Web.dll</HintPath>
+    </Reference>
     <Reference Include="DT.Core.Web.Common">
       <HintPath>..\..\DocumentManagement\DT.Core.Web.Ui.Navigation\bin\Debug\DT.Core.Web.Common.dll</HintPath>
     </Reference>
     <Reference Include="DT.Core.Web.Common.Identity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\DocumentManagement\DT.Core.Web.Common.Identity\bin\Debug\DT.Core.Web.Common.Identity.dll</HintPath>
+    </Reference>
+    <Reference Include="DT.Core.Web.Common.Mvc">
+      <HintPath>..\..\DocumentManagement\DT.Core.Web.Common.Mvc\bin\Debug\DT.Core.Web.Common.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="DT.Core.Web.Ui.Navigation">
       <HintPath>..\..\DocumentManagement\DT.Core.Web.Ui.Navigation\bin\Debug\DT.Core.Web.Ui.Navigation.dll</HintPath>
@@ -91,6 +97,9 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.4.0\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="IdentityModel.Net45, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IdentityModel.1.0.0\lib\net45\IdentityModel.Net45.dll</HintPath>
@@ -133,9 +142,8 @@
     <Reference Include="Microsoft.Owin.Security.OpenIdConnect">
       <HintPath>..\packages\Microsoft.Owin.Security.OpenIdConnect.3.0.0\lib\net45\Microsoft.Owin.Security.OpenIdConnect.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -149,6 +157,9 @@
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -258,6 +269,7 @@
     <Compile Include="Areas\Administration\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Administration\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Administration\Controllers\DepartmentsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\IdentityServerControllerBase.cs" />
     <Compile Include="Areas\Administration\Controllers\ScopesController.cs" />
     <Compile Include="Areas\Administration\Controllers\UsersController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserScopesController.cs" />
@@ -266,10 +278,12 @@
     <Compile Include="Areas\Administration\Models\Clients\ClientCreateModel.cs" />
     <Compile Include="Areas\Administration\Models\Clients\ClientUpdateModel.cs" />
     <Compile Include="Areas\Administration\Models\Clients\SearchClientViewModel.cs" />
+    <Compile Include="Areas\Administration\Models\LanguageSelectionViewModel.cs" />
     <Compile Include="Areas\Administration\Models\Scopes\ScopeCreateModel.cs" />
     <Compile Include="Areas\Administration\Models\Scopes\ScopeUpdateModel.cs" />
     <Compile Include="Areas\Administration\Models\Scopes\SearchScopeViewModel.cs" />
     <Compile Include="Areas\Administration\Models\Users\UserCreateModel.cs" />
+    <Compile Include="Areas\Administration\Models\Users\UserUpdateModel.cs" />
     <Compile Include="Areas\Administration\Services\MenuConfigurationContext.cs" />
     <Compile Include="Areas\Administration\Services\MenuManager.cs" />
     <Compile Include="AuthorizationManager.cs" />
@@ -277,21 +291,16 @@
     <Compile Include="Configurations\DefaultClientSetting.cs" />
     <Compile Include="Configurations\DefaultClientSettings.cs" />
     <Compile Include="Configurations\DefaultClientsSection.cs" />
+    <Compile Include="Constants\IdentityServerResourceNames.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CallApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extensions\DependencyResolverExtensions.cs" />
-    <Compile Include="Extensions\HtmlExtensions.cs" />
-    <Compile Include="Extensions\IdentityExtensions.cs" />
-    <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImageLoaderHelper.cs" />
     <Compile Include="IdentityServer\Certificate.cs" />
-    <Compile Include="IdentityServer\Clients.cs" />
-    <Compile Include="IdentityServer\Scopes.cs" />
-    <Compile Include="IdentityServer\Users.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ClientStore.cs" />
@@ -342,6 +351,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\busy-load.min.css" />
+    <Content Include="Content\famfamfam_flags\famfamfam-flags.css" />
+    <Content Include="Content\famfamfam_flags\famfamfam-flags.png" />
     <Content Include="Content\jquery.toast.min.css" />
     <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
@@ -1920,6 +1931,9 @@
     <Content Include="Areas\Administration\Views\UserScopes\List.cshtml" />
     <Content Include="Areas\Administration\Views\Clients\Update.cshtml" />
     <Content Include="Localization\JsonSources\identityserver.json" />
+    <Content Include="Localization\JsonSources\identityserver-vi.json" />
+    <Content Include="Areas\Administration\Views\Shared\_LanguagesPartial.cshtml" />
+    <Content Include="Areas\Administration\Views\Users\Update.cshtml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\admin_lte\adminlte.min.js" />
     <Content Include="Scripts\admin_lte\bower_components\bootstrap\dist\css\bootstrap-theme.css" />

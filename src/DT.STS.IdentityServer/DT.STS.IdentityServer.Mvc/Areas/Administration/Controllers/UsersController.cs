@@ -17,7 +17,7 @@ using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 {
     [Authorize]
-    public class UsersController : Controller
+    public class UsersController : IdentityServerControllerBase
     {
         private readonly IMediator _mediator;
         public UsersController(IMediator mediator)
@@ -33,18 +33,18 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return RedirectToAction("List");
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.User)]
         [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.Users)]
         [HandleForbidden]
-        [Menu(SelectedMenu = MenuNameConstants.User)]
         public ActionResult List()
         {
             return View();
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.User)]
         [ResourceAuthorize(DtPermissionBaseTypes.Write, IdentityServerResources.Users)]
         [HandleForbidden]
         [HttpGet]
-        [Menu(SelectedMenu = MenuNameConstants.User)]
         public async Task<ActionResult> Create()
         {
             UserCreateModel model = new UserCreateModel();
@@ -55,10 +55,10 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return View(model);
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.User)]
         [ResourceAuthorize(DtPermissionBaseTypes.Write, IdentityServerResources.Users)]
         [HandleForbidden]
         [HttpPost]
-        [Menu(SelectedMenu = MenuNameConstants.User)]
         public async Task<ActionResult> Create(UserCreateModel model)
         {
             if (ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
                 createUserCommand.CreatedBy = User.Identity.Name;
                 createUserCommand.CreatedOn = DateTime.Now;
                 createUserCommand.Password = createUserCommand.Password.Sha256();
-                int result = await _mediator.Send(createUserCommand);
+                int result = await Mediator.Send(createUserCommand);
                 if (result > 0)
                 {
                     return View("List");
@@ -80,6 +80,55 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 
             model.AvailableDomains = GetDomains();
             model.Departments = await GetDepartments();
+
+            return View(model);
+        }
+
+        [Menu(SelectedMenu = MenuNameConstants.User)]
+        [ResourceAuthorize(DtPermissionBaseTypes.Update, IdentityServerResources.Users)]
+        [HandleForbidden]
+        [HttpGet]
+        public async Task<ActionResult> Update(int id)
+        {
+            UserUpdateModel model = new UserUpdateModel();
+            var user = await Mediator.Send(new GetUserByIdQuery {
+                Id = id
+            });
+            model = user.ToUserUpdateModel();
+            model.AvailableDomains = GetDomains();
+            model.Departments = await GetDepartments();
+            model.Users = await GetUsers();
+
+            return View(model);
+        }
+
+        [Menu(SelectedMenu = MenuNameConstants.User)]
+        [ResourceAuthorize(DtPermissionBaseTypes.Update, IdentityServerResources.Users)]
+        [HandleForbidden]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> Update(UserUpdateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var updateUserCommand = model.ToUpdateUserCommand();
+                updateUserCommand.CreatedBy = User.Identity.Name;
+                updateUserCommand.CreatedOn = DateTime.Now;
+
+                int result = await Mediator.Send(updateUserCommand);
+                if (result > 0)
+                {
+                    return View("List");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Update User thất bại");
+                }
+            }
+
+            model.AvailableDomains = GetDomains();
+            model.Departments = await GetDepartments();
+            model.Users = await GetUsers();
 
             return View(model);
         }

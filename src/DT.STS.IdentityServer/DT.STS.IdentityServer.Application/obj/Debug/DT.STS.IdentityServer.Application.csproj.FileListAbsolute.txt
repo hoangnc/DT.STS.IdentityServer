@@ -50,3 +50,7 @@ C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServe
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Application\bin\Debug\IdentityServer3.xml
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Application\bin\Debug\DT.Core.Web.Common.Identity.dll
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Application\bin\Debug\DT.Core.Web.Common.Identity.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Application\bin\Debug\DT.Core.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Application\bin\Debug\FluentValidation.dll
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Application\bin\Debug\DT.Core.pdb
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Application\bin\Debug\FluentValidation.xml

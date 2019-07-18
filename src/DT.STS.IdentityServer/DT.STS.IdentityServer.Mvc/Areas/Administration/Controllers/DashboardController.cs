@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : IdentityServerControllerBase
     {
         // GET: Administration/Dashboard
         [Authorize]

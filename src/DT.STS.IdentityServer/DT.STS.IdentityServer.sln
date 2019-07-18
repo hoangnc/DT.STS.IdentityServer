@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DT.STS.IdentityServer", "DT.STS.IdentityServer\DT.STS.IdentityServer.csproj", "{D8FADDB1-458E-4E09-AA6D-289DD5D6A240}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DT.STS.IdentityServer.Domain", "DT.STS.IdentityServer.Domain\DT.STS.IdentityServer.Domain.csproj", "{D9B16DDC-E5B3-4257-A50E-DDBA8E374DC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DT.STS.IdentityServer.Persistence", "DT.STS.IdentityServer.Persistence\DT.STS.IdentityServer.Persistence.csproj", "{3A3E2E89-BF89-4810-AA6B-D1A8B3AB691D}"
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D8FADDB1-458E-4E09-AA6D-289DD5D6A240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8FADDB1-458E-4E09-AA6D-289DD5D6A240}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8FADDB1-458E-4E09-AA6D-289DD5D6A240}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8FADDB1-458E-4E09-AA6D-289DD5D6A240}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D9B16DDC-E5B3-4257-A50E-DDBA8E374DC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D9B16DDC-E5B3-4257-A50E-DDBA8E374DC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9B16DDC-E5B3-4257-A50E-DDBA8E374DC9}.Release|Any CPU.ActiveCfg = Release|Any CPU

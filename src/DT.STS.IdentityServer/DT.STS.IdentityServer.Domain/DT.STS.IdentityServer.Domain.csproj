@@ -50,6 +50,7 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Claim.cs" />
     <Compile Include="Entities\Client.cs" />
+    <Compile Include="Entities\Company.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Scope.cs" />

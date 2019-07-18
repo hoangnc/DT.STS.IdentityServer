@@ -33,11 +33,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(model => model.ClientId)
+                        <span style="color: red">(*)</span>
                         <i id="clientid-help"
                            class="fa fa-info-circle"
                            data-toggle="tooltip"
                            data-placement="top"
                            title="Unique ID of the client"></i>
+
                         @Html.EditorFor(model => model.ClientId, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
 
@@ -46,6 +48,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(model => model.ClientName)
+                        <span style="color: red">(*)</span>
                         <i id="clientname-help"
                            class="fa fa-info-circle"
                            data-toggle="tooltip"
@@ -103,10 +106,14 @@
                             <input type="checkbox"
                                    name="RequireConsent"
                                    id="RequireConsent"
-                                   value="@Model.RequireConsent">
+                                   value="@Model.RequireConsent.ToString().ToLowerInvariant()">
+
                             Require consent
                         </span>
                     </label>
+                    <input type="hidden"
+                           name="RequireConsent"
+                           value="@Model.RequireConsent.ToString().ToLowerInvariant()">
                     <i id="requireconsent-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -118,8 +125,11 @@
                         <input type="checkbox"
                                name="AllowRememberConsent"
                                id="AllowRememberConsent"
-                               value=""> Allow remember consent
+                               value="@Model.AllowRememberConsent.ToString().ToLowerInvariant()"> Allow remember consent
                     </label>
+                    <input type="hidden"
+                           name="AllowRememberConsent"
+                           value="@Model.AllowRememberConsent.ToString().ToLowerInvariant()">
                     <i id="allowrememberconsent-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -131,9 +141,12 @@
                         <input type="checkbox"
                                name="AllowClientCredentialsOnly"
                                id="AllowClientCredentialsOnly"
-                               value=""> Allow client credentitals only
+                               value="@Model.AllowClientCredentialsOnly.ToString().ToLowerInvariant()"> Allow client credentitals only
 
                     </label>
+                    <input type="hidden"
+                           name="AllowClientCredentialsOnly"
+                           value="@Model.AllowClientCredentialsOnly.ToString().ToLowerInvariant()">
                     <i id="allowclientcredentialsonly-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -149,8 +162,11 @@
                         <input type="checkbox"
                                name="LogoutSessionRequired"
                                id="LogoutSessionRequired"
-                               value=""> Logout Session Required
+                               value="@Model.LogoutSessionRequired.ToString().ToLowerInvariant()"> Logout Session Required
                     </label>
+                    <input type="hidden"
+                           name="LogoutSessionRequired"
+                           value="@Model.LogoutSessionRequired.ToString().ToLowerInvariant()">
                     <i id="logoutsessionrequired-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -162,8 +178,11 @@
                         <input type="checkbox"
                                name="RequireSignOutPrompt"
                                id="RequireSignOutPrompt"
-                               value="@Model.RequireSignOutPrompt"> Require SignOut Prompt
+                               value="@Model.RequireSignOutPrompt.ToString().ToLowerInvariant()"> Require SignOut Prompt
                     </label>
+                    <input type="hidden"
+                           name="RequireSignOutPrompt"
+                           value="@Model.RequireSignOutPrompt.ToString().ToLowerInvariant()">
                     <i id="requiresignoutprompt-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -175,8 +194,11 @@
                         <input type="checkbox"
                                name="AllowAccessTokensViaBrowser"
                                id="AllowAccessTokensViaBrowser"
-                               value="">Allow access tokens via browser
+                               value="@Model.AllowAccessTokensViaBrowser.ToString().ToLowerInvariant()">Allow access tokens via browser
                     </label>
+                    <input type="hidden"
+                           name="AllowAccessTokensViaBrowser"
+                           value="@Model.AllowAccessTokensViaBrowser.ToString().ToLowerInvariant()">
                     <i id="allowaccesstokenviabrower-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -190,8 +212,11 @@
                         <input type="checkbox"
                                name="AllowedCustomGrantTypes"
                                id="AllowedCustomGrantTypes"
-                               value="">Allowed custom grant types
+                               value="@Model.AllowedCustomGrantTypes.ToString().ToLowerInvariant()">Allowed custom grant types
                     </label>
+                    <input type="hidden"
+                           name="AllowedCustomGrantTypes"
+                           value="@Model.AllowedCustomGrantTypes.ToString().ToLowerInvariant()">
                     <i id="allwedcustomgranttypes-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -203,8 +228,11 @@
                         <input type="checkbox"
                                name="UpdateAccessTokenClaimsOnRefresh"
                                id="UpdateAccessTokenClaimsOnRefresh"
-                               value="">Update Access token claims on refresh
+                               value="@Model.UpdateAccessTokenClaimsOnRefresh.ToString().ToLowerInvariant()">Update Access token claims on refresh
                     </label>
+                    <input type="hidden"
+                           name="UpdateAccessTokenClaimsOnRefresh"
+                           value="@Model.UpdateAccessTokenClaimsOnRefresh.ToString().ToLowerInvariant()">
                     <i id="updateaccesstokenclaimsonrefresh-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -216,8 +244,11 @@
                         <input type="checkbox"
                                name="EnableLocalLogin"
                                id="EnableLocalLogin"
-                               value="">Enable local login
+                               value="@Model.EnableLocalLogin.ToString().ToLowerInvariant()">Enable local login
                     </label>
+                    <input type="hidden"
+                           name="EnableLocalLogin"
+                           value="@Model.EnableLocalLogin.ToString().ToLowerInvariant()">
                     <i id="enablelocallogin-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -231,8 +262,11 @@
                         <input type="checkbox"
                                name="IncludeJwtId"
                                id="IncludeJwtId"
-                               value="">Include JwtId
+                               value="@Model.IncludeJwtId.ToString().ToLowerInvariant()">Include JwtId
                     </label>
+                    <input type="hidden"
+                           name="IncludeJwtId"
+                           value="@Model.IncludeJwtId.ToString().ToLowerInvariant()">
                     <i id="includejwtid-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -244,8 +278,11 @@
                         <input type="checkbox"
                                name="AlwaysSendClientClaims"
                                id="AlwaysSendClientClaims"
-                               value="">Always send client claims
+                               value="@Model.AlwaysSendClientClaims.ToString().ToLowerInvariant()">Always send client claims
                     </label>
+                    <input type="hidden"
+                           name="AlwaysSendClientClaims"
+                           value="@Model.AlwaysSendClientClaims.ToString().ToLowerInvariant()">
                     <i id="includejwtid-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -257,8 +294,11 @@
                         <input type="checkbox"
                                name="PrefixClientClaims"
                                id="PrefixClientClaims"
-                               value="">Prefix client claims
+                               value="@Model.PrefixClientClaims.ToString().ToLowerInvariant()">Prefix client claims
                     </label>
+                    <input type="hidden"
+                           name="PrefixClientClaims"
+                           value="@Model.PrefixClientClaims.ToString().ToLowerInvariant()">
                     <i id="includejwtid-help"
                        class="fa fa-info-circle inline"
                        data-toggle="tooltip"
@@ -270,6 +310,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         @Html.LabelFor(model => model.Scopes, htmlAttributes: new { @class = "control-label" })
+                        <span style="color: red">(*)</span>
                         <i id="logouturi-help"
                            class="fa fa-info-circle inline"
                            data-toggle="tooltip"
@@ -282,6 +323,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         @Html.LabelFor(model => model.LogoutUri, htmlAttributes: new { @class = "control-label" })
+                        <span style="color: red">(*)</span>
                         <i id="logouturi-help"
                            class="fa fa-info-circle inline"
                            data-toggle="tooltip"
@@ -434,7 +476,7 @@
         const scopes = $('#Scopes');
         const grdRedirectUris = $("#grdRedirectUris");
         const grdPostLogoutRedirectUris = $("#grdPostLogoutRedirectUris");
-        const grdAllowedCorsOrigins = $("#grdAllowedCorsOrigins"); 
+        const grdAllowedCorsOrigins = $("#grdAllowedCorsOrigins");
 
         let redirectUris = [
             { id: 0, uri: '' },

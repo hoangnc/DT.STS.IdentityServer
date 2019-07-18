@@ -37,6 +37,9 @@
     <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="DT.Core">
+      <HintPath>..\..\DocumentManagement\DT.Core.Localization\bin\Debug\DT.Core.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -70,6 +73,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveDirectories\Queries\GetAllGroupsInActiveDirectoryQuery.cs" />
+    <Compile Include="ActiveDirectories\Queries\GetAllGroupsInActiveDirectoryQueryHandler.cs" />
     <Compile Include="BaseCommand.cs" />
     <Compile Include="Claims\Queries\GetAllClaimsDto.cs" />
     <Compile Include="Claims\Queries\GetAllClaimsQuery.cs" />
@@ -84,6 +89,9 @@
     <Compile Include="Clients\Queries\SearchClientsByTokenPagedDto.cs" />
     <Compile Include="Clients\Queries\SearchClientsByTokenPagedQuery.cs" />
     <Compile Include="Clients\Queries\SearchClientsByTokenPagedQueryHandler.cs" />
+    <Compile Include="Companies\Queries\GetAllCompaniesDto.cs" />
+    <Compile Include="Companies\Queries\GetAllCompaniesQuery.cs" />
+    <Compile Include="Companies\Queries\GetAllCompaniesQueryHandler.cs" />
     <Compile Include="Departments\Commands\SyncDepartmentsFromActiveDirectoryCommand.cs" />
     <Compile Include="Departments\Commands\SyncDepartmentsFromActiveDirectoryCommandHandler.cs" />
     <Compile Include="Departments\Queries\GetAllDepartmentsDto.cs" />
@@ -128,13 +136,18 @@
     <Compile Include="Users\Commands\Authenticate\AuthenticateDto.cs" />
     <Compile Include="Users\Commands\CreateUser\CreateUserCommand.cs" />
     <Compile Include="Users\Commands\CreateUser\CreateUserCommandHandler.cs" />
-    <Compile Include="Users\Commands\SyncImagesFromCloudCommand.cs" />
-    <Compile Include="Users\Commands\SyncImagesFromCloudCommandHandler.cs" />
+    <Compile Include="Users\Commands\SyncImagesFromCloud\SyncImagesFromCloudCommand.cs" />
+    <Compile Include="Users\Commands\SyncImagesFromCloud\SyncImagesFromCloudCommandHandler.cs" />
     <Compile Include="Users\Commands\SyncUsersFromActiveDirectory\SyncUsersFromActiveDirectoryCommand.cs" />
     <Compile Include="Users\Commands\SyncUsersFromActiveDirectory\SyncUsersFromActiveDirectoryCommandHandler.cs" />
+    <Compile Include="Users\Commands\UpdateUser\UpdateUserCommand.cs" />
+    <Compile Include="Users\Commands\UpdateUser\UpdateUserCommandHandler.cs" />
     <Compile Include="Users\Queries\GetAllUsers\GetAllUsersDto.cs" />
     <Compile Include="Users\Queries\GetAllUsers\GetAllUsersQuery.cs" />
     <Compile Include="Users\Queries\GetAllUsers\GetAllUsersQueryHandler.cs" />
+    <Compile Include="Users\Queries\GetUserById\GetUserByIdDto.cs" />
+    <Compile Include="Users\Queries\GetUserById\GetUserByIdQuery.cs" />
+    <Compile Include="Users\Queries\GetUserById\GetUserByIdQueryHandler.cs" />
     <Compile Include="Users\Queries\GetUserByUserNameFromAd\GetUserByUserNameFromAdDto.cs" />
     <Compile Include="Users\Queries\GetUserByUserNameFromAd\GetUserByUserNameFromAdQuery.cs" />
     <Compile Include="Users\Queries\GetUserByUserNameFromAd\GetUserByUserNameFromAdQueryHandler.cs" />
@@ -147,7 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DT.STS.IdentityServer.Common\DT.STS.IdentityServer.Common.csproj">

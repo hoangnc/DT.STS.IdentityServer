@@ -47,6 +47,8 @@ namespace DT.STS.IdentityServer.Mvc
                     return Eval(context.Principal.HasClaim(AdminMvcClaimType, DtPermissionBaseTypes.Read));
                 case DtPermissionBaseTypes.Write:
                     return Eval(context.Principal.HasClaim(AdminMvcClaimType, DtPermissionBaseTypes.Write));
+                case DtPermissionBaseTypes.Update:
+                    return Eval(context.Principal.HasClaim(AdminMvcClaimType, DtPermissionBaseTypes.Update));
                 default:
                     return Nok();
             }
@@ -67,6 +69,7 @@ namespace DT.STS.IdentityServer.Mvc
             }
         }
         #endregion
+
         #region Scopes
         private Task<bool> AuthorizeScopes(ResourceAuthorizationContext context)
         {

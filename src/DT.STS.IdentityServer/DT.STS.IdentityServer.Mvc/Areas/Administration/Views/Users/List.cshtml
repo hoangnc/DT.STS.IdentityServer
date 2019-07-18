@@ -11,34 +11,34 @@
     <div class="col-xs-12">
         <div class="box box-info">
             <div class="box-header">
-                <h3 class="box-title">Danh sách người dùng</h3>
-                <div class="box-tools pull-right">                 
+                <h3 class="box-title">@L(IdentityServerResourceNames.ListOfUser)</h3>
+                <div class="box-tools pull-right">
                 </div>
                 <div class="mailbox-controls">
                     <div class="btn-group">
                         <!-- Check all button -->
-                        <a href="@Url.ActionWithHost("DataExport", "ExportAllAirTicketToExcel")" class="btn btn-success btn-sm"><i class="fa fa-file-excel-o"></i> Export to Excel</a>
+                        <a href="@Url.ActionWithHost("DataExport", "ExportAllAirTicketToExcel")" class="btn btn-success btn-sm"><i class="fa fa-file-excel-o"></i> @Ls(DTWebConsts.LocalizationSourceName, DTWebResourceNames.ExportToExcel)</a>
                         <button type="button"
                                 id="btnSyncFromAd"
                                 class="btn btn-success btn-sm">
                             <i class="fa fa-refresh"></i>
-                            Sync từ AD
+                            @L(IdentityServerResourceNames.SyncFromAd)
                         </button>
                         <button type="button"
                                 id="btnSyncImageFromCloud"
                                 class="btn btn-success btn-sm">
                             <i class="fa fa-refresh"></i>
-                            Sync hình từ Cloud
+                            @L(IdentityServerResourceNames.SyncImageFromCloud)
                         </button>
                         <a href="@Url.Action("Create")" class="btn btn-success btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Thêm mới
+                            <i class="fa fa-plus" aria-hidden="true"></i> @Ls(DTWebConsts.LocalizationSourceName, DTWebResourceNames.AddNew)
                         </a>
 
                     </div>
                     <div class="box-tools pull-right">
                         <input id="txtSearch"
                                class="form-control"
-                               placeholder="Tìm kiếm" />
+                               placeholder="@Ls(DTWebConsts.LocalizationSourceName, DTWebResourceNames.Search)" />
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -81,14 +81,24 @@
     <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
     <script type="text/javascript" src="~/Scripts/demos.js"></script>
     <script type="text/javascript">
-        Globalize.cultureSelector = "vi";
+        Globalize.cultureSelector = '@CurrentLanguage.Name';
+    </script>
+    <script>
+        const updateUserUrl = `${hostUrl}/administration/users/update`;
+        const userNameText = '@L(IdentityServerResourceNames.UserName)';
+        const departmentNameText = '@L(IdentityServerResourceNames.DepartmentName)';
+        const lastNameText = '@L(IdentityServerResourceNames.LastName)';
+        const firstNameText = '@L(IdentityServerResourceNames.FirstName)';
+        const managerNameText = '@L(IdentityServerResourceNames.ManagerName)';
+        const jpegPhotoText = '@L(IdentityServerResourceNames.JpegPhoto)';
+        const syncUsersFromAdSuccessedText = '@IdentityServerResourceNames.SyncUsersFromAdSuccessed';
     </script>
     <script>
         const txtSearch = $('#txtSearch');
         const grdUser = $("#grdUser");
         txtSearch.on("keyup", function (e) {
             const key = event.charCode ? event.charCode : event.keyCode ? event.keyCode : 0;
-            if (key === 13) {             
+            if (key === 13) {
                 grdUser.jqxGrid('updatebounddata');
                 grdUser.jqxGrid('gotopage', 0);
             }
@@ -152,7 +162,7 @@
                 altrows: true,
                 editable: true,
                 pagesizeoptions: ["20", "40", "60"],
-                localization: getLocalization('vi'),
+                localization: getLocalization('@CurrentLanguage.Name'),
                 selectionmode: 'singlerow',
                 editmode: 'singlecell',
                 showstatusbar: false,
@@ -177,15 +187,20 @@
                         }
                     },
                     {
-                        text: 'Tên đăng nhập',
+                        text: userNameText,
                         columntype: 'textbox',
                         datafield: 'userName',
                         pinned: true,
                         editable: false,
-                        width: 150
+                        width: 150,
+                        cellsrenderer: function (row, column, value, defaultHtml) {
+                            var element = $(defaultHtml);
+                            element.html(`<a href="${updateUserUrl}?id=${dataAdapter.records[row].id}"> <i class="fa fa-pencil"></i> ${value} </a>`);
+                            return element[0].outerHTML;
+                        }
                     },
                     {
-                        text: 'Phòng ban',
+                        text: departmentNameText,
                         columntype: 'textbox',
                         datafield: 'departmentName',
                         pinned: true,
@@ -193,28 +208,28 @@
                         width: 150
                     },
                     {
-                        text: 'Họ và tên lót',
+                        text: lastNameText,
                         columntype: 'textbox',
                         datafield: 'lastName',
                         editable: false,
                         width: 150
                     },
                     {
-                        text: 'Tên',
+                        text: firstNameText,
                         columntype: 'textbox',
                         datafield: 'firstName',
                         editable: false,
                         width: 150
                     },
                     {
-                        text: 'Quản lý',
+                        text: managerNameText,
                         columntype: 'textbox',
                         datafield: 'managerName',
                         editable: false,
                         width: 150
                     },
                     {
-                        text: 'Ảnh nhân viên',
+                        text: jpegPhotoText,
                         datafield: 'email',
                         editable: false,
                         width: 150,
@@ -228,8 +243,9 @@
     <script>
         let btnSyncFromAd = $('#btnSyncFromAd');
         let btnSyncImageFromCloud = $('#btnSyncImageFromCloud');
-        let syncUsersFromAdUrl = '@Url.ActionApiWithHost("users","syncusersfromad")';
-        let syncImagesFromCloudUrl = '@Url.ActionApiWithHost("users", "syncimagesfromcloud")';
+        const syncUsersFromAdUrl = '@Url.ActionApiWithHost("users","syncusersfromad")';
+        const syncImagesFromCloudUrl = '@Url.ActionApiWithHost("users", "syncimagesfromcloud")';
+
         btnSyncFromAd.click(function () {
             $.ajax({
                 url: syncUsersFromAdUrl,
@@ -239,7 +255,7 @@
                 dataType: "json",
                 success: function (event, settings, xhr) {
                     xhr.message = {
-                        infor: 'Cập nhật thông tin người dùng từ Active Dicrectory thành công!',
+                        infor: syncUsersFromAdSuccessedText,
                         returnUrl: ''
                     };
                     grdUser.jqxGrid('updatebounddata', 'cells');
@@ -256,7 +272,7 @@
                 dataType: "json",
                 success: function (event, settings, xhr) {
                     xhr.message = {
-                        infor: 'Cập nhật thông tin người dùng từ Active Dicrectory thành công!',
+                        infor: syncUsersFromAdSuccessedText,
                         returnUrl: ''
                     };
                     grdUser.jqxGrid('updatebounddata', 'cells');

@@ -85,7 +85,8 @@ namespace DT.STS.IdentityServer.Mvc.Services
                             "profile",
                             "roles",
                             "documentmvc",
-                            "documentapi"
+                            "documentapi",
+                            "masterdataapi"
                         }
                     };
                 }

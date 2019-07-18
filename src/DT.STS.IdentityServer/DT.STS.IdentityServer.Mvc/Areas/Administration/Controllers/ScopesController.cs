@@ -17,7 +17,7 @@ using static DT.Core.Web.Common.Identity.Constants;
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 {
     [Authorize]
-    public class ScopesController : Controller
+    public class ScopesController : IdentityServerControllerBase
     {
         private readonly IMediator _mediator;
         public ScopesController(IMediator mediator)
@@ -32,18 +32,18 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return RedirectToAction("List");
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.Scopes)]
         [HandleForbidden]
-        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         public ActionResult List()
         {
             return View();
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         [ResourceAuthorize(DtPermissionBaseTypes.Update, IdentityServerResources.Scopes)]
         [HandleForbidden]
         [HttpGet]
-        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         public async Task<ActionResult> Update(int id)
         {
             ScopeUpdateModel model = new ScopeUpdateModel();
@@ -68,10 +68,11 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return RedirectToAction("List");
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         [ResourceAuthorize(DtPermissionBaseTypes.Update, IdentityServerResources.Scopes)]
         [HandleForbidden]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         public async Task<ActionResult> Update(ScopeUpdateModel model)
         {
             if (ModelState.IsValid)
@@ -101,10 +102,10 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return View(model);
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         [ResourceAuthorize(DtPermissionBaseTypes.Write, IdentityServerResources.Scopes)]
         [HandleForbidden]
         [HttpGet]
-        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         public async Task<ActionResult> Create()
         {
             ScopeCreateModel model = new ScopeCreateModel();
@@ -119,10 +120,11 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return View(model);
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         [ResourceAuthorize(DtPermissionBaseTypes.Write, IdentityServerResources.Scopes)]
         [HandleForbidden]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        [Menu(SelectedMenu = MenuNameConstants.Scope)]
         public async Task<ActionResult> Create(ScopeCreateModel model)
         {
             if (ModelState.IsValid)

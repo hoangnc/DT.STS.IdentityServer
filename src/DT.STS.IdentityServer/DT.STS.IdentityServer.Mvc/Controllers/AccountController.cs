@@ -2,17 +2,14 @@
 using DT.STS.IdentityServer.Mvc.Models;
 using IdentityServer3.Core.Extensions;
 using MediatR;
-using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OpenIdConnect;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Linq;
-using IdentityServer3.Core;
+using IdentityServer3Constants = IdentityServer3.Core.Constants;
 
 namespace DT.STS.IdentityServer.Mvc.Controllers
 {
@@ -55,8 +52,8 @@ namespace DT.STS.IdentityServer.Mvc.Controllers
                     if (authenticateResult.User.JpegPhoto != null)
                         claims.Add(new Claim(Common.Constants.DtClaimTypes.UserImage, Convert.ToBase64String(authenticateResult.User.JpegPhoto)));
 
-                    claims.Add(new Claim(Constants.ClaimTypes.GivenName, $"{authenticateResult.User.DisplayName }"));
-                    claims.Add(new Claim(Constants.ClaimTypes.Email, $"{ authenticateResult.User.UserPrincipalName}"));
+                    claims.Add(new Claim(IdentityServer3Constants.ClaimTypes.GivenName, $"{authenticateResult.User.DisplayName }"));
+                    claims.Add(new Claim(IdentityServer3Constants.ClaimTypes.Email, $"{ authenticateResult.User.UserPrincipalName}"));
 
                     env.IssueLoginCookie(new IdentityServer3.Core.Models.AuthenticatedLogin
                     {
@@ -101,9 +98,9 @@ namespace DT.STS.IdentityServer.Mvc.Controllers
             }
         }
 
-        private  IList<SelectListItem> GetDomains()
+        private IList<SelectListItem> GetDomains()
         {
-           return new List<SelectListItem>
+            return new List<SelectListItem>
             {
                 new SelectListItem
                 {

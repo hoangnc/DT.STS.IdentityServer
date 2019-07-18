@@ -3,6 +3,7 @@ using DT.STS.IdentityServer.Application.Clients.Queries;
 using DT.STS.IdentityServer.Application.Scopes.Commands;
 using DT.STS.IdentityServer.Application.Scopes.Queries;
 using DT.STS.IdentityServer.Application.Users.Commands;
+using DT.STS.IdentityServer.Application.Users.Queries;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Scopes;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Users;
@@ -21,11 +22,20 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper
             return MvcAutoMapperConfiguration.Mapper.Map(source, destination);
         }
 
+        #region Users
         public static CreateUserCommand ToCreateUserCommand(this UserCreateModel model)
         {
             return model.MapTo<UserCreateModel, CreateUserCommand>();
         }
-
+        public static UserUpdateModel ToUserUpdateModel(this GetUserByIdDto dto)
+        {
+            return dto.MapTo<GetUserByIdDto, UserUpdateModel>();
+        }
+        public static UpdateUserCommand ToUpdateUserCommand(this UserUpdateModel model)
+        {
+            return model.MapTo<UserUpdateModel, UpdateUserCommand>();
+        }
+        #endregion
         #region Scopes
 
         public static CreateScopeCommand ToCreateScopeCommand(this ScopeCreateModel model)

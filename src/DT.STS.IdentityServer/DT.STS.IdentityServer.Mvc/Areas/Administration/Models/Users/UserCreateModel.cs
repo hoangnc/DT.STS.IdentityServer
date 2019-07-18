@@ -30,7 +30,6 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Users
         [StringLength(50, ErrorMessage = "{0} không được lớn hơn {1} ký tự.")]
         public string LastName { get; set; }
 
-
         [Display(Name = "Tên đầy đủ(Tiếng Việt)")]
         [StringLength(100, ErrorMessage = "{0} không được lớn hơn {1} ký tự.")]
         public string FullNameUnicode { get; set; }

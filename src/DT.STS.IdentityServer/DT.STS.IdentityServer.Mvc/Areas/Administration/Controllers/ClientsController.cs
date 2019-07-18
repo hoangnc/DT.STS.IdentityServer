@@ -1,4 +1,5 @@
 ﻿using DT.Core.Web.Ui.Navigation;
+using DT.STS.IdentityServer.Application.Clients.Commands;
 using DT.STS.IdentityServer.Application.Clients.Queries;
 using DT.STS.IdentityServer.Application.Scopes.Queries;
 using DT.STS.IdentityServer.Application.ScopeScopeClaims.Queries;
@@ -17,7 +18,7 @@ using static DT.Core.Web.Common.Identity.Constants;
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 {
     [Authorize]
-    public class ClientsController : Controller
+    public class ClientsController : IdentityServerControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -35,19 +36,19 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return RedirectToAction("List");
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Client)]
         [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.Clients)]
         [HandleForbidden]
         [HttpGet]
-        [Menu(SelectedMenu = MenuNameConstants.Client)]
         public ActionResult List()
         {
             return View();
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Client)]
         [ResourceAuthorize(DtPermissionBaseTypes.Write, IdentityServerResources.Clients)]
         [HandleForbidden]
         [HttpGet]
-        [Menu(SelectedMenu = MenuNameConstants.Client)]
         public async Task<ActionResult> Create()
         {
             ClientCreateModel model = new ClientCreateModel
@@ -57,7 +58,12 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
                 LogoutSessionRequired = true,
                 AllowedCustomGrantTypes = true,
                 EnableLocalLogin = true,
-                PrefixClientClaims = true
+                PrefixClientClaims = true,
+                IdentityTokenLifetime = 300,
+                AccessTokenLifetime = 3600,
+                AuthorizationCodeLifetime = 300,
+                AbsoluteRefreshTokenLifetime = 2592000,
+                SlidingRefreshTokenLifetime = 1296000
             };
 
             model.AvailableClaims = await GetClaims();
@@ -66,15 +72,16 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return View(model);
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Client)]
         [ResourceAuthorize(DtPermissionBaseTypes.Write, IdentityServerResources.Clients)]
         [HandleForbidden]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        [Menu(SelectedMenu = MenuNameConstants.Client)]
         public async Task<ActionResult> Create(ClientCreateModel model)
         {
             if (ModelState.IsValid)
             {
-                Application.Clients.Commands.CreateClientCommand createClientCommand = model.ToCreateClientCommand();
+                CreateClientCommand createClientCommand = model.ToCreateClientCommand();
                 createClientCommand.CreatedBy = User.Identity.Name;
                 createClientCommand.CreatedOn = DateTime.Now;
 
@@ -96,10 +103,10 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
             return View(model);
         }
 
+        [Menu(SelectedMenu = MenuNameConstants.Client)]
         [ResourceAuthorize(DtPermissionBaseTypes.Update, IdentityServerResources.Scopes)]
         [HandleForbidden]
         [HttpGet]
-        [Menu(SelectedMenu = MenuNameConstants.Client)]
         public async Task<ActionResult> Update(string clientId)
         {
             ClientUpdateModel model = new ClientUpdateModel();

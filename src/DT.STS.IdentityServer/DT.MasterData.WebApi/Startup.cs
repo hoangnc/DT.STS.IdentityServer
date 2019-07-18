@@ -28,11 +28,10 @@ namespace DT.MasterData.WebApi
             IContainer container = AutofacConfig.ConfigureContainer();
             app.UseAutofacMiddleware(container);
 
-
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
             {
-                Authority = "https://localhost:44319/identity",
-                RequiredScopes = new[] { "documentapi" },
+                Authority = "https://192.168.9.61/identity",// "https://localhost:44319/identity",
+                RequiredScopes = new[] { "masterdataapi" },
             });
         }
     }
