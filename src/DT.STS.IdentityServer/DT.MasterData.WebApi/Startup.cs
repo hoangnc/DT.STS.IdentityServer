@@ -4,6 +4,7 @@ using IdentityServer3.Core;
 using Microsoft.Owin;
 using Owin;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IdentityModel.Tokens;
 using System.Net;
 using System.Net.Security;
@@ -30,7 +31,7 @@ namespace DT.MasterData.WebApi
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions
             {
-                Authority = "https://192.168.9.61/identity",// "https://localhost:44319/identity",
+                Authority = ConfigurationManager.AppSettings["Authority"],
                 RequiredScopes = new[] { "masterdataapi" },
             });
         }

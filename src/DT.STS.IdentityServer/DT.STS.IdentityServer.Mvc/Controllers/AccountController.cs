@@ -6,9 +6,11 @@ using Microsoft.Owin.Security.Cookies;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static DT.Core.Web.Common.Identity.Constants;
 using IdentityServer3Constants = IdentityServer3.Core.Constants;
 
 namespace DT.STS.IdentityServer.Mvc.Controllers
@@ -28,6 +30,19 @@ namespace DT.STS.IdentityServer.Mvc.Controllers
             LoginModel loginModel = new LoginModel();
             loginModel.AvailableDomains = GetDomains();
             return View(loginModel);
+        }
+
+        [Route("identity/account/was")]
+        [HttpGet]
+        public async Task<ActionResult> Was(string id)
+        {
+            IDictionary<string, object> env = Request.GetOwinContext().Environment;
+            IdentityServer3.Core.Models.SignInMessage msg = env.GetSignInMessage(id);
+            var userWindow = User.Identity as WindowsPrincipal;
+
+            string returnUrl = msg.ReturnUrl;
+
+            return Redirect(returnUrl);
         }
 
         [Route("identity/account/login")]
@@ -54,6 +69,7 @@ namespace DT.STS.IdentityServer.Mvc.Controllers
 
                     claims.Add(new Claim(IdentityServer3Constants.ClaimTypes.GivenName, $"{authenticateResult.User.DisplayName }"));
                     claims.Add(new Claim(IdentityServer3Constants.ClaimTypes.Email, $"{ authenticateResult.User.UserPrincipalName}"));
+                    claims.Add(new Claim(DtClaimTypes.Department, $"{ authenticateResult.User.Department}"));
 
                     env.IssueLoginCookie(new IdentityServer3.Core.Models.AuthenticatedLogin
                     {

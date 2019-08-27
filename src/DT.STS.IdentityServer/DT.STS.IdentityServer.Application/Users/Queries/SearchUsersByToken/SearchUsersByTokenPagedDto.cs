@@ -16,5 +16,6 @@ namespace DT.STS.IdentityServer.Application.Users.Queries
         public string Email { get; set; }
         public string DepartmentName { get; set; }
         public string DirectReports { get; set; }
+        public string Groups { get; set; }
     }
 }

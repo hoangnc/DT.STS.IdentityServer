@@ -1,6 +1,5 @@
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\bin\Debug\DT.STS.IdentityServer.Common.dll
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\bin\Debug\DT.STS.IdentityServer.Common.pdb
-C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\obj\Debug\DT.STS.IdentityServer.Common.csprojAssemblyReference.cache
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\obj\Debug\DT.STS.IdentityServer.Common.csproj.CoreCompileInputs.cache
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\obj\Debug\DT.STS.IdentityServer.Common.dll
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\obj\Debug\DT.STS.IdentityServer.Common.pdb
@@ -33,3 +32,4 @@ C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServe
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\bin\Debug\System.Web.Http.xml
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\bin\Debug\System.Web.Http.WebHost.xml
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Common\obj\Debug\DT.STS.IdentityServer.Common.csprojAssemblyReference.cache

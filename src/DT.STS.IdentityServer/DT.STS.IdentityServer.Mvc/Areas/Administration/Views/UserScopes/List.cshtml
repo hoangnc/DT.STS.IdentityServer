@@ -167,7 +167,10 @@
                 }
 
                 selectUsers.on("change", function (e) {
-                    const users = selectUsers.val().join(';');
+                    let users = '';
+                    if (!isVariableHaveDefaltVal(selectUsers.val()))
+                        selectUsers.val().join(';');
+
                     let permissions = [];
                     if (!isVariableHaveDefaltVal(selectPermissions.val())) {
                         permissions = selectPermissions.val().join(';');

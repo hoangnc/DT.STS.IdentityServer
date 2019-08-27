@@ -1,17 +1,21 @@
-﻿using Autofac;
+﻿using Abp.Localization;
+using Autofac;
 using DT.Core.Web.Common.Identity.Configurations;
+using DT.Core.Web.Common.Validation;
+using DT.STS.IdentityServer.Mvc.Configurations;
 using DT.STS.IdentityServer.Mvc.IdentityServer;
 using DT.STS.IdentityServer.Mvc.Services;
+using FluentValidation;
 using IdentityModel.Client;
-using IdentityServer3Constants = IdentityServer3.Core.Constants;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
-using Microsoft.IdentityModel.Protocols;
+using IdentityServer3.Core.Services.Default;
 using Microsoft.Owin;
+using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OpenIdConnect;
+using Microsoft.Owin.Security.WsFederation;
 using Owin;
 using Serilog;
 using System;
@@ -25,9 +29,7 @@ using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Helpers;
-using DT.Core.Web.Common.Validation;
-using Abp.Localization;
-using FluentValidation;
+using IdentityServer3Constants = IdentityServer3.Core.Constants;
 
 [assembly: OwinStartup(typeof(DT.STS.IdentityServer.Mvc.Startup))]
 
@@ -63,17 +65,26 @@ namespace DT.STS.IdentityServer.Mvc
                     factory.UserService = new Registration<IUserService, UserService>();
                     factory.ScopeStore = new Registration<IScopeStore>(container.Resolve<IScopeStore>());
                     factory.ClientStore = new Registration<IClientStore>(container.Resolve<IClientStore>());
+
+                    var cors = new DefaultCorsPolicyService
+                    {
+                        AllowAll = true
+                    };
+                    factory.CorsPolicyService = new Registration<ICorsPolicyService>(cors);
+
+
                     IdentityServerOptions options = new IdentityServerOptions
                     {
                         SiteName = "Duy Tan Security Token Service",
                         SigningCertificate = Certificate.Get(),
                         Factory = factory,
                         RequireSsl = false,
-                        EnableWelcomePage = true,
+                        EnableWelcomePage = true,                 
                         AuthenticationOptions = new IdentityServer3.Core.Configuration.AuthenticationOptions
                         {
                             EnablePostSignOutAutoRedirect = true,
-                            EnableSignOutPrompt = false
+                            EnableSignOutPrompt = false,
+                        
                         },
                         EventsOptions = new EventsOptions
                         {
@@ -84,17 +95,33 @@ namespace DT.STS.IdentityServer.Mvc
                         }
                     };
 
+                    if (Configs.WindowAuth)
+                    {
+                        options.AuthenticationOptions = new IdentityServer3.Core.Configuration.AuthenticationOptions
+                        {
+                            EnablePostSignOutAutoRedirect = true,
+                            EnableSignOutPrompt = false,
+                            EnableLocalLogin = false,
+                            IdentityProviders = ConfigureIdentityProviders,
+                            EnableAutoCallbackForFederatedSignout = true,
+                        };
+                    }
+
                     idsrvApp.UseIdentityServer(options);
                 });
-            
+
             app.UseResourceAuthorization(new AuthorizationManager());
+
+            app.UseKentorOwinCookieSaver();
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = "Cookies"
+                AuthenticationType = "Cookies",
+                CookieManager = new SystemWebChunkingCookieManager()
+
             });
 
-            object section = ConfigurationManager.GetSection("openIdConnectionOptionSection");
+           object section = ConfigurationManager.GetSection("openIdConnectionOptionSection");
 
             if (section != null)
             {
@@ -110,20 +137,28 @@ namespace DT.STS.IdentityServer.Mvc
                     UseTokenLifetime = openIdConnectionOption.UseTokenLifetime,
                     Notifications = new OpenIdConnectAuthenticationNotifications
                     {
+                        AuthenticationFailed = n =>
+                        {
+                            return Task.FromResult(0);
+                        },
+                        MessageReceived = n => {
+                            return Task.FromResult(0);
+                        },
                         SecurityTokenValidated = async n =>
                             {
                                 ClaimsIdentity nid = new ClaimsIdentity(
-                                    n.AuthenticationTicket.Identity.AuthenticationType,
-                                    IdentityServer3Constants.ClaimTypes.GivenName,
-                                    IdentityServer3Constants.ClaimTypes.Role);
+                                 n.AuthenticationTicket.Identity.AuthenticationType,
+                                 ClaimTypes.GivenName,
+                                 ClaimTypes.Role);
 
                                     // get userinfo data
+#pragma warning disable CS0618 // Type or member is obsolete
                                     UserInfoClient userInfoClient = new UserInfoClient(
-                                        new Uri(n.Options.Authority + "/connect/userinfo"),
-                                        n.ProtocolMessage.AccessToken);
+#pragma warning restore CS0618 // Type or member is obsolete
+                                n.Options.Authority + "/connect/userinfo");
 
-                                UserInfoResponse userInfo = await userInfoClient.GetAsync();
-                                userInfo.Claims.ToList().ForEach(ui => nid.AddClaim(new Claim(ui.Item1, ui.Item2)));
+                                UserInfoResponse userInfo = await userInfoClient.GetAsync(n.ProtocolMessage.AccessToken);
+                                userInfo.Claims.ToList().ForEach(ui => nid.AddClaim(new Claim(ui.Type, ui.Value)));
 
                                     // keep the id_token for logout
                                     nid.AddClaim(new Claim("id_token", n.ProtocolMessage.IdToken));
@@ -144,8 +179,11 @@ namespace DT.STS.IdentityServer.Mvc
 
                         RedirectToIdentityProvider = n =>
                             {
-                                if (n.ProtocolMessage.RequestType == OpenIdConnectRequestType.LogoutRequest)
+                                if (n.ProtocolMessage.RequestType == Microsoft.IdentityModel.Protocols.OpenIdConnectRequestType.LogoutRequest)
                                 {
+                                    string uri = ConfigurationManager.AppSettings["Host"].ToString();
+                                    n.ProtocolMessage.RedirectUri = $"{uri}/";
+                                    n.ProtocolMessage.PostLogoutRedirectUri = $"{uri}/";
                                     Claim idTokenHint = n.OwinContext.Authentication.User.FindFirst("id_token");
 
                                     if (idTokenHint != null)
@@ -159,6 +197,102 @@ namespace DT.STS.IdentityServer.Mvc
                     }
                 });
             }
+        }
+
+        private void ConfigureIdentityProviders(IAppBuilder app, string signInAsType)
+        {
+            string host = ConfigurationManager.AppSettings["Host"];
+            string metadataAddress = ConfigurationManager.AppSettings["MetadataAddress"];
+            WsFederationAuthenticationOptions wsFederation = new WsFederationAuthenticationOptions
+            {
+                AuthenticationType = "windows",
+                Caption = "Windows",
+                SignInAsAuthenticationType = signInAsType,
+                MetadataAddress = metadataAddress,
+                Wtrealm = "urn:idsrv3",
+                //BackchannelCertificateValidator = null,
+               
+                Notifications = new WsFederationAuthenticationNotifications
+                {
+                    // ignore signout requests (we can't sign out of Windows)
+                    RedirectToIdentityProvider = n =>
+                    {
+                        if (n.ProtocolMessage.IsSignOutMessage)
+                        {
+                            // tell IdentityServer to manage the sign out instead of the Windows provider
+                            n.OwinContext.Authentication.SignOut();
+                            n.HandleResponse();
+                        }
+
+                        return Task.FromResult(0);
+                    }
+                }
+            };
+            app.UseWsFederationAuthentication(wsFederation);
+        }
+
+        
+    }
+    public static class OpenIdConnectAuthenticationPatchedMiddlewareExtension
+    {
+        public static IAppBuilder UseOpenIdConnectAuthenticationPatched(this IAppBuilder app, OpenIdConnectAuthenticationOptions openIdConnectOptions)
+        {
+            if (app == null)
+            {
+                throw new ArgumentNullException("app");
+            }
+            if (openIdConnectOptions == null)
+            {
+                throw new ArgumentNullException("openIdConnectOptions");
+            }
+            Type type = typeof(OpenIdConnectAuthenticationPatchedMiddleware);
+            object[] objArray = new object[] { app, openIdConnectOptions };
+            return app.Use(type, objArray);
+        }
+    }
+
+    /// <summary>
+    /// Patched to fix the issue with too many nonce cookies described here: https://github.com/IdentityServer/IdentityServer3/issues/1124
+    /// Deletes all nonce cookies that weren't the current one
+    /// </summary>
+    public class OpenIdConnectAuthenticationPatchedMiddleware : OpenIdConnectAuthenticationMiddleware
+    {
+        private readonly Microsoft.Owin.Logging.ILogger _logger;
+
+        public OpenIdConnectAuthenticationPatchedMiddleware(Microsoft.Owin.OwinMiddleware next, Owin.IAppBuilder app, Microsoft.Owin.Security.OpenIdConnect.OpenIdConnectAuthenticationOptions options)
+                : base(next, app, options)
+        {
+            this._logger = Microsoft.Owin.Logging.AppBuilderLoggerExtensions.CreateLogger<OpenIdConnectAuthenticationPatchedMiddleware>(app);
+        }
+
+        protected override Microsoft.Owin.Security.Infrastructure.AuthenticationHandler<OpenIdConnectAuthenticationOptions> CreateHandler()
+        {
+            return new SawtoothOpenIdConnectAuthenticationHandler(_logger);
+        }
+
+        public class SawtoothOpenIdConnectAuthenticationHandler : OpenIdConnectAuthenticationHandler
+        {
+            public SawtoothOpenIdConnectAuthenticationHandler(Microsoft.Owin.Logging.ILogger logger)
+                : base(logger) { }
+
+            /*protected override void RememberNonce(OpenIdConnectMessage message, string nonce)
+            {
+ 
+                var oldNonces = Request.Cookies.Where(kvp => kvp.Key.StartsWith(OpenIdConnectAuthenticationDefaults.CookiePrefix + "nonce"));
+                if (oldNonces.Any())
+                {
+                    Microsoft.Owin.CookieOptions cookieOptions = new Microsoft.Owin.CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = Request.IsSecure
+                    };
+                    foreach (KeyValuePair<string, string> oldNonce in oldNonces)
+                    {
+                        Response.Cookies.Delete(oldNonce.Key, cookieOptions);
+                    }
+                }
+                base.RememberNonce(message, nonce);
+            }*/
         }
     }
 }

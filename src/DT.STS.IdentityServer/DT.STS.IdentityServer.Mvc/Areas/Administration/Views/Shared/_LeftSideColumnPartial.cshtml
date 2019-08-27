@@ -7,10 +7,19 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=@User.Identity.GetUserEmail()&UA=0&size=HR64x64&sc=1468233338850" class="user-image" alt="User Image">
+                @{ if (string.IsNullOrEmpty(User.Identity.GetUserImage()))
+                    {
+                        <img src="~/images/avatar5.png" class="user-image" alt="User Image">
+                    }
+                    else
+                    {
+                        @Html.Image(User.Identity.GetUserImage())
+                    }
+                }
+                <!--<img src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=@User.Identity.GetUserEmail()&UA=0&size=HR64x64&sc=1468233338850" class="user-image" alt="User Image">-->
             </div>
             <div class="pull-left info">
-                <p>@User.Identity.Name</p>
+                <p>@User.Identity.GetDisplayName()</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>

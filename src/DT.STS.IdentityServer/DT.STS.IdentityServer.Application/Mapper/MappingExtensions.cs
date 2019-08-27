@@ -10,6 +10,7 @@ using DT.STS.IdentityServer.Application.Clients.Commands;
 using DT.STS.IdentityServer.Application.UserScopes.Commands;
 using DT.STS.IdentityServer.Application.Claims.Queries;
 using DT.STS.IdentityServer.Application.Companies.Queries;
+using DT.STS.IdentityServer.Application.Departments.Commands;
 
 namespace DT.STS.IdentityServer.Application.Mapper
 {
@@ -62,6 +63,16 @@ namespace DT.STS.IdentityServer.Application.Mapper
         {
             return entity.MapTo<Department, SearchDepartmentsByTokenPagedDto>();
         }
+
+        public static Department ToDepartment(this UpdateDepartmentCommand command)
+        {
+            return command.MapTo<UpdateDepartmentCommand, Department>();
+        }
+        public static GetDepartmentByIdDto ToGetDepartmentByIdDto(this Department entity)
+        {
+            return entity.MapTo<Department, GetDepartmentByIdDto>();
+        }
+        
         #endregion
 
         #region ScopeClaims

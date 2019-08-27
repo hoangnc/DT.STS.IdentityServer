@@ -1,9 +1,5 @@
 ﻿using DT.Core.Web.Ui.Navigation;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
@@ -15,6 +11,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         [Menu(SelectedMenu = MenuNameConstants.User)]
         public ActionResult Index()
         {
+            var user = User;
             return View();
         }
     }

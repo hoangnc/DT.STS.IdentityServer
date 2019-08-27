@@ -37,3 +37,6 @@ C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServe
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddPermissionsToUserScope.resources
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddScopesToClient.resources
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.UpdateColumnsCompany.resources
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddGroupsToUser.resources
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.AddEmailToDeparment.resources
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Persistence\obj\Debug\DT.STS.IdentityServer.Persistence.Migrations.UpdateMaxLengthEmailDepartment.resources

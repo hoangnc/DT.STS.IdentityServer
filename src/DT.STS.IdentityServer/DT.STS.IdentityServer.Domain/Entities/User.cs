@@ -19,5 +19,6 @@ namespace DT.STS.IdentityServer.Domain.Entities
         public string DepartmentName { get; set; }
         //public Department Department { get; set; }
         public string DirectReports { get; set; }
+        public string Groups { get; set; }
     }
 }

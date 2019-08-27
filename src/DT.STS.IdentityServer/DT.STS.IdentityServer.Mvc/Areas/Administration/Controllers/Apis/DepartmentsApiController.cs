@@ -1,4 +1,5 @@
-﻿using DT.STS.IdentityServer.Application.Departments.Commands;
+﻿using DT.Core.Web.Common.Identity.Extensions;
+using DT.STS.IdentityServer.Application.Departments.Commands;
 using DT.STS.IdentityServer.Application.Departments.Queries;
 using DT.STS.IdentityServer.Common.Models;
 using System;
@@ -25,7 +26,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
         {
             return await Mediator.Send(new SyncDepartmentsFromActiveDirectoryCommand
             {
-                CreatedBy = User.Identity.Name,
+                CreatedBy = User.Identity.GetUserName(),
                 CreatedOn = DateTime.Now
             });
         }

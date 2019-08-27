@@ -3,6 +3,7 @@ using DT.STS.IdentityServer.Application.Claims.Queries;
 using DT.STS.IdentityServer.Application.Clients.Commands;
 using DT.STS.IdentityServer.Application.Clients.Queries;
 using DT.STS.IdentityServer.Application.Companies.Queries;
+using DT.STS.IdentityServer.Application.Departments.Commands;
 using DT.STS.IdentityServer.Application.Departments.Queries;
 using DT.STS.IdentityServer.Application.Scopes.Commands;
 using DT.STS.IdentityServer.Application.Scopes.Queries;
@@ -83,6 +84,10 @@ namespace DT.STS.IdentityServer.Application.Mapper
 
                 // ----- GetAllCompaniesDto -----
                 cfg.CreateMap<Company, GetAllCompaniesDto>();
+
+                cfg.CreateMap<UpdateDepartmentCommand, Department>();
+
+                cfg.CreateMap<Department, GetDepartmentByIdDto>();
 
             });
             Mapper = MapperConfiguration.CreateMapper();

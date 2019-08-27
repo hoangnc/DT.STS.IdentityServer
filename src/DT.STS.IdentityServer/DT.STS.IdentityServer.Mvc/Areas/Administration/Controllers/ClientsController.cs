@@ -6,7 +6,6 @@ using DT.STS.IdentityServer.Application.ScopeScopeClaims.Queries;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Clients;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
-using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +19,6 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
     [Authorize]
     public class ClientsController : IdentityServerControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public ClientsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         // GET: Administration/Clients
         [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.Clients)]
         [HandleForbidden]
@@ -85,7 +77,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
                 createClientCommand.CreatedBy = User.Identity.Name;
                 createClientCommand.CreatedOn = DateTime.Now;
 
-                int result = await _mediator.Send(createClientCommand);
+                int result = await Mediator.Send(createClientCommand);
                 if (result > 0)
                 {
                     return View("List");
@@ -110,7 +102,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         public async Task<ActionResult> Update(string clientId)
         {
             ClientUpdateModel model = new ClientUpdateModel();
-            var getClientByClientIdDto = await _mediator.Send(new GetClientByClientIdQuery
+            GetClientByClientIdDto getClientByClientIdDto = await Mediator.Send(new GetClientByClientIdQuery
             {
                 ClientId = clientId
             });
@@ -129,7 +121,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 
         private async Task<List<SelectListItem>> GetClaims()
         {
-            List<GetAllScopeClaimsDto> scopeClaims = await _mediator.Send(new GetAllScopeClaimsQuery());
+            List<GetAllScopeClaimsDto> scopeClaims = await Mediator.Send(new GetAllScopeClaimsQuery());
 
             List<SelectListItem> claims = scopeClaims.Select(scopeClaim => new SelectListItem
             {
@@ -142,7 +134,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 
         private async Task<List<SelectListItem>> GetScopes()
         {
-            List<GetScopesDto> scopes = await _mediator.Send(new GetScopesQuery());
+            List<GetScopesDto> scopes = await Mediator.Send(new GetScopesQuery());
 
             List<SelectListItem> selectListItems = scopes.Select(scope => new SelectListItem
             {

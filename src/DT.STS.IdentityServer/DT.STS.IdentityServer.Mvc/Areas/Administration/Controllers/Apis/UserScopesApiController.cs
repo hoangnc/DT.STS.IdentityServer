@@ -1,4 +1,5 @@
-﻿using DT.STS.IdentityServer.Application.UserScopes.Commands;
+﻿using DT.Core.Web.Common.Identity.Extensions;
+using DT.STS.IdentityServer.Application.UserScopes.Commands;
 using DT.STS.IdentityServer.Application.UserScopes.Queries;
 using DT.STS.IdentityServer.Common.Models;
 using System;
@@ -30,7 +31,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
         [HttpPost]
         public async Task<int> InsertOrUpdate([FromBody] InsertOrUpdateUserScopeCommand command)
         {
-            command.CreatedBy = User.Identity.Name;
+            command.CreatedBy = User.Identity.GetUserName();
             command.CreatedOn = DateTime.Now;
             return await Mediator.Send(command);
         }

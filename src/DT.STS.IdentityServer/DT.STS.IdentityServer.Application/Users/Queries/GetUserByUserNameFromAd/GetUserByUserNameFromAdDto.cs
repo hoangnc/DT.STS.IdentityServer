@@ -15,5 +15,6 @@ namespace DT.STS.IdentityServer.Application.Users.Queries
         public string DepartmentName { get; set; }
         public string DirectReports { get; set; }
         public string Email { get; set; }
+        public byte[] JpegPhoto { get; set; }
     }
 }

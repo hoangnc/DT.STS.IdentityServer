@@ -151,22 +151,22 @@
             $('#Required').jqxCheckBox();
 
             $('#ShowInDiscoveryDocument').on('change', function (event) {
-                var checked = event.args.checked;
+                const checked = event.args.checked;
                 $('input:hidden[name=ShowInDiscoveryDocument]').val(`${checked}`);
             });
 
             $('#IncludeAllClaimsForUser').on('change', function (event) {
-                var checked = event.args.checked;
+                const checked = event.args.checked;
                 $('input:hidden[name=IncludeAllClaimsForUser]').val(`${checked}`);
             });
 
             $('#Emphasize').on('change', function (event) {
-                var checked = event.args.checked;
+                const checked = event.args.checked;
                 $('input:hidden[name=Emphasize]').val(`${checked}`);
             });
 
             $('#Required').on('change', function (event) {
-                var checked = event.args.checked;
+                const checked = event.args.checked;
                 $('input:hidden[name=Required]').val(`${checked}`);
             });
 

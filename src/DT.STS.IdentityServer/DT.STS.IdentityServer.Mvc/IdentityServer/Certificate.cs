@@ -8,7 +8,7 @@ namespace DT.STS.IdentityServer.Mvc.IdentityServer
         public static X509Certificate2 Get()
         {
             var assembly = typeof(Certificate).Assembly;
-            using (var stream = assembly.GetManifestResourceStream("DT.STS.IdentityServer.Mvc.IdentityServer.idsrv3test.pfx"))
+            using (var stream = assembly.GetManifestResourceStream("DT.STS.IdentityServer.Mvc.IdentityServer.idsrv3test1.pfx"))
             {
                 return new X509Certificate2(ReadStream(stream), "idsrv3test");
             }

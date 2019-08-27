@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using DT.STS.IdentityServer.Common.Models;
+using System;
+using System.Collections.Generic;
 using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Wdc.DirectoryLib.Types;
 namespace DT.STS.IdentityServer.Common.Helpers
 {
@@ -12,11 +17,14 @@ namespace DT.STS.IdentityServer.Common.Helpers
         /// Returns UserAccount object from a given search result
         /// </summary>
         /// <param name="result">SearchResult computed by one of the other GetUser methods</param>
-        public static UserAccount GetUserFromResult(SearchResult result)
+        public static AdUserAccount GetUserFromResult(SearchResult result)
         {
+            var userAccountControl = TryGetResult<int>(result, "userAccountControl");
+            var active = userAccountControl == 512 ? true : false;
+
             // Values can be found here:
             // http://msdn.microsoft.com/en-us/library/ms679021(v=vs.85).aspx
-            return new UserAccount()
+            return new AdUserAccount()
             {
                 ObjectGuid = TryGetResult<byte[]>(result, "objectGUID"),
                 CommonName = TryGetResult<string>(result, "cn"),
@@ -38,8 +46,31 @@ namespace DT.STS.IdentityServer.Common.Helpers
                 SamAccountName = TryGetResult<string>(result, "samAccountName"),
                 UserPrincipalName = TryGetResult<string>(result, "userPrincipalName"),
                 Manager = TryGetResult<string>(result, "manager"),
+                Active = active,
                 DirectReports = TryGetResultList<string>(result, "directReports"),
             };
+        }
+
+        public static PrincipalContext GetPrincipalContext()
+        {
+            return new PrincipalContext(ContextType.Domain);
+        }
+
+        public static UserPrincipal GetUser(IdentityType identityType, string identityValue)
+        {
+            var res = UserPrincipal.FindByIdentity(GetPrincipalContext(), identityType, identityValue);
+            return res;
+        }
+
+        public static IEnumerable<string> GetGroupsForUser(UserPrincipal userPrincipal)
+        {
+            var groups = new List<string>();
+            var principalGroups = userPrincipal.GetGroups();
+            foreach (var principalGroup in principalGroups)
+            {
+                groups.Add(principalGroup.Name);
+            }
+            return groups.Distinct().ToList();
         }
 
         public static T TryGetResult<T>(SearchResult result, string key)

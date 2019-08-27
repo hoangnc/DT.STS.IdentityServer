@@ -184,6 +184,10 @@
 
         $(document).ready(function () {
             $('#Active').jqxCheckBox();
+            $('#Active').on('change', function (event) {
+                const checked = event.args.checked;
+                $('input:hidden[name=Active]').val(`${checked}`);
+            });
             btnLookFromAd.click(function () {
                 $.getJSON(`${lookUserFromAdUrl}?userName=${userName.val()}`,
                     function (data) {

@@ -1,4 +1,5 @@
-﻿using DT.STS.IdentityServer.Application.Users.Commands;
+﻿using DT.Core.Web.Common.Identity.Extensions;
+using DT.STS.IdentityServer.Application.Users.Commands;
 using DT.STS.IdentityServer.Application.Users.Queries;
 using DT.STS.IdentityServer.Common.Models;
 using DT.STS.IdentityServer.Mvc.Helpers;
@@ -31,12 +32,12 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers.Apis
         }
 
         [Route("api/users/syncusersfromad")]
-        [ResourceAuthorize(DtPermissionBaseTypes.Sync, IdentityServerResources.ApiUsers)]
+       [ResourceAuthorize(DtPermissionBaseTypes.Sync, IdentityServerResources.ApiUsers)]
         public async Task<int> SyncUsersFromAd()
         {
             return await Mediator.Send(new SyncUsersFromActiveDirectoryCommand
             {
-                CreatedBy = User.Identity.Name,
+                CreatedBy = User.Identity.GetUserName(),
                 CreatedOn = DateTime.Now
             });
         }

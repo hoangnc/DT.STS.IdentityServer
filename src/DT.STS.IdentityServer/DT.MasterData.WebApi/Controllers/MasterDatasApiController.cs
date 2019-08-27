@@ -48,6 +48,12 @@ namespace DT.MasterData.WebApi.Controllers
             return await Mediator.Send(new GetAllCompaniesQuery());
         }
 
+        /// <summary>
+        /// Get all groups from active directory
+        /// </summary>
+        /// <returns>
+        /// List<string>
+        /// </returns>
         [Route("api/v1/masterdatas/getallgroupsfromactivedirectory")]
         [HttpGet]
         public async Task<List<string>> GetAllGroupsFromActiveDirectory()

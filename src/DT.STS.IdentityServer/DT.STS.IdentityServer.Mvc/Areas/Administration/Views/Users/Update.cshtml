@@ -8,6 +8,24 @@
     <link rel="stylesheet" href="/Scripts/jqwidgets/styles/jqx.light.css" type="text/css" />
     <!-- Select2 -->
     <link rel="stylesheet" href="~/Scripts/admin_lte/bower_components/select2/dist/css/select2.min.css">
+    <style>
+        /*Select2 ReadOnly Start*/
+        select[readonly].select2-hidden-accessible + .select2-container {
+            pointer-events: none;
+            touch-action: none;
+        }
+
+            select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+                background: #eee;
+                box-shadow: none;
+            }
+
+            select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+                display: none;
+            }
+
+        /*Select2 ReadOnly End*/
+    </style>
 }
     <div class="box box-info form-horizontal">
         @using (Html.BeginForm())
@@ -33,7 +51,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Domain, new { @class = "control-label col-md-2" })
                         <div class="col-md-5">
-                            @Html.DropDownListFor(model => model.Domain, Model.AvailableDomains, new { @class = "form-control", @disabled = "disabled" })
+                            @Html.DropDownListFor(model => model.Domain, Model.AvailableDomains, new { @class = "form-control", @readonly = "readonly" })
                             @Html.ValidationMessageFor(model => model.Domain, "", new { @class = "text-danger" })
                             <small class="form-text text-muted">Nếu người dùng không thuộc trong công ty Duy Tân thì chọn Domain là khách.</small>
                         </div>
@@ -84,7 +102,7 @@
                             }
                             else
                             {
-                                @Html.PasswordFor(model => model.Password, htmlAttributes: new { @value = Model.Password, @class = "form-control", @disabled = "disabled" })
+                                @Html.PasswordFor(model => model.Password, htmlAttributes: new { @value = Model.Password, @class = "form-control", @readonly = "readonly" })
                             }
                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         </div>
@@ -185,6 +203,10 @@
 
         $(document).ready(function () {
             $('#Active').jqxCheckBox();
+            $('#Active').on('change', function (event) {
+                const checked = event.args.checked;
+                $('input:hidden[name=Active]').val(`${checked}`);
+            });
             btnLookFromAd.click(function () {
                 $.getJSON(`${lookUserFromAdUrl}?userName=${userName.val()}`,
                     function (data) {
@@ -235,6 +257,7 @@
                 templateSelection: formatUserSelection
             });
             manager.val([@Model.ManagerName]).trigger('change');
+            $('select[readonly="readonly"] option:not(:selected)').attr('disabled', true);
         });
     </script>
 }

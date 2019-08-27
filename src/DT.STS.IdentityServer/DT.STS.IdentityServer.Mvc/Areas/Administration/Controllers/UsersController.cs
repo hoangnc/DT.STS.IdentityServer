@@ -1,30 +1,23 @@
-﻿using DT.STS.IdentityServer.Application.Departments.Queries;
-using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Users;
+﻿using DT.Core.Web.Ui.Navigation;
+using DT.STS.IdentityServer.Application.Departments.Queries;
+using DT.STS.IdentityServer.Application.Users.Queries;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper;
-using MediatR;
+using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Users;
+using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
+using IdentityServer3.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System;
-using IdentityServer3.Core.Models;
-using DT.STS.IdentityServer.Application.Users.Queries;
 using Thinktecture.IdentityModel.Mvc;
 using static DT.Core.Web.Common.Identity.Constants;
-using DT.Core.Web.Ui.Navigation;
-using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
 
 namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 {
     [Authorize]
     public class UsersController : IdentityServerControllerBase
     {
-        private readonly IMediator _mediator;
-        public UsersController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.Users)]
         [HandleForbidden]
         public ActionResult Index()
@@ -63,7 +56,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var createUserCommand = model.ToCreateUserCommand();
+                Application.Users.Commands.CreateUserCommand createUserCommand = model.ToCreateUserCommand();
                 createUserCommand.CreatedBy = User.Identity.Name;
                 createUserCommand.CreatedOn = DateTime.Now;
                 createUserCommand.Password = createUserCommand.Password.Sha256();
@@ -91,7 +84,8 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         public async Task<ActionResult> Update(int id)
         {
             UserUpdateModel model = new UserUpdateModel();
-            var user = await Mediator.Send(new GetUserByIdQuery {
+            GetUserByIdDto user = await Mediator.Send(new GetUserByIdQuery
+            {
                 Id = id
             });
             model = user.ToUserUpdateModel();
@@ -111,7 +105,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var updateUserCommand = model.ToUpdateUserCommand();
+                Application.Users.Commands.UpdateUserCommand updateUserCommand = model.ToUpdateUserCommand();
                 updateUserCommand.CreatedBy = User.Identity.Name;
                 updateUserCommand.CreatedOn = DateTime.Now;
 
@@ -135,7 +129,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 
         private async Task<IList<SelectListItem>> GetDepartments()
         {
-            List<GetAllDepartmentsDto> departments = await _mediator.Send(new GetAllDepartmentsQuery());
+            List<GetAllDepartmentsDto> departments = await Mediator.Send(new GetAllDepartmentsQuery());
 
             return departments.Select(department => new SelectListItem
             {
@@ -146,8 +140,9 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
 
         private async Task<IList<SelectListItem>> GetUsers()
         {
-            List<GetAllUsersDto> users = await _mediator.Send(new GetAllUsersQuery());
-            return users.Select(user => new SelectListItem {
+            List<GetAllUsersDto> users = await Mediator.Send(new GetAllUsersQuery());
+            return users.Select(user => new SelectListItem
+            {
                 Text = $"{user.LastName} {user.FirstName};{user.DepartmentName}",
                 Value = user.UserName
             }).ToList();

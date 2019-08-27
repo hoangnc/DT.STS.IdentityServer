@@ -94,9 +94,14 @@
     <Compile Include="Companies\Queries\GetAllCompaniesQueryHandler.cs" />
     <Compile Include="Departments\Commands\SyncDepartmentsFromActiveDirectoryCommand.cs" />
     <Compile Include="Departments\Commands\SyncDepartmentsFromActiveDirectoryCommandHandler.cs" />
+    <Compile Include="Departments\Commands\UpdateDepartmentCommand.cs" />
+    <Compile Include="Departments\Commands\UpdateDepartmentCommandHandler.cs" />
     <Compile Include="Departments\Queries\GetAllDepartmentsDto.cs" />
     <Compile Include="Departments\Queries\GetAllDepartmentsQuery.cs" />
     <Compile Include="Departments\Queries\GetAllDepartmentsQueryHandler.cs" />
+    <Compile Include="Departments\Queries\GetDepartmentByIdDto.cs" />
+    <Compile Include="Departments\Queries\GetDepartmentByIdQuery.cs" />
+    <Compile Include="Departments\Queries\GetDepartmentByIdQueryHandler.cs" />
     <Compile Include="Departments\Queries\SearchDepartmentsByTokenPagedDto.cs" />
     <Compile Include="Departments\Queries\SearchDepartmentsByTokenPagedQuery.cs" />
     <Compile Include="Departments\Queries\SearchDepartmentsByTokenPagedQueryHandler.cs" />

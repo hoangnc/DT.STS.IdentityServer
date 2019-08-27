@@ -7,5 +7,5 @@ C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServe
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\Owin.dll
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\IdentityServer3.pdb
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\bin\Debug\IdentityServer3.xml
-C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\obj\Debug\DT.STS.IdentityServer.Domain.csprojAssemblyReference.cache
 C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\obj\Debug\DT.STS.IdentityServer.Domain.csproj.CopyComplete
+C:\Users\nguyenconghoang\source\repos\DT.STS.IdentityServer\DT.STS.IdentityServer.Domain\obj\Debug\DT.STS.IdentityServer.Domain.csprojAssemblyReference.cache

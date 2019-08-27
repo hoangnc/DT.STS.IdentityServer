@@ -77,6 +77,9 @@
 
     <script type="text/javascript">
         const txtSearch = $('#txtSearch');
+
+        const updateDepartmentUrl = `${hostUrl}/administration/departments/update`;
+
         txtSearch.on("keyup", function (e) {
             const key = event.charCode ? event.charCode : event.keyCode ? event.keyCode : 0;
             if (key === 13) {
@@ -102,7 +105,8 @@
                 [
                     { name: 'id', type: 'int' },
                     { name: 'code', type: 'string' },
-                    { name: 'name', type: 'string' }
+                    { name: 'name', type: 'string' },
+                    { name: 'email', type: 'string' }
                   ],
             root: 'data',
             beforeprocessing: function (data) { source.totalrecords = data.total; }
@@ -156,13 +160,26 @@
                         datafield: 'code',
                         pinned: true,
                         editable: false,
-                        width: 250
+                        width: 250,
+                        cellsrenderer: function (row, column, value, defaultHtml) {
+                            var element = $(defaultHtml);
+                            element.html(`<a href="${updateDepartmentUrl}?id=${dataAdapter.records[row].id}"> <i class="fa fa-pencil"></i> ${value} </a>`);
+                            return element[0].outerHTML;
+                        }
                     },
                     {
                         text: 'Phòng ban',
                         columntype: 'textbox',
                         datafield: 'name',
                         pinned: true,
+                        editable: false,
+                        width: 250
+                    },
+                    {
+                        text: 'Email',
+                        columntype: 'textbox',
+                        datafield: 'email',
+                        pinned: false,
                         editable: false,
                         width: 250
                     }

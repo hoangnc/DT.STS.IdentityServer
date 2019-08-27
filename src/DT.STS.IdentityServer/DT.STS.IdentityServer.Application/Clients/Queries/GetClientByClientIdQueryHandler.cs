@@ -35,6 +35,7 @@ namespace DT.STS.IdentityServer.Application.Clients.Queries
                     AuthorizationCodeLifetime = client.AuthorizationCodeLifetime,
                     ClientUri = client.ClientUri,
                     EnableLocalLogin = client.EnableLocalLogin,
+                    Scopes = client.Scopes,
                     Flow = client.Flow,
                     IdentityTokenLifetime = client.IdentityTokenLifetime,
                     IncludeJwtId = client.IncludeJwtId,

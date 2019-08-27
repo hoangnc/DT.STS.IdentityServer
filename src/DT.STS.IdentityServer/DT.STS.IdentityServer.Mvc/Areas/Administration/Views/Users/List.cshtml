@@ -76,6 +76,7 @@
     <script type="text/javascript" src="~/Scripts/jqwidgets/jqxnumberinput.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/jqxdatetimeinput.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="/Scripts/jqwidgets/jqxgrid.grouping.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/jqxinput.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/globalization/globalize.js"></script>
     <script type="text/javascript" src="~/Scripts/jqwidgets/localization.js"></script>
@@ -132,12 +133,14 @@
                     { name: 'userName', type: 'string' },
                     { name: 'firstName', type: 'string' },
                     { name: 'lastName', type: 'string' },
+                    { name: 'active' , type: 'string' },
                     { name: 'fullNameUnicode', type: 'string' },
                     { name: 'lastLoginDate', type: 'string' },
                     { name: 'managerName', type: 'string' },
                     { name: 'departmentName', type: 'string' },
                     { name: 'directReports', type: 'string' },
                     { name: 'jpegPhoto', type: 'string' },
+                    { name: 'groups', type: 'string'},
                     { name: 'email', type: 'string'}
                 ],
             root: 'data',
@@ -157,6 +160,7 @@
                 height: 600,
                 source: dataAdapter,
                 pageable: true,
+                groupable: true,
                 autorowheight: true,
                 columnsresize: true,
                 altrows: true,
@@ -222,9 +226,23 @@
                         width: 150
                     },
                     {
+                        text: 'Enable',
+                        columntype: 'checkbox',
+                        datafield: 'active',
+                        editable: false,
+                        width: 150
+                    },
+                    {
                         text: managerNameText,
                         columntype: 'textbox',
                         datafield: 'managerName',
+                        editable: false,
+                        width: 150
+                    },
+                    {
+                        text: 'Group',
+                        columntype: 'textbox',
+                        datafield: 'groups',
                         editable: false,
                         width: 150
                     },

@@ -16,10 +16,10 @@ namespace DT.STS.IdentityServer.Persistence.Configurations
             ToTable("User");
 
             Property(e => e.UserName).IsRequired()
-                .HasMaxLength(64);
+               .HasMaxLength(64);
 
             Property(e => e.Password)
-                .HasMaxLength(256);
+               .HasMaxLength(256);
 
             Property(e => e.FirstName)
                .HasMaxLength(64);
@@ -44,6 +44,9 @@ namespace DT.STS.IdentityServer.Persistence.Configurations
             Property(e => e.JpegPhoto);
 
             Property(e => e.DirectReports);
+
+            Property(e => e.Groups)
+                .HasMaxLength(1024);
 
             Property(e => e.Active);
 

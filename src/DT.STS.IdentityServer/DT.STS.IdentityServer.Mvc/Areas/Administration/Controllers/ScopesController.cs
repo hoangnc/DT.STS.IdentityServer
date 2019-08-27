@@ -4,12 +4,10 @@ using DT.STS.IdentityServer.Application.ScopeScopeClaims.Queries;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Mapper;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Models.Scopes;
 using DT.STS.IdentityServer.Mvc.Areas.Administration.Services;
-using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Thinktecture.IdentityModel.Mvc;
 using static DT.Core.Web.Common.Identity.Constants;
@@ -19,11 +17,6 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
     [Authorize]
     public class ScopesController : IdentityServerControllerBase
     {
-        private readonly IMediator _mediator;
-        public ScopesController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
         // GET: Administration/Scope
         [ResourceAuthorize(DtPermissionBaseTypes.Read, IdentityServerResources.Scopes)]
         [HandleForbidden]
@@ -47,14 +40,15 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         public async Task<ActionResult> Update(int id)
         {
             ScopeUpdateModel model = new ScopeUpdateModel();
-            var getScopeByIdDto = await _mediator.Send(new GetScopeByIdQuery {
+            GetScopeByIdDto getScopeByIdDto = await Mediator.Send(new GetScopeByIdQuery
+            {
                 Id = id
             });
 
-            if(getScopeByIdDto != null && getScopeByIdDto.Id > 0)
+            if (getScopeByIdDto != null && getScopeByIdDto.Id > 0)
             {
                 model = getScopeByIdDto.ToScopeUpdateModel();
-                var scopeClaims = await _mediator.Send(new GetAllScopeClaimsQuery());
+                List<GetAllScopeClaimsDto> scopeClaims = await Mediator.Send(new GetAllScopeClaimsQuery());
                 model.AvailableClaims = scopeClaims.Select(scopeClaim => new SelectListItem
                 {
                     Selected = true,
@@ -77,11 +71,11 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var updateScopeCommand = model.ToUpdateScopeCommand();
+                Application.Scopes.Commands.UpdateScopeCommand updateScopeCommand = model.ToUpdateScopeCommand();
                 updateScopeCommand.CreatedBy = User.Identity.Name;
                 updateScopeCommand.CreatedOn = DateTime.Now;
 
-                int result = await _mediator.Send(updateScopeCommand);
+                int result = await Mediator.Send(updateScopeCommand);
                 if (result > 0)
                 {
                     return View("List");
@@ -92,7 +86,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
                 }
             }
 
-            var scopeClaims = await _mediator.Send(new GetAllScopeClaimsQuery());
+            List<GetAllScopeClaimsDto> scopeClaims = await Mediator.Send(new GetAllScopeClaimsQuery());
             model.AvailableClaims = scopeClaims.Select(scopeClaim => new SelectListItem
             {
                 Value = scopeClaim.Id.ToString(),
@@ -110,7 +104,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         {
             ScopeCreateModel model = new ScopeCreateModel();
 
-            var scopeClaims = await _mediator.Send(new GetAllScopeClaimsQuery());
+            List<GetAllScopeClaimsDto> scopeClaims = await Mediator.Send(new GetAllScopeClaimsQuery());
             model.AvailableClaims = scopeClaims.Select(scopeClaim => new SelectListItem
             {
                 Value = scopeClaim.Id.ToString(),
@@ -129,11 +123,11 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var createScopeCommand = model.ToCreateScopeCommand();
+                Application.Scopes.Commands.CreateScopeCommand createScopeCommand = model.ToCreateScopeCommand();
                 createScopeCommand.CreatedBy = User.Identity.Name;
                 createScopeCommand.CreatedOn = DateTime.Now;
 
-                int result = await _mediator.Send(createScopeCommand);
+                int result = await Mediator.Send(createScopeCommand);
                 if (result > 0)
                 {
                     return View("List");
@@ -144,7 +138,7 @@ namespace DT.STS.IdentityServer.Mvc.Areas.Administration.Controllers
                 }
             }
 
-            var scopeClaims = await _mediator.Send(new GetAllScopeClaimsQuery());
+            List<GetAllScopeClaimsDto> scopeClaims = await Mediator.Send(new GetAllScopeClaimsQuery());
             model.AvailableClaims = scopeClaims.Select(scopeClaim => new SelectListItem
             {
                 Value = scopeClaim.Id.ToString(),

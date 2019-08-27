@@ -55,7 +55,8 @@ namespace DT.STS.IdentityServer.Mvc.Services
                                 RequireConsent = c.RequireConsent,
                                 RedirectUris = c.RedirectUris.Split(';').ToList(),
                                 PostLogoutRedirectUris = c.PostLogoutRedirectUris.Split(';').ToList(),
-                                AllowedScopes = c.AllowedScopes.Split(';').ToList()
+                                AllowedScopes = c.AllowedScopes.Split(';').ToList(),
+                                AllowedCorsOrigins = c.RedirectUris.Split(';').ToList()
                             };
                         })
                     );
@@ -79,15 +80,16 @@ namespace DT.STS.IdentityServer.Mvc.Services
                         Flow = dtClient.Flow,
                         RequireConsent = dtClient.RequireConsent,
                         RedirectUris = dtClient.RedirectUris.Split(';').ToList(),
+                        AllowedCorsOrigins = dtClient.RedirectUris.Split(';').ToList(),
                         PostLogoutRedirectUris = dtClient.PostLogoutRedirectUris.Split(';').ToList(),
-                        AllowedScopes = new List<string> {
+                        AllowedScopes = dtClient.Scopes.Split(';').ToList()/*new List<string> {
                             "openid",
                             "profile",
                             "roles",
                             "documentmvc",
                             "documentapi",
                             "masterdataapi"
-                        }
+                        }*/
                     };
                 }
             }

@@ -36,18 +36,24 @@ namespace DT.STS.IdentityServer.Application.Departments.Commands
                     for (int i = 0; i < resultCol.Count; i++)
                     {
                         result = resultCol[i];
-                        string departmentName = ActiveDirectoryHelper.TryGetResult<string>(result, "department");
-                        if (!string.IsNullOrEmpty(departmentName))
+                        
+                        var userAccountControl = ActiveDirectoryHelper.TryGetResult<int>(result, "userAccountControl");
+                        var active = userAccountControl == 512 ? true : false;
+                        if (active)
                         {
-                            if (!departments.Any(d=>d.Name == departmentName))
+                            string departmentName = ActiveDirectoryHelper.TryGetResult<string>(result, "department");
+                            if (!string.IsNullOrEmpty(departmentName))
                             {
-                                departments.Add(new Department
+                                if (!departments.Any(d => d.Name == departmentName))
                                 {
-                                    Code = departmentName,
-                                    Name = departmentName,
-                                    CreatedBy = request.CreatedBy,
-                                    CreatedOn = request.CreatedOn
-                                });
+                                    departments.Add(new Department
+                                    {
+                                        Code = departmentName,
+                                        Name = departmentName,
+                                        CreatedBy = request.CreatedBy,
+                                        CreatedOn = request.CreatedOn
+                                    });
+                                }
                             }
                         }
                     }

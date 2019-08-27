@@ -67,7 +67,8 @@ namespace DT.STS.IdentityServer.Application.Users.Queries
                                     FirstName = userAccount.GivenName,
                                     LastName = userAccount.SurName,
                                     ManagerName = manager,
-                                    Email = userAccount.Email
+                                    Email = userAccount.Email,
+                                    JpegPhoto = userAccount.JpegPhoto
                                 };
 
                                 return Task.FromResult(getUserByUserNameFromAdDto);

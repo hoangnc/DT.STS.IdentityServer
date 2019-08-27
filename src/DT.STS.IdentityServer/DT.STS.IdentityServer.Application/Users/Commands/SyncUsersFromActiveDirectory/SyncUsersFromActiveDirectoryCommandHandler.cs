@@ -1,4 +1,5 @@
 ﻿using DT.STS.IdentityServer.Common.Helpers;
+using DT.STS.IdentityServer.Common.Models;
 using DT.STS.IdentityServer.Domain.Entities;
 using DT.STS.IdentityServer.Persistence;
 using MediatR;
@@ -38,7 +39,7 @@ namespace DT.STS.IdentityServer.Application.Users.Commands
                     for (int i = 0; i < resultCol.Count; i++)
                     {
                         result = resultCol[i];
-                        UserAccount userAccount = ActiveDirectoryHelper.GetUserFromResult(result);
+                        AdUserAccount userAccount = ActiveDirectoryHelper.GetUserFromResult(result);
                         if (userAccount != null)
                         {
                             if (!string.IsNullOrWhiteSpace(userAccount.Department)
@@ -61,14 +62,18 @@ namespace DT.STS.IdentityServer.Application.Users.Commands
                                     }
                                 }
 
+                                List<string> groups = new List<string>();
+                                var userPrinciple = ActiveDirectoryHelper.GetUser(System.DirectoryServices.AccountManagement.IdentityType.SamAccountName, userAccount.SamAccountName);
+                                groups = ActiveDirectoryHelper.GetGroupsForUser(userPrinciple).ToList();
                                 users.Add(new User
                                 {
                                     UserName = userAccount.SamAccountName,
-                                    Active = true,
+                                    Active = userAccount.Active,
                                     CreatedBy = request.CreatedBy,
                                     CreatedOn = request.CreatedOn,
                                     DepartmentName = userAccount.Department,
                                     DirectReports = string.Join(";", directReports),
+                                    Groups = string.Join(";", groups),
                                     FirstName = userAccount.GivenName,
                                     LastName = userAccount.SurName,
                                     Email = userAccount.UserPrincipalName,

@@ -20,6 +20,9 @@ namespace DT.STS.IdentityServer.Persistence.Configurations
             Property(e => e.Name).IsRequired()
                 .HasMaxLength(64);
 
+            Property(e => e.Email)
+                .HasMaxLength(4000);
+
             Property(e => e.CreatedBy).IsRequired()
               .HasMaxLength(64);
             Property(e => e.CreatedOn).IsRequired();
