@@ -6,10 +6,13 @@ using DT.STS.IdentityServer.Mvc.Configurations;
 using DT.STS.IdentityServer.Mvc.IdentityServer;
 using DT.STS.IdentityServer.Mvc.Services;
 using FluentValidation;
+using IdentityModel;
 using IdentityModel.Client;
+using IdentityServer.WindowsAuthentication.Configuration;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
 using IdentityServer3.Core.Services.Default;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.Owin;
 using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Security;
@@ -24,10 +27,12 @@ using System.Configuration;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Security;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Helpers;
 using IdentityServer3Constants = IdentityServer3.Core.Constants;
 
@@ -42,7 +47,7 @@ namespace DT.STS.IdentityServer.Mvc
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.File(@"c:\logs\sts.identityserver.txt")
+                .WriteTo.RollingFile(HttpContext.Current.Request.PhysicalApplicationPath + @"\logs\sts.identityserver-{Date}.txt")
                 .CreateLogger();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
@@ -57,14 +62,31 @@ namespace DT.STS.IdentityServer.Mvc
             CustomLanguageManager customLanguageManager = new CustomLanguageManager(container.Resolve<ILanguageManager>());
             ValidatorOptions.LanguageManager = customLanguageManager;
 
+            app.Use(async (context, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "OWIN error.");
+                }
+
+            });
+
+            app.Map("/windows", ConfigureWindowsTokenProvider);
+
             app.Map("/identity", idsrvApp =>
                 {
                     idsrvApp.UseAutofacMiddleware(container);
                     IdentityServerServiceFactory factory = new IdentityServerServiceFactory();
-
+                    factory.CustomGrantValidators.Add(new Registration<ICustomGrantValidator>(typeof(WindowsGrantValidator)));
                     factory.UserService = new Registration<IUserService, UserService>();
                     factory.ScopeStore = new Registration<IScopeStore>(container.Resolve<IScopeStore>());
                     factory.ClientStore = new Registration<IClientStore>(container.Resolve<IClientStore>());
+                    IdentityModelEventSource.ShowPII = true;
+                    IdentityModelEventSource.HeaderWritten = true;
 
                     var cors = new DefaultCorsPolicyService
                     {
@@ -72,11 +94,12 @@ namespace DT.STS.IdentityServer.Mvc
                     };
                     factory.CorsPolicyService = new Registration<ICorsPolicyService>(cors);
 
+                    //var subjects = X509.LocalMachine.My.SubjectDistinguishedName;
 
                     IdentityServerOptions options = new IdentityServerOptions
                     {
                         SiteName = "Duy Tan Security Token Service",
-                        SigningCertificate = Certificate.Get(),
+                        SigningCertificate = Certificate.Get(),//X509.LocalMachine.My.SubjectDistinguishedName.Find("CN=localhost").First(),//Certificate.Get(),//X509.LocalMachine.My.SerialNumber.Find("CN =*.duytan.com OU=IT O=Duy Tan Plastics Manufacturing Corporation L=Ho Chi Minh C=VN").First(),//Certificate.Get(),
                         Factory = factory,
                         RequireSsl = false,
                         EnableWelcomePage = true,                 
@@ -92,6 +115,13 @@ namespace DT.STS.IdentityServer.Mvc
                             RaiseErrorEvents = true,
                             RaiseFailureEvents = true,
                             RaiseInformationEvents = true
+                        },
+                        LoggingOptions = new LoggingOptions
+                        {
+                            EnableWebApiDiagnostics = true,
+                            WebApiDiagnosticsIsVerbose = true,
+                            EnableHttpLogging = true,
+                            EnableKatanaLogging = true
                         }
                     };
 
@@ -114,14 +144,16 @@ namespace DT.STS.IdentityServer.Mvc
 
             app.UseKentorOwinCookieSaver();
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            /*app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = "Cookies",
                 CookieManager = new SystemWebChunkingCookieManager()
 
-            });
+            });*/
 
-           object section = ConfigurationManager.GetSection("openIdConnectionOptionSection");
+            
+
+            /*object section = ConfigurationManager.GetSection("openIdConnectionOptionSection");
 
             if (section != null)
             {
@@ -137,8 +169,10 @@ namespace DT.STS.IdentityServer.Mvc
                     UseTokenLifetime = openIdConnectionOption.UseTokenLifetime,
                     Notifications = new OpenIdConnectAuthenticationNotifications
                     {
-                        AuthenticationFailed = n =>
+                        AuthenticationFailed = context =>
                         {
+                            context.HandleResponse();
+                            context.Response.Redirect("/Error?message=" + context.Exception.Message);
                             return Task.FromResult(0);
                         },
                         MessageReceived = n => {
@@ -196,13 +230,31 @@ namespace DT.STS.IdentityServer.Mvc
                             }
                     }
                 });
-            }
+            }*/
+        }
+
+        private static void ConfigureWindowsTokenProvider(IAppBuilder app)
+        {
+            app.UseWindowsAuthenticationService(new WindowsAuthenticationOptions
+            {
+                IdpReplyUrl = "https://winauth.duytan.com/identity",
+                SigningCertificate = Certificate.Get(),
+                EnableOAuth2Endpoint = false
+            });
         }
 
         private void ConfigureIdentityProviders(IAppBuilder app, string signInAsType)
         {
             string host = ConfigurationManager.AppSettings["Host"];
             string metadataAddress = ConfigurationManager.AppSettings["MetadataAddress"];
+            HttpClientHandler handler;
+            handler = new HttpClientHandler();
+            //handler.ClientCertificates.Add(X509.LocalMachine.My.SubjectDistinguishedName.Find("CN=localhost").First());
+            handler.UseDefaultCredentials = true;
+            handler.AllowAutoRedirect = false;
+            handler.ServerCertificateCustomValidationCallback =
+(req, cert, er, t) =>
+true;
             WsFederationAuthenticationOptions wsFederation = new WsFederationAuthenticationOptions
             {
                 AuthenticationType = "windows",
@@ -210,8 +262,7 @@ namespace DT.STS.IdentityServer.Mvc
                 SignInAsAuthenticationType = signInAsType,
                 MetadataAddress = metadataAddress,
                 Wtrealm = "urn:idsrv3",
-                //BackchannelCertificateValidator = null,
-               
+                BackchannelCertificateValidator = null,
                 Notifications = new WsFederationAuthenticationNotifications
                 {
                     // ignore signout requests (we can't sign out of Windows)
@@ -226,7 +277,8 @@ namespace DT.STS.IdentityServer.Mvc
 
                         return Task.FromResult(0);
                     }
-                }
+                },
+                BackchannelHttpHandler =  handler
             };
             app.UseWsFederationAuthentication(wsFederation);
         }

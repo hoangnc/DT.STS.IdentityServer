@@ -24,6 +24,31 @@ namespace DT.STS.IdentityServer.Mvc.Services
             List<Client> defaultClients = new List<Client>();
             object section = ConfigurationManager.GetSection("defaultClientsSection");
 
+            if (clientId == "dtwinauthclient")
+            {
+                return new Client
+                {
+                    ClientId = "dtwinauthclient",
+                    ClientName = "Duy Tan Windown Authenticate client",
+                    Enabled = true,
+                    Flow = Flows.Custom,
+                    AllowedCustomGrantTypes = new List<string>
+                    {
+                        "windows"
+                    },
+                    AllowedScopes = new List<string>
+                    {
+                        "openid", "profile", "roles", "admindocumentmvc", "admindocumentapi", "documentmvc", "documentapi", "masterdataapi"
+                    },
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("secret".Sha256()),
+                    },
+                    RequireConsent = false,
+                    AccessTokenType = AccessTokenType.Jwt
+                };
+            }
+
             if (section != null)
             {
                 DefaultClientSettings clients = (section as DefaultClientsSection).DefaultClientSettings;

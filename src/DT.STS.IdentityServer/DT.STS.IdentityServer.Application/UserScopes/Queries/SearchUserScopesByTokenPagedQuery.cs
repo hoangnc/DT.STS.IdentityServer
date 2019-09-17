@@ -1,6 +1,5 @@
 ﻿using DT.STS.IdentityServer.Common.Models;
 using MediatR;
-using System.Collections.Generic;
 
 namespace DT.STS.IdentityServer.Application.UserScopes.Queries
 {

@@ -19,11 +19,11 @@
                 </div>
                 <div class="mailbox-controls">
                     <!-- Check all button -->
-                    <a href="@Url.ActionWithHost("DataExport", "ExportAllAirTicketToExcel")"
+                    <!--<a href="@Url.ActionWithHost("DataExport", "ExportAllAirTicketToExcel")"
                        class="btn btn-success btn-sm">
                         <i class="fa fa-file-excel-o"></i>
                         Export to Excel
-                    </a>
+                    </a>-->
 
                     <div class="box-tools pull-right">
                         <input id="txtSearch"
@@ -169,7 +169,7 @@
                 selectUsers.on("change", function (e) {
                     let users = '';
                     if (!isVariableHaveDefaltVal(selectUsers.val()))
-                        selectUsers.val().join(';');
+                       users = selectUsers.val().join(';');
 
                     let permissions = [];
                     if (!isVariableHaveDefaltVal(selectPermissions.val())) {
